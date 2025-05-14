@@ -3,12 +3,12 @@ import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none shadow-md cursor-pointer',
+  'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none shadow-md cursor-pointer',
   {
     variants: {
       variant: {
         primary: 'bg-black text-white hover:bg-black/90',
-        secondary: 'bg-white text-black-foreground hover:bg-white/80',
+        secondary: 'bg-white text-black hover:bg-white/80',
       },
       size: {
         sm: 'h-9 px-3 text-sm',
@@ -27,7 +27,7 @@ const buttonVariants = cva(
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>;
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({children, className, variant, size, ...rest}) => {
+  ({children, className, variant, size, ...rest}, ref) => {
     return <button className={cn(buttonVariants({variant, size}), className)} {...rest}>
       {children}
     </button>
