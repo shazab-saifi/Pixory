@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Button from "./Button";
 import Image from "next/image";
 import pixoryWhite from "@/public/pixoryWhite.svg";
+import pixory from "@/public/pixory.svg";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Menu, X, Home, Plus, Megaphone } from "lucide-react";
@@ -14,13 +15,13 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full px-6 md:px-20 flex justify-between items-center text-base text-white">
+      <nav className="w-full px-4 md:px-20 flex justify-between items-center text-base text-white">
         <Image src={pixoryWhite} alt="Logo" />
         <div className="hidden md:flex items-center space-x-8">
           <div className="space-x-8 font-medium">
-            <Link href="/" className="hover:text-gray-600 transition-colors">Home</Link>
-            <Link href="/getpixory+" className="hover:text-gray-600 transition-colors">Get Pixory+</Link>
-            <Link href="/advertise" className="hover:text-gray-600 transition-colors">Advertise</Link>
+            <Link href="/">Home</Link>
+            <Link href="/getpixory+">Get Pixory+</Link>
+            <Link href="/advertise">Advertise</Link>
           </div>
           <div className="space-x-4">
             <Button variant="secondary" onClick={() => router.push("/signup")}>Sign Up</Button>
@@ -42,7 +43,7 @@ const Navbar = () => {
           }`}
       >
         <div className="flex justify-between items-center px-6">
-          <Image src={pixoryWhite} alt="Logo" />
+          <Image src={pixory} alt="Logo" />
           <button onClick={() => setIsOpen(false)}>
             <X className="w-6 h-6" />
           </button>

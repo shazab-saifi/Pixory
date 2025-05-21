@@ -21,12 +21,11 @@ const cards = [
 
 const Card = ({ image, label, spanCols = false }: { image: string; label: string; spanCols?: boolean }) => (
   <div
-    className={`group relative h-[150px] rounded-xl overflow-hidden cursor-pointer ${
-      spanCols ? 'w-full col-span-2' : 'w-[180px]'
-    }`}
+    className={`group relative rounded-xl overflow-hidden cursor-pointer ${spanCols ? 'col-span-2' : ''
+      }`}
   >
     <div
-      className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-300 group-hover:scale-[1.01]"
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-300"
       style={{ backgroundImage: `url(${image})` }}
     />
     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -40,33 +39,44 @@ const Card = ({ image, label, spanCols = false }: { image: string; label: string
 
 const HeroSection = () => {
   return (
-    <div className="w-full px-80 inline-flex justify-between items-center py-20">
-      <div className="space-y-8">
-        <div className="text-2xl space-y-2 text-white font-semibold text-shadow-lg">
-          <h2>Discover. Download. Inspire.</h2>
-          <h2>
-            Browse thousands of high-quality free photos <br /> for personal and commercial use
-          </h2>
+    <div className="w-full px-4 pt-20 pb-24 md:px-20 2xl:px-88 flex justify-center">
+      <div className="w-full flex flex-col lg:flex-row items-center gap-26 xl:gap-48 2xl:gap-78">
+        <div className="space-y-8 flex-1">
+          <div className="text-xl md:text-3xl space-y-2 text-white font-semibold text-shadow-lg">
+            <h2>Discover. Download. Inspire.</h2>
+            <h2 className='inline md:block'>
+              Browse thousands of high-quality free photos for personal and commercial use
+            </h2>
+          </div>
+          <div className="w-full inline-flex items-center rounded-xl justify-between bg-white shadow-md">
+            <Dropdown />
+            <input
+              type="text"
+              placeholder="Search for free photos"
+              className="py-2 outline-none sm:flex-1 w-[180px]"
+            />
+            <Button
+              variant="secondary"
+              className="shadow-none flex items-center px-4"
+            >
+              <Search size={18} className="opacity-80 hover:opacity-50" />
+            </Button>
+          </div>
         </div>
-        <div className="inline-flex items-center rounded-xl gap-2 bg-white shadow-md">
-          <Dropdown />
-          <input type="text" className="py-2 md:w-[350px] outline-none" />
-          <Button
-            variant="secondary"
-            className="shadow-none flex items-center"
-          >
-            <Search size={18} className="opacity-80 hover:opacity-50" />
-          </Button>
+        <div className="h-[300px] max-w-[350px] hidden lg:grid grid-flow-row grid-cols-2 grid-rows-2 gap-2 shadow-2xl text-white text-sm font-medium flex-1">
+          {cards.map((card, index) => (
+            <Card
+              key={index}
+              image={card.image}
+              label={card.label}
+              spanCols={card.spanCols}
+            />
+          ))}
         </div>
-      </div>
-
-      <div className="hidden md:grid grid-flow-row grid-cols-2 grid-rows-2 gap-2 shadow-2xl text-white text-sm font-medium">
-        {cards.map((card, index) => (
-          <Card key={index} image={card.image} label={card.label} spanCols={card.spanCols} />
-        ))}
       </div>
     </div>
-  )
-}
+  );
+};
+
 
 export default HeroSection

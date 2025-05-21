@@ -8,13 +8,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: 'bg-black text-white hover:bg-black/90',
-        secondary: 'bg-white text-black hover:bg-white/80',
+        secondary: 'bg-white text-black hover:bg-gray-50',
       },
       size: {
-        sm: 'h-9 px-3 text-sm',
-        md: 'h-10 px-4 text-sm',
-        lg: 'h-11 px-8 text-base',
-        icon: 'h-10 w-10',
+        sm: 'h-8 px-2 text-xs sm:h-9 sm:px-3 sm:text-sm',
+        md: 'h-9 px-3 text-sm sm:h-10 sm:px-4 md:text-sm md:h-11 md:px-5',
+        lg: 'h-10 px-4 text-sm sm:h-11 sm:px-6 sm:text-base md:h-12 md:px-8 md:text-lg',
+        icon: 'h-8 w-8 sm:h-10 sm:w-10',
       },
     },
     defaultVariants: {

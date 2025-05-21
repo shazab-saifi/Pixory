@@ -2,6 +2,8 @@ import React from 'react'
 import Navbar from './Navbar'
 import HeroSection from './HeroSection'
 import OptionsSection from './OptionsSection'
+import Footer from './Footer'
+import PhotosSection from './PhotosSection'
 
 const Landing = () => {
   return (
@@ -11,6 +13,8 @@ const Landing = () => {
         <HeroSection />
       </div>
       <OptionsSection />
+      <PhotosSection />
+      <Footer />
     </div>
   )
 }
