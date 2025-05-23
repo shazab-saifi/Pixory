@@ -25,6 +25,8 @@ const PhotoCard = React.memo(({
         width={width}
         height={height}
         alt={alt}
+        loading="lazy"
+        decoding="async"
       />
       <div className="absolute hidden sm:block invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 inset-0 top-0 left-0 w-full h-full bg-gradient-to-t from-black/30 via-transparent to-black/30"></div>
       <div className="absolute inset-0 p-2 md:p-4 flex flex-col justify-between z-10">
