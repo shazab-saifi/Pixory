@@ -44,7 +44,6 @@ const fetchData = async ({ pageParam }: { pageParam?: number }) => {
 
     nextPage = nextParam ? parseInt(nextParam, 10) : null;
   }
-  console.log(data);
 
   return {
     photos: data.photos,

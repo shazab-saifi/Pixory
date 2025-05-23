@@ -20,18 +20,6 @@ const OptionsSection = () => {
                 className='rounded-2xl'
                 children="Videos"
             />
-            <Button
-                onClick={() => setCurrentOptions('trending')}
-                variant={currentOption === 'trending' ? 'primary' : 'secondary'}
-                className='rounded-2xl invisible sm:visible'
-                children="Trending"
-            />
-            <Button
-                onClick={() => setCurrentOptions('collection')}
-                variant={currentOption === 'collection' ? 'primary' : 'secondary'}
-                className='rounded-2xl invisible sm:visible'
-                children="Collections"
-            />
         </div>
     )
 }
