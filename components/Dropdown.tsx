@@ -9,8 +9,8 @@ const Dropdown = () => {
 
     return (
         <div
-            onMouseEnter={() => setIsOpen(prev => !prev)}
-            onMouseLeave={() => setIsOpen(prev => !prev)}
+            onMouseEnter={() => setIsOpen(true)}
+            onMouseLeave={() => setIsOpen(false)}
             // onClick={() => setIsOpen(prev => !prev)}
             className="flex flex-col relative"
         >

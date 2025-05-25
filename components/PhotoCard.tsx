@@ -18,7 +18,7 @@ const PhotoCard = React.memo(({
   alt: string
 }) => {
   return (
-    <div className={`relative w-[${width}px] h-[${height}px] rounded-xl lg:rounded-2xl overflow-hidden group`}>
+    <div className={`relative w-[${width}px] h-[${height}px] rounded-xl lg:rounded-2xl overflow-hidden group cursor-pointer`}>
       <Image
         className="w-full h-full object-cover z-0"
         src={photoURL}
