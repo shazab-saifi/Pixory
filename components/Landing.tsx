@@ -14,7 +14,7 @@ const Landing = () => {
       </div>
       <OptionsSection />
       <ContentSection />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

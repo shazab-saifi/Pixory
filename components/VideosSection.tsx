@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import Masonry from 'react-masonry-css'
+// import Masonry from 'react-masonry-css'
 import VideoCard from './VideoCard'
 import Spinner from './Spinner'
 import { VideoData } from '@/lib/types'
@@ -7,6 +7,7 @@ import useIntersection from '@/hooks/useIntersection'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { fetchData } from '@/lib/fetchdata'
 import { useOptionsToggle } from '@/lib/store'
+import Masonry from 'react-masonry-css'
 
 const VideosSection = () => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -19,7 +20,6 @@ const VideosSection = () => {
     fetchNextPage,
     isFetchingNextPage,
     isPending,
-
   } = useInfiniteQuery({
     queryKey: ['videos'],
     queryFn: ({ pageParam = 1 }) => {
@@ -59,9 +59,11 @@ const VideosSection = () => {
             return (
               <VideoCard
                 key={video.id}
+                // videoId={video.id}
                 width={video.width}
                 height={video.height}
-                videoURL={videoFile?.link}
+                videoURL={videoFile.link}
+                videoPreviewURL={video.image}
                 pexelsVideoURL={video.url}
               />
             );
