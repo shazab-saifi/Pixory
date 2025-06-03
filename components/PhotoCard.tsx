@@ -1,18 +1,21 @@
 import React from 'react'
 import Image from 'next/image'
 import Button from './Button'
-import { Bookmark, Copy, X } from 'lucide-react'
+import { Bookmark, X } from 'lucide-react'
 import DownloadDropdown from './DownloadDropdown'
 import PhotoLinkCopy from './PhotoLinkCopy'
+import { PhotoURLsTypes } from '@/lib/types'
 
 const PhotoCard = React.memo(({
   photographerName,
   photographerURL,
+  src,
   photoURL,
   onXClick,
 }: {
   photographerName: string;
   photographerURL: string;
+  src: PhotoURLsTypes;
   photoURL: string;
   onXClick: () => void;
 }) => {
@@ -25,7 +28,7 @@ const PhotoCard = React.memo(({
         />
       </div>
       <div className='w-full flex justify-between md:hidden'>
-        <DownloadDropdown />
+        <DownloadDropdown src={src} />
         <Button
           variant='secondary'
           className='hover:bg-gray-100 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]'
@@ -62,7 +65,7 @@ const PhotoCard = React.memo(({
             </Button>
           </div>
           <div className='hidden md:block'>
-            <DownloadDropdown />
+            <DownloadDropdown src={src} />
           </div>
           <div className='md:hidden'>
             <h3 className='text-base font-semibold'>Photographer</h3>

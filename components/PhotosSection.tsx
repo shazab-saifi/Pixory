@@ -112,6 +112,7 @@ const PhotosSection = () => {
             <PhotoCard
               photographerName={selectedPhoto?.photographer as string}
               photographerURL={selectedPhoto?.photographer_url as string}
+              src={selectedPhoto?.src}
               photoURL={selectedPhoto?.src.original as string}
               onXClick={() => setIsPhotoOpen(false)}
             />

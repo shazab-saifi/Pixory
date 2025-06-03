@@ -1,7 +1,8 @@
+import { PhotoURLsTypes } from "@/lib/types"
 import { ChevronDown, Check } from "lucide-react"
 import { useState } from "react"
 
-const DownloadDropdown = () => {
+const DownloadDropdown = ({ src }: { src: PhotoURLsTypes }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState('Original (full resolution)');
 
@@ -27,9 +28,37 @@ const DownloadDropdown = () => {
     },
   ];
 
+  const downloadImage = async () => {
+    if (!src) return;
+    let imageUrl = '';
+    const size = selectedSize.toLowerCase();
+    if (size === 'original (full resolution)') {
+      imageUrl = src.original;
+    } else if (size === 'large') {
+      imageUrl = src.large;
+    } else if (size === 'portrait') {
+      imageUrl = src.portrait;
+    } else if (size === 'landscape') {
+      imageUrl = src.landscape;
+    } else {
+      imageUrl = src.original;
+    }
+
+    const image = await fetch(imageUrl);
+    const imageBlob = await image.blob();
+    const imageURL = URL.createObjectURL(imageBlob);
+
+    let link = document.createElement('a');
+    link.href = imageURL;
+    link.download = 'downloaded-image.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <div className="relative flex items-center">
-      <button className="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-l-lg cursor-pointer">Free Download</button>
+      <button onClick={() => downloadImage()} className="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-l-lg cursor-pointer">Free Download</button>
       <div
         onClick={() => setIsOpen((prev) => !prev)}
         className={`p-2 bg-green-500 flex items-center transition-colors rounded-r-lg cursor-pointer justify-center ${isOpen && 'bg-green-600'}`}
