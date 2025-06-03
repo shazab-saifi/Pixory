@@ -6,7 +6,7 @@ import Button from './Button'
 import Link from 'next/link'
 import Image from 'next/image'
 
-const VideoCard = React.memo(({
+const VideoPreviewCard = React.memo(({
     videoURL,
     width,
     height,
@@ -91,4 +91,4 @@ const VideoCard = React.memo(({
     )
 });
 
-export default VideoCard;
+export default VideoPreviewCard;

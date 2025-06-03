@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
-// import Masonry from 'react-masonry-css'
-import VideoCard from './VideoCard'
+import VideoPreviewCard from './VideoPreviewCard'
 import Spinner from './Spinner'
 import { VideoData } from '@/lib/types'
 import useIntersection from '@/hooks/useIntersection'
@@ -19,7 +18,6 @@ const VideosSection = () => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isPending,
   } = useInfiniteQuery({
     queryKey: ['videos'],
     queryFn: ({ pageParam = 1 }) => {
@@ -38,7 +36,6 @@ const VideosSection = () => {
   })
 
   if (error) return <div>Error loading videos: {(error as Error).message}</div>;
-  // if (isPending) return <Spinner />;
   if (data === undefined) return;
 
   return (
@@ -57,9 +54,8 @@ const VideosSection = () => {
               ) || video.video_files[0];
 
             return (
-              <VideoCard
+              <VideoPreviewCard
                 key={video.id}
-                // videoId={video.id}
                 width={video.width}
                 height={video.height}
                 videoURL={videoFile.link}

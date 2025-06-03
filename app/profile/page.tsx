@@ -3,7 +3,8 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='flex justify-center items-center mt-20'>
+    <div className='flex justify-center items-center'>
+      {/* <PhotoCard /> */}
     </div>
   )
 }
