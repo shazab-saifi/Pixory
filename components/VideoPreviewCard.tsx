@@ -1,21 +1,24 @@
 'use client'
 
-import { Bookmark, Download, DownloadIcon } from 'lucide-react'
+import { Bookmark, Download } from 'lucide-react'
 import React, { useRef, useState, useEffect } from 'react'
 import Button from './Button'
 import Link from 'next/link'
 import Image from 'next/image'
+import { handleDownload } from '@/lib/utils'
 
 const VideoPreviewCard = React.memo(({
     videoURL,
     width,
     height,
+    originalVideoURL,
     pexelsVideoURL,
     videoPreviewURL
 }: {
     videoURL: string,
     width: number,
     height: number,
+    originalVideoURL: string;
     pexelsVideoURL: string,
     videoPreviewURL?: string
 }) => {
@@ -74,14 +77,19 @@ const VideoPreviewCard = React.memo(({
                 <div className="flex w-full justify-between items-center opacity-0 invisible transition-all duration-300 translate-y-full group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
                     <Link
                         href={pexelsVideoURL}
-                        className="text-white md:font-semibold text-[10px] sm:text-sm text-shadow"
+                        className="text-white/70 md:font-semibold text-[10px] sm:text-sm md:text-base text-shadow"
                     >
-                        Provided by Pexels
+                        Provided by
+                        <span className='font-bold text-white italic'> pexels</span>
                     </Link>
                     <Button
                         variant="secondary"
                         size='lg'
                         className="hidden md:block"
+                        onClick={e => {
+                            e.stopPropagation();
+                            handleDownload({url: originalVideoURL})
+                        }}
                     >
                         Download
                     </Button>

@@ -3,7 +3,7 @@ import { Bookmark, Download } from "lucide-react"
 import Button from "./Button"
 import Image from "next/image"
 import Link from "next/link"
-import downloadPhoto from "@/lib/downloadPhoto"
+import { handleDownload } from "@/lib/utils"
 
 const PhotoPreviewCard = React.memo(({
   photoURL,
@@ -44,16 +44,18 @@ const PhotoPreviewCard = React.memo(({
         <div className="flex w-full justify-between items-center opacity-0 invisible transition-all duration-300 translate-y-full group-hover:opacity-100 group-hover:visible group-hover:translate-y-0">
           <Link
             href={pexelsPhotoURL}
-            className="text-white md:font-semibold text-[10px] sm:text-sm text-shadow"
+            className="text-white/70 md:font-semibold text-[10px] sm:text-sm md:text-base text-shadow"
           >
-            Provided by pexels
+            Provided by
+            <span className='font-bold text-white italic'> pexels</span>
           </Link>
           <Button
             variant="secondary"
+            size='lg'
             className="hidden md:block z-50"
             onClick={e => {
               e.stopPropagation();
-              downloadPhoto({ imageUrl: originalPhotoURL });
+              handleDownload({ url: originalPhotoURL });
             }}
           >
             Download

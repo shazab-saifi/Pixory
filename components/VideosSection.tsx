@@ -39,7 +39,7 @@ const VideosSection = () => {
   if (data === undefined) return;
 
   return (
-    <div className="">
+    <div>
       <h1 className="my-6 font-medium text-2xl px-4 md:px-22 xl:px-52">Free Stock Videos</h1>
       <Masonry
         breakpointCols={{ default: 3, 768: 2 }}
@@ -53,17 +53,23 @@ const VideosSection = () => {
                 (file) => file.quality === 'sd' && file.file_type === 'video/mp4'
               ) || video.video_files[0];
 
+            const hdVideoFIle =
+            video.video_files.find(
+              (file) => file.quality === 'hd' && file.file_type === 'video/mp4'
+            ) || video.video_files[0];
+
             return (
               <VideoPreviewCard
                 key={video.id}
                 width={video.width}
                 height={video.height}
                 videoURL={videoFile.link}
+                originalVideoURL={hdVideoFIle.link}
                 videoPreviewURL={video.image}
                 pexelsVideoURL={video.url}
               />
             );
-          })
+          }) ?? []
         ))}
       </Masonry>
       <div ref={loadMoreRef} className="py-10 text-center text-gray-500">

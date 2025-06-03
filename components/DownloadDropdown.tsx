@@ -1,4 +1,4 @@
-import downloadPhoto from "@/lib/downloadPhoto";
+import { handleDownload } from "@/lib/utils"
 import { PhotoURLsTypes } from "@/lib/types"
 import { ChevronDown, Check } from "lucide-react"
 import { useState } from "react"
@@ -45,7 +45,7 @@ const DownloadDropdown = ({ src }: { src: PhotoURLsTypes }) => {
       imageUrl = src.original;
     }
 
-    downloadPhoto({imageUrl});
+    handleDownload({url: imageUrl});
   }
 
   return (
