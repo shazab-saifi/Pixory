@@ -81,14 +81,17 @@ const VideoPreviewCard = React.memo(({
                     </Link>
                     <Button
                         variant="secondary"
-                        children="Download"
                         className="hidden md:block"
-                    />
+                    >
+                        Download
+                    </Button>
                     <Download size={20} className="md:hidden text-white" />
                 </div>
             </div>
         </div>
     )
 });
+
+VideoPreviewCard.displayName = 'VideoPreviewCard';
 
 export default VideoPreviewCard;

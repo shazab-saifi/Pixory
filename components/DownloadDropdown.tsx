@@ -48,7 +48,7 @@ const DownloadDropdown = ({ src }: { src: PhotoURLsTypes }) => {
     const imageBlob = await image.blob();
     const imageURL = URL.createObjectURL(imageBlob);
 
-    let link = document.createElement('a');
+    const link = document.createElement('a');
     link.href = imageURL;
     link.download = 'downloaded-image.jpg';
     document.body.appendChild(link);

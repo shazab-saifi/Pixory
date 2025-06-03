@@ -28,10 +28,12 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({children, className, variant, size, ...rest}, ref) => {
-    return <button className={cn(buttonVariants({variant, size}), className)} {...rest}>
+    return <button ref={ref} className={cn(buttonVariants({variant, size}), className)} {...rest}>
       {children}
     </button>
   }
 )
+
+Button.displayName = "Button";
 
 export default Button

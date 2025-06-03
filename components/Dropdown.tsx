@@ -1,6 +1,6 @@
 "use client"
 
-import { Image, CirclePlay, ChevronDown } from "lucide-react";
+import { Images, CirclePlay, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const Dropdown = () => {
@@ -17,7 +17,7 @@ const Dropdown = () => {
             <button className="inline-flex rounded-l-xl items-center p-4 bg-white hover:bg-gray-50 hover:opacity-70 gap-2">
                 {dropdownItem === 'photo' ?
                     <div className='flex items-center gap-2'>
-                        <Image
+                        <Images
                             size={18}
                             className="opacity-80"
                         />
@@ -40,7 +40,7 @@ const Dropdown = () => {
                         className='w-full flex items-center gap-2 px-4 py-2 hover:bg-gray-50 hover:text-red-500 rounded-lg'
                         onClick={() => setDropdownItem('photo')}
                     >
-                        <Image
+                        <Images
                             size={18}
                             className="opacity-80"
                         />

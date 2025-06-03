@@ -39,7 +39,7 @@ const PhotosSection = () => {
   });
 
   useEffect(() => {
-    let newPhotos: PhotoType[] = [];
+    const newPhotos: PhotoType[] = [];
 
     data?.pages.forEach(page => {
       page.data.photos.forEach((photo: PhotoType) => {

@@ -47,9 +47,10 @@ const PhotoPreviewCard = React.memo(({
           </Link>
           <Button
             variant="secondary"
-            children="Download"
             className="hidden md:block"
-          />
+          >
+            Download
+          </Button>
           <Download
             size={20}
             className="md:hidden text-white"
@@ -59,6 +60,8 @@ const PhotoPreviewCard = React.memo(({
     </div>
 
   )
-})
+});
+
+PhotoPreviewCard.displayName = 'PhotoPreviewCard';
 
 export default PhotoPreviewCard

@@ -82,6 +82,8 @@ const PhotoCard = React.memo(({
       </div>
     </div>
   );
-})
+});
+
+PhotoCard.displayName = 'PhotoCard'
 
 export default PhotoCard

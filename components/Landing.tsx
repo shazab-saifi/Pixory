@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from './Navbar'
 import HeroSection from './HeroSection'
 import OptionsSection from './OptionsSection'
-import Footer from './Footer'
+// import Footer from './Footer'
 import ContentSection from './ContentSection'
 
 const Landing = () => {

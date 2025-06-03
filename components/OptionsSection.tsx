@@ -13,14 +13,16 @@ const OptionsSection = () => {
                 onClick={setToPhotos}
                 variant={currentOption === 'photos' ? 'primary' : 'secondary'}
                 className='rounded-2xl'
-                children="Photos"
-            />
+            >
+                Photos
+            </Button>
             <Button
                 onClick={setToVideos}
                 variant={currentOption === 'videos' ? 'primary' : 'secondary'}
                 className='rounded-2xl'
-                children="Videos"
-            />
+            >
+                Videos
+            </Button>
         </div>
     )
 }
