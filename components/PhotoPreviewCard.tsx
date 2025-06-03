@@ -3,9 +3,11 @@ import { Bookmark, Download } from "lucide-react"
 import Button from "./Button"
 import Image from "next/image"
 import Link from "next/link"
+import downloadPhoto from "@/lib/downloadPhoto"
 
 const PhotoPreviewCard = React.memo(({
   photoURL,
+  originalPhotoURL,
   width,
   height,
   pexelsPhotoURL,
@@ -13,6 +15,7 @@ const PhotoPreviewCard = React.memo(({
   alt
 }: {
   photoURL: string,
+  originalPhotoURL: string;
   width: number,
   height: number,
   pexelsPhotoURL: string,
@@ -21,8 +24,8 @@ const PhotoPreviewCard = React.memo(({
 }) => {
   return (
     <div
-    onClick={onClick}
-    className={`relative w-[${width}px] h-[${height}px] rounded-xl lg:rounded-2xl overflow-hidden group cursor-pointer`}
+      onClick={onClick}
+      className={`relative w-[${width}px] h-[${height}px] rounded-xl lg:rounded-2xl overflow-hidden group`}
     >
       <Image
         className="w-full h-full object-cover z-0"
@@ -47,7 +50,11 @@ const PhotoPreviewCard = React.memo(({
           </Link>
           <Button
             variant="secondary"
-            className="hidden md:block"
+            className="hidden md:block z-50"
+            onClick={e => {
+              e.stopPropagation();
+              downloadPhoto({ imageUrl: originalPhotoURL });
+            }}
           >
             Download
           </Button>

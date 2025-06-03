@@ -1,3 +1,4 @@
+import downloadPhoto from "@/lib/downloadPhoto";
 import { PhotoURLsTypes } from "@/lib/types"
 import { ChevronDown, Check } from "lucide-react"
 import { useState } from "react"
@@ -44,16 +45,7 @@ const DownloadDropdown = ({ src }: { src: PhotoURLsTypes }) => {
       imageUrl = src.original;
     }
 
-    const image = await fetch(imageUrl);
-    const imageBlob = await image.blob();
-    const imageURL = URL.createObjectURL(imageBlob);
-
-    const link = document.createElement('a');
-    link.href = imageURL;
-    link.download = 'downloaded-image.jpg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    downloadPhoto({imageUrl});
   }
 
   return (

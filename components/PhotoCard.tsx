@@ -38,7 +38,7 @@ const PhotoCard = React.memo(({
       </div>
       <div className='rounded-lg overflow-hidden'>
         <Image
-          src={photoURL || ''}
+          src={photoURL}
           width={400}
           height={400}
           alt='photo'

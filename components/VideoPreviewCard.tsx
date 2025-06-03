@@ -1,6 +1,6 @@
 'use client'
 
-import { Bookmark, Download } from 'lucide-react'
+import { Bookmark, Download, DownloadIcon } from 'lucide-react'
 import React, { useRef, useState, useEffect } from 'react'
 import Button from './Button'
 import Link from 'next/link'
@@ -36,7 +36,7 @@ const VideoPreviewCard = React.memo(({
 
     useEffect(() => {
         if (isHovered && videoRef.current) {
-            videoRef.current.play().catch(() => {});
+            videoRef.current.play().catch(() => { });
         }
     }, [isHovered]);
 
@@ -46,7 +46,7 @@ const VideoPreviewCard = React.memo(({
         <div
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={`relative rounded-xl ${fixedHeight ? 'h-[800px]' : 'h-[279.73px]'} lg:rounded-2xl overflow-hidden group cursor-pointer`}
+            className={`relative rounded-xl ${fixedHeight ? 'h-[800px]' : 'h-[279.73px]'} lg:rounded-2xl overflow-hidden group`}
         >
             <Image
                 src={videoPreviewURL as string}
@@ -67,7 +67,6 @@ const VideoPreviewCard = React.memo(({
 
             {/* Overlay */}
             <div className="absolute hidden sm:block invisible opacity-0 group-hover:opacity-100 group-hover:visible transition-all duration-300 inset-0 top-0 left-0 w-full h-full bg-gradient-to-t from-black/30 via-transparent to-black/30" />
-
             <div className="absolute inset-0 p-2 md:p-4 flex flex-col justify-between z-10">
                 <div className="flex justify-end">
                     <Bookmark className="w-4 h-4 md:w-6 md:h-6 text-white opacity-0 invisible transition-all duration-300 translate-x-full group-hover:opacity-100 group-hover:visible group-hover:translate-x-0" />
@@ -81,6 +80,7 @@ const VideoPreviewCard = React.memo(({
                     </Link>
                     <Button
                         variant="secondary"
+                        size='lg'
                         className="hidden md:block"
                     >
                         Download

@@ -91,6 +91,7 @@ const PhotosSection = () => {
             <PhotoPreviewCard
               key={photo.id}
               width={photo.width}
+              originalPhotoURL={photo.src.original}
               height={photo.height}
               photoURL={photo.src.large}
               pexelsPhotoURL={photo.url}
@@ -113,7 +114,7 @@ const PhotosSection = () => {
               photographerName={selectedPhoto?.photographer as string}
               photographerURL={selectedPhoto?.photographer_url as string}
               src={selectedPhoto?.src}
-              photoURL={selectedPhoto?.src.original as string}
+              photoURL={selectedPhoto?.src.large as string}
               onXClick={() => setIsPhotoOpen(false)}
             />
           </div>
