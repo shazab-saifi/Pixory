@@ -110,9 +110,9 @@ const PhotosSection = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
           <div className="pointer-events-auto">
             <PhotoCard
-              photographerName={selectedPhoto?.photographer}
-              photographerURL={selectedPhoto?.photographer_url}
-              photoURL={selectedPhoto?.src.original}
+              photographerName={selectedPhoto?.photographer as string}
+              photographerURL={selectedPhoto?.photographer_url as string}
+              photoURL={selectedPhoto?.src.original as string}
               onXClick={() => setIsPhotoOpen(false)}
             />
           </div>

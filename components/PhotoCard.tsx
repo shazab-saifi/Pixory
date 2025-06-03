@@ -1,18 +1,19 @@
+import React from 'react'
 import Image from 'next/image'
 import Button from './Button'
 import { Bookmark, Copy, X } from 'lucide-react'
 import DownloadDropdown from './DownloadDropdown'
-import Link from 'next/link'
+import PhotoLinkCopy from './PhotoLinkCopy'
 
-const PhotoCard = ({
+const PhotoCard = React.memo(({
   photographerName,
   photographerURL,
   photoURL,
   onXClick,
 }: {
-  photographerName: string | undefined;
-  photographerURL: string | undefined;
-  photoURL: string | undefined;
+  photographerName: string;
+  photographerURL: string;
+  photoURL: string;
   onXClick: () => void;
 }) => {
   return (
@@ -35,15 +36,24 @@ const PhotoCard = ({
       <div className='rounded-lg overflow-hidden'>
         <Image
           src={photoURL || ''}
-          width={497.33}
-          height={745.98}
+          width={400}
+          height={400}
           alt='photo'
         />
       </div>
       <div className='space-y-6 md:flex flex-col justify-between'>
         <div className='space-y-6'>
           <div className='w-full justify-between hidden md:flex'>
-            <DownloadDropdown />
+            <div>
+              <h3 className='text-base font-semibold'>Photographer</h3>
+              <a
+                href={photographerURL}
+                className='text-sm cursor-pointer'
+                target='_blank'
+              >
+                {photographerName}
+              </a>
+            </div>
             <Button
               variant='secondary'
               className='hover:bg-gray-100 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]'
@@ -51,40 +61,24 @@ const PhotoCard = ({
               <Bookmark className='w-6 h-6' />
             </Button>
           </div>
-          <div className='flex justify-between'>
-            <div>
-              <h3 className='text-base font-semibold'>Pohographer</h3>
-              <Link
-                href={photographerURL || ''}
-                className='text-sm'
-              >
-                {photographerName}
-              </Link>
-            </div>
+          <div className='hidden md:block'>
+            <DownloadDropdown />
           </div>
-        </div>
-        <div className="w-full max-w-xl mx-auto">
-          <h3 className="text-base font-semibold mb-2">Link</h3>
-          <div className="flex w-full rounded-lg shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] overflow-hidden bg-gray-50">
-            <input
-              type="text"
-              readOnly
-              value={photoURL}
-              className="flex-grow px-4 py-2 text-sm sm:text-base bg-gray-50 outline-none border-none"
-            />
-            <Button
-              variant="secondary"
-              size="md"
-              className="w-14 sm:w-16 shrink-0 rounded-none hover:bg-gray-100 transition-colors"
-              aria-label="Copy link"
+          <div className='md:hidden'>
+            <h3 className='text-base font-semibold'>Photographer</h3>
+            <a
+              href={photographerURL}
+              className='text-sm cursor-pointer'
+              target='_blank'
             >
-              <Copy className="w-5 h-5 text-gray-700" />
-            </Button>
+              {photographerName}
+            </a>
           </div>
         </div>
+        <PhotoLinkCopy photoURL={photoURL} />
       </div>
     </div>
   );
-}
+})
 
 export default PhotoCard

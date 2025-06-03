@@ -3,7 +3,7 @@ import { useState } from "react"
 
 const DownloadDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSize, setSelectedSize] = useState('original');
+  const [selectedSize, setSelectedSize] = useState('Original (full resolution)');
 
   const dropdownItems = [
     {
