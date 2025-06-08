@@ -9,7 +9,7 @@ import { PhotoType } from "@/lib/types";
 import useIntersection from "@/hooks/useIntersection";
 import { fetchData } from "@/lib/fetchdata";
 import { useOptionsToggle } from "@/lib/store";
-import PhotoCard from "./PhotoCard";
+import MediaCard from "./MediaCard";
 
 interface PhotoId {
   id: number
@@ -105,16 +105,17 @@ const PhotosSection = () => {
         })}
       </Masonry>
       {isPhotoOpen && (
-        <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" onClick={() => setIsPhotoOpen(false)} />
+        <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" />
       )}
       {isPhotoOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
           <div className="pointer-events-auto">
-            <PhotoCard
-              photographerName={selectedPhoto?.photographer as string}
-              photographerURL={selectedPhoto?.photographer_url as string}
+            <MediaCard
+              ownerName={selectedPhoto?.photographer as string}
+              ownerUrl={selectedPhoto?.photographer_url as string}
               src={selectedPhoto?.src}
-              photoURL={selectedPhoto?.src.large as string}
+              isVideo={false}
+              Url={selectedPhoto?.src.large as string}
               onXClick={() => setIsPhotoOpen(false)}
             />
           </div>

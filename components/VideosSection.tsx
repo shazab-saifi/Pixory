@@ -1,16 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import VideoPreviewCard from './VideoPreviewCard'
 import Spinner from './Spinner'
-import { VideoData } from '@/lib/types'
+import { VideoData, VideoFile } from '@/lib/types'
 import useIntersection from '@/hooks/useIntersection'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { fetchData } from '@/lib/fetchdata'
 import { useOptionsToggle } from '@/lib/store'
 import Masonry from 'react-masonry-css'
+import MediaCard from './MediaCard'
 
 const VideosSection = () => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { currentOption } = useOptionsToggle();
+  const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+  const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
+  const [hdVideo, setHdVideos] = useState<String>();
 
   const {
     data,
@@ -21,11 +25,11 @@ const VideosSection = () => {
   } = useInfiniteQuery({
     queryKey: ['videos'],
     queryFn: ({ pageParam = 1 }) => {
-      return fetchData({ pageParam, currentOption })
+      return fetchData({ pageParam, currentOption });
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage
-  })
+  });
 
   useIntersection({
     onIntersect: () => {
@@ -54,9 +58,9 @@ const VideosSection = () => {
               ) || video.video_files[0];
 
             const hdVideoFIle =
-            video.video_files.find(
-              (file) => file.quality === 'hd' && file.file_type === 'video/mp4'
-            ) || video.video_files[0];
+              video.video_files.find(
+                (file) => file.quality === 'hd' && file.file_type === 'video/mp4'
+              ) || video.video_files[0];
 
             return (
               <VideoPreviewCard
@@ -67,11 +71,33 @@ const VideosSection = () => {
                 originalVideoURL={hdVideoFIle.link}
                 videoPreviewURL={video.image}
                 pexelsVideoURL={video.url}
+                onClick={() => {
+                  setIsVideoOpen(true);
+                  setSelectedVideo(video);
+                  setHdVideos(hdVideoFIle.link)
+                }}
               />
             );
-          }) ?? []
+          })
         ))}
       </Masonry>
+      {isVideoOpen && (
+        <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" />
+      )}
+      {isVideoOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+          <div className="pointer-events-auto">
+            <MediaCard
+              ownerName={selectedVideo?.user.name as string}
+              ownerUrl={selectedVideo?.user.url as string}
+              src={selectedVideo?.video_files}
+              isVideo={true}
+              Url={hdVideo as string}
+              onXClick={() => setIsVideoOpen(false)}
+            />
+          </div>
+        </div>
+      )}
       <div ref={loadMoreRef} className="py-10 text-center text-gray-500">
         {isFetchingNextPage && <Spinner />}
       </div>

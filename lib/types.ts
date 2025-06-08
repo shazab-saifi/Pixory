@@ -39,7 +39,7 @@ export interface VideoData {
     video_pictures: VideoPicture[];
 }
 
-interface VideoFile {
+export interface VideoFile {
     id: number;
     quality: string;
     file_type: string;

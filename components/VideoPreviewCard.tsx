@@ -13,6 +13,7 @@ const VideoPreviewCard = React.memo(({
     height,
     originalVideoURL,
     pexelsVideoURL,
+    onClick,
     videoPreviewURL
 }: {
     videoURL: string,
@@ -20,6 +21,7 @@ const VideoPreviewCard = React.memo(({
     height: number,
     originalVideoURL: string;
     pexelsVideoURL: string,
+    onClick: () => void;
     videoPreviewURL?: string
 }) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -49,7 +51,8 @@ const VideoPreviewCard = React.memo(({
         <div
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={`relative rounded-xl ${fixedHeight ? 'h-[800px]' : 'h-[279.73px]'} lg:rounded-2xl overflow-hidden group`}
+            onClick={onClick}
+            className={`relative rounded-xl ${fixedHeight ? 'h-[250px] sm:h-[400px] md:h-[500px] xl:h-[800px]' : 'h-[100px] md:h-[200px] xl:h-[279.73px]'} lg:rounded-2xl overflow-hidden group`}
         >
             <Image
                 src={videoPreviewURL as string}

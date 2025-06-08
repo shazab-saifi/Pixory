@@ -15,8 +15,8 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full px-4 md:px-20 flex justify-between items-center text-base text-white">
-        <Image src={pixoryWhite} alt="Logo" />
+      <nav className="w-full px-4 py-4 md:px-20 flex justify-between items-center text-base text-white">
+        <Image className="aspect-auto w-[100px]" src={pixoryWhite} alt="Logo" />
         <div className="hidden md:flex items-center space-x-8">
           <div className="space-x-8 font-medium">
             <Link href="/">Home</Link>
@@ -42,8 +42,8 @@ const Navbar = () => {
         className={`fixed top-0 right-0 z-50 h-full w-64 bg-white transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"
           }`}
       >
-        <div className="flex justify-between items-center px-6">
-          <Image src={pixory} alt="Logo" />
+        <div className="flex justify-between items-center px-6 py-6">
+          <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
           <button onClick={() => setIsOpen(false)}>
             <X className="w-6 h-6" />
           </button>
