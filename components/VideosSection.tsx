@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import VideoPreviewCard from './VideoPreviewCard'
 import Spinner from './Spinner'
-import { VideoData, VideoFile } from '@/lib/types'
+import { VideoData } from '@/lib/types'
 import useIntersection from '@/hooks/useIntersection'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { fetchData } from '@/lib/fetchdata'
@@ -14,7 +14,7 @@ const VideosSection = () => {
   const { currentOption } = useOptionsToggle();
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
-  const [hdVideo, setHdVideos] = useState<String>();
+  const [hdVideo, setHdVideo] = useState<string>();
 
   const {
     data,
@@ -74,7 +74,7 @@ const VideosSection = () => {
                 onClick={() => {
                   setIsVideoOpen(true);
                   setSelectedVideo(video);
-                  setHdVideos(hdVideoFIle.link)
+                  setHdVideo(hdVideoFIle.link)
                 }}
               />
             );
