@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from './Button'
 import Dropdown from './Dropdown'
 import { Search } from 'lucide-react'
@@ -17,7 +16,7 @@ const cards = [
     image: 'https://images.pexels.com/photos/1366957/pexels-photo-1366957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
     spanCols: true,
   },
-]
+];
 
 const Card = ({ image, label, spanCols = false }: { image: string; label: string; spanCols?: boolean }) => (
   <div
@@ -38,8 +37,9 @@ const Card = ({ image, label, spanCols = false }: { image: string; label: string
 )
 
 const HeroSection = () => {
+  
   return (
-    <div className="w-full px-4 pt-20 pb-24 md:px-20 2xl:px-88 flex justify-center">
+    <div className="w-full relative px-4 pt-20 pb-24 md:px-20 2xl:px-88 flex justify-center">
       <div className="w-full flex flex-col lg:flex-row items-center gap-26 xl:gap-48 2xl:gap-78">
         <div className="space-y-8 flex-1">
           <div className="text-xl md:text-3xl space-y-2 text-white font-semibold text-shadow-lg">
@@ -74,6 +74,10 @@ const HeroSection = () => {
           ))}
         </div>
       </div>
+      <span className='absolute right-4 bottom-4 text-white/70 md:font-semibold text-[10px] sm:text-sm md:text-base text-shadow'>
+        Provided by
+        <span className='font-bold text-white italic'> pexels</span>
+      </span>
     </div>
   );
 };

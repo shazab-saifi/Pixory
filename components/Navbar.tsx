@@ -15,10 +15,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full px-4 py-4 md:px-20 flex justify-between items-center text-base text-white">
+      <nav className="w-full relative px-4 py-4 md:px-20 flex justify-between items-center text-base text-white">
         <Image className="aspect-auto w-[100px]" src={pixoryWhite} alt="Logo" />
         <div className="hidden md:flex items-center space-x-8">
-          <div className="space-x-8 font-medium">
+          <div className="space-x-8 font-medium text-shadow-md">
             <Link href="/">Home</Link>
             <Link href="/getpixory+">Get Pixory+</Link>
             <Link href="/advertise">Advertise</Link>

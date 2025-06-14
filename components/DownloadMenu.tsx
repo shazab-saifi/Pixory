@@ -10,7 +10,7 @@ const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
   const photoDropdownItems = [
     {
       label: 'Original (full resolution)',
-      value: 'original (full resolution)',
+      value: 'Original (full resolution)',
       onclick: () => setSelectedSize('Original (full resolution)'),
     },
     {
