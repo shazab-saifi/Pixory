@@ -1,14 +1,15 @@
 'use client'
 
+import Navbar2 from '@/components/Navbar2';
 import { useSearchParams } from 'next/navigation'
-import React from 'react'
 
 const page = () => {
     const searchParams = useSearchParams();
     const query = searchParams.get('query');
-    
+
     return (
         <div>
+            <Navbar2 />
             {query}
         </div>
     )

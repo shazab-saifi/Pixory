@@ -18,6 +18,11 @@ html, body, #root {
   background-clip: padding-box;
 }
 
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

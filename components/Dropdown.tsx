@@ -24,11 +24,11 @@ const Dropdown = () => {
   };
 
   return (
-    <div className="flex flex-col relative">
+    <div className="flex flex-col relative mr-2">
       <button
         onMouseEnter={handleButtonMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="inline-flex rounded-l-xl items-center p-4 bg-white hover:bg-gray-50 hover:opacity-70 gap-2"
+        className="inline-flex rounded-l-xl items-center p-4 bg-white hover:bg-gray-100 hover:opacity-70 gap-2"
       >
         {dropdownItem === "photo" ? (
           <div className="flex items-center gap-2">
