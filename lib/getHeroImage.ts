@@ -3,22 +3,19 @@ interface HeroImageResponse {
 }
 
 export async function getHeroImage(): Promise<HeroImageResponse> {
-    const TWENTY_HOURS = 20 * 60 * 60 * 1000;
     const TWO_HOUR = 2 * 60 * 60 * 1000;
-
     const now = Date.now();
-
-    const batchIndex = Math.floor(now / TWENTY_HOURS) % 100;
-    const imageIndex = Math.floor((now % TWENTY_HOURS) / TWO_HOUR);
+    
+    const imageIndex = Math.floor(now / TWO_HOUR) % 10;
 
     try {
         const res = await fetch(
-            `https://api.pexels.com/v1/search?query=nature&per_page=10&page=${batchIndex}`,
+            `https://api.pexels.com/v1/search?query=nature&per_page=1&page=${imageIndex + 1}`,
             {
                 headers: {
                     Authorization: process.env.PEXELS_API_KEY || ''
                 },
-                next: { revalidate: 72000 }
+                next: { revalidate: TWO_HOUR / 1000 }
             }
         );
 
@@ -27,8 +24,7 @@ export async function getHeroImage(): Promise<HeroImageResponse> {
         }
 
         const data = await res.json();
-        const photos = data.photos;
-        const image = photos[imageIndex] || photos[0];
+        const image = data.photos[0];
 
         return {
             imageUrl: image.src.landscape

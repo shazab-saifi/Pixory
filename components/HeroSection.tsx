@@ -1,6 +1,4 @@
-import Button from './Button'
-import Dropdown from './Dropdown'
-import { Search } from 'lucide-react'
+import SearchInput from './SearchInput';
 
 const cards = [
   {
@@ -37,7 +35,7 @@ const Card = ({ image, label, spanCols = false }: { image: string; label: string
 )
 
 const HeroSection = () => {
-  
+
   return (
     <div className="w-full relative px-4 pt-20 pb-24 md:px-20 2xl:px-88 flex justify-center">
       <div className="w-full flex flex-col lg:flex-row items-center gap-26 xl:gap-48 2xl:gap-78">
@@ -48,20 +46,7 @@ const HeroSection = () => {
               Browse thousands of high-quality free photos for personal and commercial use
             </h2>
           </div>
-          <div className="w-full inline-flex items-center rounded-xl justify-between bg-white shadow-md">
-            <Dropdown />
-            <input
-              type="text"
-              placeholder="Search for free photos"
-              className="py-2 outline-none sm:flex-1 w-[180px]"
-            />
-            <Button
-              variant="secondary"
-              className="shadow-none flex items-center px-4"
-            >
-              <Search size={18} className="opacity-80 hover:opacity-50" />
-            </Button>
-          </div>
+          <SearchInput />
         </div>
         <div className="h-[300px] max-w-[350px] hidden lg:grid grid-flow-row grid-cols-2 grid-rows-2 gap-2 shadow-2xl text-white text-sm font-medium flex-1">
           {cards.map((card, index) => (
