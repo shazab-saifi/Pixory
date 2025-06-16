@@ -24,7 +24,7 @@ const Dropdown = () => {
   };
 
   return (
-    <div className="flex flex-col relative mr-2">
+    <div className="flex flex-col relative">
       <button
         onMouseEnter={handleButtonMouseEnter}
         onMouseLeave={handleMouseLeave}

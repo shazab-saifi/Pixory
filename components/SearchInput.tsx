@@ -26,14 +26,14 @@ const SearchInput = ({
     }
 
     return (
-        <div className={cn("w-full inline-flex items-center rounded-xl justify-between bg-white shadow-md", className)}>
+        <div className={cn("inline-flex gap-2 items-center rounded-xl justify-between bg-white shadow-md", className)}>
             <Dropdown />
             <input
                 value={inputValue}
                 onChange={handleInput}
                 type="text"
                 placeholder="Search for free photos"
-                className={cn("py-2 outline-none sm:flex-1 w-[180px]", inputClassName)}
+                className={cn("py-2 2xl:w-[300px] flex-1 outline-none", inputClassName)}
             />
             <Button
                 variant="secondary"

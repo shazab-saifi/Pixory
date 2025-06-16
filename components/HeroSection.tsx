@@ -37,16 +37,18 @@ const Card = ({ image, label, spanCols = false }: { image: string; label: string
 const HeroSection = () => {
 
   return (
-    <div className="w-full relative px-4 pt-20 pb-24 md:px-20 2xl:px-88 flex justify-center">
-      <div className="w-full flex flex-col lg:flex-row items-center gap-26 xl:gap-48 2xl:gap-78">
-        <div className="space-y-8 flex-1">
+    <div className="w-full relative px-4 pt-20 pb-24 md:px-20 2xl:px-24 flex justify-center">
+      <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-8 xl:gap-12 2xl:gap-50">
+        <div className="space-y-8">
           <div className="text-xl md:text-3xl space-y-2 text-white font-semibold text-shadow-lg">
-            <h2>Discover. Download. Inspire.</h2>
-            <h2 className='inline md:block'>
+            <h2 className=''>Discover. Download. Inspire.</h2>
+            <h2 className='text-wrap max-w-[500px]'>
               Browse thousands of high-quality free photos for personal and commercial use
             </h2>
           </div>
-          <SearchInput />
+          <SearchInput
+          inputClassName='w-[150px] sm:w-auto'
+          />
         </div>
         <div className="h-[300px] max-w-[350px] hidden lg:grid grid-flow-row grid-cols-2 grid-rows-2 gap-2 shadow-2xl text-white text-sm font-medium flex-1">
           {cards.map((card, index) => (
