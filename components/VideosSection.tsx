@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import VideoPreviewCard from './VideoPreviewCard'
 import Spinner from './Spinner'
 import { VideoData } from '@/lib/types'
@@ -9,7 +9,7 @@ import { useOptionsToggle } from '@/lib/store'
 import Masonry from 'react-masonry-css'
 import MediaCard from './MediaCard'
 
-const VideosSection = () => {
+const VideosSection = ({query}: {query?: string}) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const { currentOption } = useOptionsToggle();
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
@@ -23,13 +23,17 @@ const VideosSection = () => {
     fetchNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['videos'],
+    queryKey: ['videos', query],
     queryFn: ({ pageParam = 1 }) => {
-      return fetchData({ pageParam, currentOption });
+      return fetchData({ pageParam, currentOption, query });
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage
   });
+
+  useEffect(() => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }, [query]);
 
   useIntersection({
     onIntersect: () => {

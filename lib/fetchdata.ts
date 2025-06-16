@@ -10,23 +10,29 @@ export const fetchData = async ({
     let data = [];
 
     try {
+        let response;
+        
         if (query) {
-            const response = await fetch(`/api/photoSearch?query=${query}&page=${pageParam}`);
-            data = await response.json();
+            response = await fetch(`/api/${currentOption === 'photos' ? 'photoSearch' : 'videoSearch'}?query=${query}&page=${pageParam}`);
         } else {
-            const response = await fetch(`/api/${currentOption}?page=${pageParam}`);
-            data = await response.json();
+            response = await fetch(`/api/${currentOption}?page=${pageParam}`);
         }
-    } catch (error) {
 
+        data = await response.json();
+    } catch (error) {
+        console.error("Internal server error:", error);
+        throw error instanceof Error ? error : new Error("Unknown error occurred during fetchData");
     }
 
     let nextPage: number | null = null;
     if (data.next_page) {
-        const url = new URL(data.next_page);
-        const nextParam = url.searchParams.get('page')
-
-        nextPage = nextParam ? parseInt(nextParam, 10) : null;
+        try {
+            const url = new URL(data.next_page);
+            const nextParam = url.searchParams.get('page');
+            nextPage = nextParam ? parseInt(nextParam, 10) : null;
+        } catch (e) {
+            nextPage = null;
+        }
     }
 
     return {

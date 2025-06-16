@@ -1,7 +1,9 @@
+import Footer from "@/components/Footer"
+
 const page = () => {
   return (
-    <div className='flex justify-center items-center'>
-      {/* <PhotoCard /> */}
+    <div className=''>
+      <Footer />
     </div>
   )
 }

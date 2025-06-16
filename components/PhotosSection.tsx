@@ -1,5 +1,3 @@
-'use client'
-
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import PhotoPreviewCard from "./PhotoPreviewCard";
@@ -43,6 +41,10 @@ const PhotosSection = ({query}: {query?: string}) => {
     setUniquePhotos([]);
   }, [query]);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [query])
+  
   useEffect(() => {
     const newPhotos: PhotoType[] = [];
 

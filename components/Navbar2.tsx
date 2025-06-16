@@ -1,5 +1,3 @@
-'use client'
-
 import Image from "next/image";
 import SearchBar from "./SearchBar";
 import pixory from "@/public/pixory.svg";
@@ -30,7 +28,7 @@ const Navbar2 = () => {
   return (
     <>
       {!isSearching ?
-        <nav className="w-full relative px-4 py-4 2xl:px-20 flex justify-between items-center text-base text-black">
+        <nav className="fixed top-0 z-30 bg-white w-full px-4 py-4 2xl:px-20 flex justify-between items-center text-base text-black">
           <div className="flex 2xl:gap-20 gap-8">
             <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
             <SearchBar
