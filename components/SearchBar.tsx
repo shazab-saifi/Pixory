@@ -7,7 +7,7 @@ import { ChangeEvent, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
-const SearchInput = ({
+const SearchBar = ({
     className,
     inputClassName
 }: {
@@ -46,4 +46,4 @@ const SearchInput = ({
     )
 }
 
-export default SearchInput
+export default SearchBar

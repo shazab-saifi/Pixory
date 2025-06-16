@@ -6,6 +6,7 @@ import VideosSection from "./VideosSection";
 
 const ContentSection = () => {
     const { currentOption } = useOptionsToggle();
+    
     return (
         <div>
             {currentOption === 'photos' ? <PhotosSection /> : <VideosSection />}

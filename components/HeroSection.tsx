@@ -1,4 +1,4 @@
-import SearchInput from './SearchInput';
+import SearchBar from './SearchBar';
 
 const cards = [
   {
@@ -46,8 +46,8 @@ const HeroSection = () => {
               Browse thousands of high-quality free photos for personal and commercial use
             </h2>
           </div>
-          <SearchInput
-          inputClassName='w-[150px] sm:w-auto'
+          <SearchBar
+            inputClassName='w-[150px] sm:w-auto'
           />
         </div>
         <div className="h-[300px] max-w-[350px] hidden lg:grid grid-flow-row grid-cols-2 grid-rows-2 gap-2 shadow-2xl text-white text-sm font-medium flex-1">

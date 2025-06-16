@@ -1,12 +1,25 @@
 export const fetchData = async ({
     pageParam,
-    currentOption
+    currentOption,
+    query
 }: {
     pageParam?: number;
-    currentOption: string
+    currentOption: string;
+    query?: string
 }) => {
-    const response = await fetch(`/api/${currentOption}?page=${pageParam}`);
-    const data = await response.json();
+    let data = [];
+
+    try {
+        if (query) {
+            const response = await fetch(`/api/photoSearch?query=${query}&page=${pageParam}`);
+            data = await response.json();
+        } else {
+            const response = await fetch(`/api/${currentOption}?page=${pageParam}`);
+            data = await response.json();
+        }
+    } catch (error) {
+
+    }
 
     let nextPage: number | null = null;
     if (data.next_page) {

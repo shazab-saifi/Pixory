@@ -15,7 +15,7 @@ interface PhotoId {
   id: number
 }
 
-const PhotosSection = () => {
+const PhotosSection = ({query}: {query?: string}) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const photoIdsRef = useRef<PhotoId[]>([]);
   const [uniquePhotos, setUniquePhotos] = useState<PhotoType[]>([]);
@@ -30,13 +30,18 @@ const PhotosSection = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ['photos'],
+    queryKey: ['photos', query, currentOption],
     queryFn: ({ pageParam = 1 }) => {
-      return fetchData({ pageParam, currentOption })
+      return fetchData({ pageParam, currentOption, query })
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage) => lastPage.nextPage
   });
+
+  useEffect(() => {
+    photoIdsRef.current = [];
+    setUniquePhotos([]);
+  }, [query]);
 
   useEffect(() => {
     const newPhotos: PhotoType[] = [];
