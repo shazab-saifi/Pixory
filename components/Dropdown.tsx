@@ -1,5 +1,6 @@
 "use client";
 
+import { useOptionsToggle } from "@/lib/store";
 import { Images, CirclePlay, ChevronDown } from "lucide-react";
 import { useState, useRef } from "react";
 
@@ -7,6 +8,7 @@ const Dropdown = () => {
   const [dropdownItem, setDropdownItem] = useState("photo");
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { setToPhotos, setToVideos } = useOptionsToggle();
 
   const handleButtonMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -42,9 +44,8 @@ const Dropdown = () => {
           </div>
         )}
         <ChevronDown
-          className={`h-4 w-4 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            }`}
         />
       </button>
 
@@ -53,22 +54,27 @@ const Dropdown = () => {
         <div
           onMouseEnter={handleDropdownMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className={`transition-all duration-300 transform bg-white shadow-md space-y-4 p-4 rounded-lg ${
-            isOpen
+          className={`transition-all duration-300 transform bg-white shadow-md space-y-4 p-4 rounded-lg ${isOpen
               ? "opacity-100 scale-100 pointer-events-auto"
               : "opacity-0 scale-95 pointer-events-none"
-          }`}
+            }`}
         >
           <div
             className="w-full flex items-center gap-2 hover:bg-gray-50 hover:text-red-500 rounded-lg cursor-pointer"
-            onClick={() => setDropdownItem("photo")}
+            onClick={() => {
+              setDropdownItem("photo");
+              setToPhotos()
+            }}
           >
             <Images size={18} className="opacity-80" />
             <span>Photos</span>
           </div>
           <div
             className="w-full flex items-center gap-2 hover:bg-gray-50 hover:text-green-500 rounded-lg cursor-pointer"
-            onClick={() => setDropdownItem("Play")}
+            onClick={() => {
+              setDropdownItem("video");
+              setToVideos()
+            }}
           >
             <CirclePlay size={18} className="opacity-80" />
             <span>Videos</span>

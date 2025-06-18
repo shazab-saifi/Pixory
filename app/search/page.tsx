@@ -11,6 +11,8 @@ const page = () => {
     const searchParams = useSearchParams();
     const { currentOption } = useOptionsToggle();
     const query = searchParams.get('query') || undefined;
+    console.log("option -> ", currentOption)
+
 
     return (
         <div>
