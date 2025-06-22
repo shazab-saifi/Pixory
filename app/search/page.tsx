@@ -17,7 +17,7 @@ const page = () => {
     return (
         <div>
             <Navbar2 />
-            <div className='mt-25'>
+            <div className='mt-17 xl:mt-25'>
                 <OptionsSection />
             </div>
             {currentOption === 'photos' ? <PhotosSection query={query} /> : <VideosSection query={query} />}

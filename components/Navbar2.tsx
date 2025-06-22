@@ -33,21 +33,21 @@ const Navbar2 = () => {
             <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
             <SearchBar
               inputClassName="flex-1"
-              className="hidden lg:flex gap-2"
+              className="hidden xl:flex gap-2"
             />
           </div>
-          <div className="hidden lg:flex items-center space-x-4 xl:space-x-8">
-            <div className="space-x-4 xl:space-x-8 text-shadow-md">
+          <div className="hidden xl:flex items-center space-x-4 xl:space-x-8">
+            <div className="space-x-4 xl:space-x-8 text-shadow-md text-nowrap">
               <Link className={hoverEffect} href="/">Home</Link>
               <Link className={hoverEffect} href="/getpixory+">Get Pixory+</Link>
               <Link className={hoverEffect} href="/advertise">Advertise</Link>
             </div>
-            <div className="space-x-4 xl:space-x-8 flex">
+            <div className="space-x-4 xl:space-x-8 flex text-nowrap">
               <Button variant="secondary" onClick={() => router.push("/signup")}>Sign Up</Button>
               <Button variant="primary" onClick={() => router.push("/signin")}>Sign In</Button>
             </div>
           </div>
-          <div className="lg:hidden space-x-4 flex items-center">
+          <div className="xl:hidden space-x-4 flex items-center">
             <Search
               className="w-6 h-6"
               onClick={() => setIsSearching(true)}
