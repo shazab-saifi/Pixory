@@ -64,4 +64,10 @@ export type PhotoURLsTypes = {
     portrait: string;
     landscape: string;
     tiny: string;
-  } | undefined;
+} | undefined;
+
+export interface CredentialsTypes {
+    email: string;
+    name: string;
+    password: string
+}
