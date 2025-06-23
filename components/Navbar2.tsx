@@ -30,7 +30,9 @@ const Navbar2 = () => {
       {!isSearching ?
         <nav className="fixed top-0 z-30 bg-white w-full px-4 py-4 2xl:px-20 flex justify-between items-center text-base text-black">
           <div className="flex 2xl:gap-20 gap-8">
-            <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
+            <Link href="/">
+              <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
+            </Link>
             <SearchBar
               inputClassName="flex-1"
               className="hidden xl:flex gap-2"

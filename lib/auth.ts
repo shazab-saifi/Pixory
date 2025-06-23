@@ -67,6 +67,9 @@ const authOptions: AuthOptions = {
 
             return true;
         },
+        async redirect({url, baseUrl}) {
+            return baseUrl + '/'
+        },
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;

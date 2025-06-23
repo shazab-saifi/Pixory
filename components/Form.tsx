@@ -1,32 +1,29 @@
-import type React from "react"
 import { useState } from "react"
-import { Eye, EyeOff, Loader2 } from "lucide-react"
+import { Eye, EyeOff, LoaderCircle } from "lucide-react"
 import Button from "./Button"
 import { CredentialsTypes } from "@/lib/types"
+import { z } from "zod"
+import { FormSchema } from "@/lib/utils"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
+type FormData = z.infer<typeof FormSchema>
 
-export default function Form({ reqfn }: { reqfn: ({email, name, password}: CredentialsTypes) => void }) {
+export default function Form({ reqfn }: { reqfn: ({ email, name, password }: CredentialsTypes) => void }) {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: ""
-    });
+    const {
+        handleSubmit,
+        register,
+        formState: { errors }
+    } = useForm<FormData>({
+        resolver: zodResolver(FormSchema)
+    })
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
+    const onSubmit = async (data: FormData) => {
         setIsLoading(true)
-        reqfn(formData);
-        console.log(formData)
+        reqfn(data);
+        console.log(data)
         setIsLoading(false)
     }
 
@@ -38,46 +35,39 @@ export default function Form({ reqfn }: { reqfn: ({email, name, password}: Crede
 
     return (
         <div className="w-full mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="flex flex-col gap-2">
                     <label htmlFor="name">Name</label>
                     <input
                         id="name"
-                        name="name"
                         type="text"
                         placeholder="Enter your name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
+                        {...register("name")}
                         className={inputClasses}
                     />
+                    {errors.name && <p className="text-sm text-red-700">{errors.name.message}</p>}
                 </div>
 
                 <div className="flex flex-col gap-2">
                     <label htmlFor="email">Email</label>
                     <input
                         id="email"
-                        name="email"
                         type="email"
                         placeholder="Enter your email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        required
+                        {...register("email")}
                         className={inputClasses}
                     />
+                    {errors.email && <p className="text-sm text-red-700">{errors.email.message}</p>}
                 </div>
                 <div className="flex flex-col gap-2">
                     <label htmlFor="password">Password</label>
                     <div className="relative flex items-center justify-center">
                         <input
                             id="password"
-                            name="password"
                             type={showPassword ? "text" : "password"}
                             placeholder="Enter your password"
-                            value={formData.password}
-                            onChange={handleInputChange}
+                            {...register("password")}
                             className={inputClasses}
-                            required
                         />
                         <button
                             type="button"
@@ -88,12 +78,13 @@ export default function Form({ reqfn }: { reqfn: ({email, name, password}: Crede
                             {showPassword ? <EyeOff className="h-4 w-4 text-gray-500" /> : <Eye className="h-4 w-4 text-gray-500" />}
                         </button>
                     </div>
+                    {errors.password && <p className="text-sm text-red-700">{errors.password.message}</p>}
                 </div>
 
                 <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? (
                         <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
                             Submitting...
                         </>
                     ) : (

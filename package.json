@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
     "@prisma/client": "^6.10.1",
     "@tanstack/react-query": "^5.76.1",
     "@types/bcrypt": "^5.0.2",
@@ -23,6 +24,7 @@
     "prisma": "^6.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.58.1",
     "react-masonry-css": "^1.0.16",
     "tailwind-merge": "^3.3.0",
     "zod": "^3.25.67",
