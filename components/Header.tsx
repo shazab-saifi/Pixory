@@ -1,6 +1,6 @@
 import { getHeroImage } from "@/lib/getHeroImage"
 import HeroSection from "./HeroSection"
-import Navbar from "./Navbar"
+import Navbar from "./Navbar/Navbar"
 
 const Header = async () => {
     const { imageUrl } = await getHeroImage();

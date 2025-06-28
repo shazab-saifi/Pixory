@@ -1,3 +1,4 @@
+import { useOutside } from "@/hooks/useOutside";
 import { PhotoURLsTypes, VideoFile } from "@/lib/types"
 import { handleDownload } from "@/lib/utils";
 import { ChevronDown, Check } from "lucide-react"
@@ -6,6 +7,7 @@ import { useState } from "react"
 const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string>();
+  const ref = useOutside(() => setIsOpen(false), isOpen);
 
   const photoDropdownItems = [
     {
@@ -83,7 +85,7 @@ const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
       >
         <ChevronDown className={`transition-transform text-white ${isOpen && 'rotate-180'}`} />
       </div>
-      <div className="pt-2 absolute top-full left-0">
+      <div ref={ref} className="pt-2 absolute top-full left-0">
         <ul className={`w-70 bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] rounded-2xl p-2 space-y-2 transition-all z-10 ${isOpen ? "opacity-100 scale-100" : "opacity-0 pointer-events-none scale-90"}`}>
           <span className="w-full p-2 rounded-md flex items-center font-semibold text-gray-700">Choose a size</span>
           {dropdownItems.map(({ label, value, onclick }) => (

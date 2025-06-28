@@ -1,6 +1,6 @@
 'use client'
 
-import Navbar2 from '@/components/Navbar2';
+import Navbar2 from '@/components/Navbar/Navbar2';
 import OptionsSection from '@/components/OptionsSection';
 import PhotosSection from '@/components/PhotosSection';
 import VideosSection from '@/components/VideosSection';

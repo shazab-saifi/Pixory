@@ -6,7 +6,7 @@ import { ClientSafeProvider, getProviders, signIn } from "next-auth/react"
 import { useEffect, useState } from "react"
 import googleicon from "@/public/googleicon.svg"
 import Image from "next/image"
-import Navbar2 from "@/components/Navbar2"
+import Navbar2 from "@/components/Navbar/Navbar2"
 import { useRouter } from "next/navigation"
 
 const page = () => {
@@ -41,8 +41,6 @@ const page = () => {
   }
 
   return (
-    <div className="w-full h-full">
-      <Navbar2 />
       <div className="h-full px-4 sm:px-0 w-full flex items-center justify-center">
         <div className="w-sm flex flex-col items-center justify-center gap-4 md:gap-8 bg-white p-6 md:p-8 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
           <h1 className="font-semibold text-3xl w-full text-center">Welcome Back</h1>
@@ -62,7 +60,6 @@ const page = () => {
           </button>
         </div>
       </div>
-    </div>
   )
 }
 

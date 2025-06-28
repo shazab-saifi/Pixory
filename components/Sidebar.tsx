@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import React, { useEffect } from 'react'
 import pixory from "@/public/pixory.svg";
-import { Home, Megaphone, Plus, X } from 'lucide-react';
+import { Home, LogOut, Megaphone, Plus, User, X } from 'lucide-react';
 import Link from 'next/link';
 import Button from './Button';
+import { signOut, useSession } from 'next-auth/react';
 
 const Sidebar = ({
     isOpen,
@@ -14,6 +15,7 @@ const Sidebar = ({
     setIsOpen: (arg: boolean) => void,
     navigate: (path: string) => void
 }) => {
+    const { data: session, status } = useSession();
 
     useEffect(() => {
         if (isOpen) {
@@ -42,25 +44,61 @@ const Sidebar = ({
                         <X className="w-6 h-6" />
                     </button>
                 </div>
-                <div className="flex flex-col p-6 gap-90 text-base font-medium">
-                    <div className="flex flex-col space-y-6">
-                        <div className="inline-flex items-center gap-3">
-                            <Home />
-                            <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
-                        </div>
-                        <div className="inline-flex items-center gap-3">
-                            <Plus />
-                            <Link href="/getpixory+" onClick={() => setIsOpen(false)}>Get Pixory+</Link>
-                        </div>
-                        <div className="inline-flex items-center gap-3">
-                            <Megaphone />
-                            <Link href="/advertise" onClick={() => setIsOpen(false)}>Advertise</Link>
+                <div className="w-full flex flex-col p-6 gap-50 text-base font-medium">
+                    <div className='space-y-10'>
+                        {status === "authenticated" &&
+                            <div className='flex gap-4 w-full'>
+                                <Image
+                                    src={session ? session?.user?.image as string : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"}
+                                    width={48}
+                                    height={48}
+                                    className='rounded-full'
+                                    alt='profile pic'
+                                />
+                                <div className='flex flex-col'>
+                                    <span className='font-semibold'>{session?.user?.name}</span>
+                                    <span className='max-w-full text-[12px] text-gray-600 break-words block'>{session.user?.email}</span>
+                                </div>
+                            </div>
+                        }
+                        <div className="flex flex-col space-y-8">
+                            {status === "authenticated" &&
+                                <div className="inline-flex items-center jsu gap-3 pl-3">
+                                    <User />
+                                    <Link href="/profile" onClick={() => setIsOpen(false)}>Profile</Link>
+                                </div>
+                            }
+                            <div className="inline-flex items-center gap-3 pl-3">
+                                <Home />
+                                <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
+                            </div>
+                            <div className="inline-flex items-center gap-3 pl-3">
+                                <Plus />
+                                <Link href="/getpixory+" onClick={() => setIsOpen(false)}>Get Pixory+</Link>
+                            </div>
+                            <div className="inline-flex items-center gap-3 pl-3">
+                                <Megaphone />
+                                <Link href="/advertise" onClick={() => setIsOpen(false)}>Advertise</Link>
+                            </div>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-3">
-                        <Button variant="secondary" onClick={() => { setIsOpen(false); navigate('signup') }}>Sign Up</Button>
-                        <Button variant="primary" onClick={() => { setIsOpen(false); navigate('signin') }}>Sign In</Button>
-                    </div>
+                    {status === "authenticated" ?
+                        <div>
+                            <Button
+                                variant="secondary"
+                                onClick={() => signOut({ callbackUrl: "/" })}
+                                className='flex justify-center gap-4 w-full mt-12'
+                            >
+                                <LogOut className='size-4' />
+                                <span>Log Out</span>
+                            </Button>
+                        </div>
+                        :
+                        <div className="flex flex-col gap-3">
+                            <Button variant="secondary" onClick={() => { setIsOpen(false); navigate('signup') }}>Sign Up</Button>
+                            <Button variant="primary" onClick={() => { setIsOpen(false); navigate('signin') }}>Sign In</Button>
+                        </div>
+                    }
                 </div>
             </div>
         </>

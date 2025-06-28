@@ -1,19 +1,23 @@
+'use client'
+
 import Image from "next/image";
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar";
 import pixory from "@/public/pixory.svg";
 import Link from "next/link";
-import Button from "./Button";
+import Button from "../Button";
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, Search, X } from "lucide-react";
-import Sidebar from "./Sidebar";
-import Dropdown from "./Dropdown";
+import Sidebar from "../Sidebar";
+import Dropdown from "../Dropdown";
+import Navigation from "./Navigation";
 
 const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -23,14 +27,12 @@ const Navbar2 = () => {
     router.push(`/search?query=${inputValue}`);
   }
 
-  const hoverEffect = "p-4 rounded-full transition-colors hover:bg-gray-100";
-
   return (
     <>
       {!isSearching ?
         <nav className="fixed top-0 z-30 bg-white w-full px-4 py-4 2xl:px-20 flex justify-between items-center text-base text-black">
           <div className="flex 2xl:gap-20 gap-8">
-            <Link href="/">
+            <Link href="/" className="inline-flex items-center">
               <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
             </Link>
             <SearchBar
@@ -38,17 +40,11 @@ const Navbar2 = () => {
               className="hidden xl:flex gap-2"
             />
           </div>
-          <div className="hidden xl:flex items-center space-x-4 xl:space-x-8">
-            <div className="space-x-4 xl:space-x-8 text-shadow-md text-nowrap">
-              <Link className={hoverEffect} href="/">Home</Link>
-              <Link className={hoverEffect} href="/getpixory+">Get Pixory+</Link>
-              <Link className={hoverEffect} href="/advertise">Advertise</Link>
-            </div>
-            <div className="space-x-4 xl:space-x-8 flex text-nowrap">
-              <Button variant="secondary" onClick={() => router.push("/signup")}>Sign Up</Button>
-              <Button variant="primary" onClick={() => router.push("/signin")}>Sign In</Button>
-            </div>
-          </div>
+          <Navigation
+            navigate={(path: string) => router.push(path)}
+            isDropdownOpen={isDropdownOpen}
+            setIsDropdownOpen={setIsDropdownOpen}
+          />
           <div className="xl:hidden space-x-4 flex items-center">
             <Search
               className="w-6 h-6"
