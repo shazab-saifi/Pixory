@@ -1,3 +1,4 @@
+import FAQ from "@/components/GetPixory+/FAQ"
 import Pricing from "@/components/GetPixory+/Pricing"
 import Navbar2 from "@/components/Navbar/Navbar2"
 
@@ -10,6 +11,7 @@ const page = () => {
         <h2 className="text-sm lg:text-lg xl:text-2xl">Choose the best plan for you</h2>
       </div>
       <Pricing />
+      <FAQ />
     </div>
   )
 }
