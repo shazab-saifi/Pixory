@@ -19,7 +19,7 @@ const Navigation = ({
     const hoverEffect = "p-4 rounded-full transition-colors hover:bg-black/30";
 
     return (
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden xl:flex items-center space-x-8">
             <div className="space-x-8 font-medium text-shadow-md">
                 <Link className={hoverEffect} href="/">Home</Link>
                 <Link className={hoverEffect} href="/getpixory+">Get Pixory+</Link>

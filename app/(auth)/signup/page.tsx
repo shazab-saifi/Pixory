@@ -1,7 +1,6 @@
 'use client'
 
 import Form from '@/components/Form'
-import Navbar2 from '@/components/Navbar/Navbar2'
 import { CredentialsTypes } from '@/lib/types'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'

@@ -6,7 +6,6 @@ import { ClientSafeProvider, getProviders, signIn } from "next-auth/react"
 import { useEffect, useState } from "react"
 import googleicon from "@/public/googleicon.svg"
 import Image from "next/image"
-import Navbar2 from "@/components/Navbar/Navbar2"
 import { useRouter } from "next/navigation"
 
 const page = () => {
