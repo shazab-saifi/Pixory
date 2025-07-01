@@ -4,7 +4,7 @@ import Form from "@/components/Form"
 import { CredentialsTypes } from "@/lib/types"
 import { ClientSafeProvider, getProviders, signIn } from "next-auth/react"
 import { useEffect, useState } from "react"
-import googleicon from "@/public/googleicon.svg"
+import { googleicon } from "@/lib/import"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 

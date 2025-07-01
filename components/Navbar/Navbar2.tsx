@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import SearchBar from "../SearchBar";
-import pixory from "@/public/pixory.svg";
+import { pixory } from "@/lib/import";
 import Link from "next/link";
 import Button from "../Button";
 import { ChangeEvent, useState } from "react";
@@ -30,7 +30,7 @@ const Navbar2 = () => {
   return (
     <>
       {!isSearching ?
-        <nav className="fixed top-0 z-30 bg-white w-full px-4 py-4 2xl:px-20 flex justify-between items-center text-base text-black">
+        <nav className="fixed top-0 z-50 bg-white w-full px-4 py-4 2xl:px-20 flex justify-between items-center text-base text-black">
           <div className="flex 2xl:gap-20 gap-8">
             <Link href="/" className="inline-flex items-center">
               <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />

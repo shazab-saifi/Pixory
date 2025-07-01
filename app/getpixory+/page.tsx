@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer"
 import FAQ from "@/components/GetPixory+/FAQ"
 import Pricing from "@/components/GetPixory+/Pricing"
 import Navbar2 from "@/components/Navbar/Navbar2"
@@ -12,6 +13,7 @@ const page = () => {
       </div>
       <Pricing />
       <FAQ />
+      <Footer />
     </div>
   )
 }

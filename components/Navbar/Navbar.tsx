@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import pixoryWhite from "@/public/pixoryWhite.svg";
+import { pixoryWhite } from "@/lib/import";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Menu } from "lucide-react";

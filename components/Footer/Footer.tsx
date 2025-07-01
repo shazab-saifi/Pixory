@@ -1,5 +1,5 @@
 import Image from "next/image";
-import pixory from "@/public/pixory.svg";
+import { pixory } from "@/lib/import";
 import QueryButton from "./QueryButton";
 
 const Footer = () => {
