@@ -17,6 +17,7 @@ import googleicon from "@/public/googleicon.svg";
 import pixory from "@/public/pixory.svg";
 import pixoryWhite from "@/public/pixoryWhite.svg";
 import pixoryIcon from "@/public/pixoryIcon.png";
+import ad from "@/public/ad.jpg";
 
 export {
   arrow,
@@ -37,5 +38,6 @@ export {
   googleicon,
   pixory,
   pixoryWhite,
-  pixoryIcon
+  pixoryIcon,
+  ad
 };
