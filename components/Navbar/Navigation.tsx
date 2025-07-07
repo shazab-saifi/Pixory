@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Button from "../Button";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";

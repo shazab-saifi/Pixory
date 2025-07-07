@@ -6,13 +6,13 @@ import { ClientSafeProvider, getProviders, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { googleicon } from "@/lib/import";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 const page = () => {
   const [googleProvider, setGoogleProvider] = useState<
     ClientSafeProvider | undefined
   >();
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   useEffect(() => {
     getProviders().then((res) => {

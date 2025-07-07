@@ -4,6 +4,7 @@ import "./globals.css";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 import AuthProvider from "@/components/AuthProvider";
 import { getSession } from "@/lib/auth";
+import { ViewTransitions } from "next-view-transitions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,15 +29,17 @@ export default async function RootLayout({
   const session = await getSession();
 
   return (
-    <html lang="en">
-      <link rel="icon" type="image/png" href="/pixoryIcon.png" />
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ReactQueryProvider>
-          <AuthProvider session={session}>{children}</AuthProvider>
-        </ReactQueryProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en">
+        <link rel="icon" type="image/png" href="/pixoryIcon.png" />
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <ReactQueryProvider>
+            <AuthProvider session={session}>{children}</AuthProvider>
+          </ReactQueryProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

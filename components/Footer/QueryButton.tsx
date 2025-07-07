@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import Button from "../Button";
 
 const QueryButton = ({
@@ -10,7 +10,7 @@ const QueryButton = ({
   query: string;
   children: string;
 }) => {
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <Button

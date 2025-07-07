@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown";
 import Button from "./Button";
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { cn } from "@/lib/utils";
 
 const SearchBar = ({
@@ -15,7 +15,7 @@ const SearchBar = ({
   inputClassName?: string;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const router = useRouter();
+  const router = useTransitionRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   console.log(inputValue);

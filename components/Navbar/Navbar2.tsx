@@ -3,10 +3,10 @@
 import Image from "next/image";
 import SearchBar from "../SearchBar";
 import { pixory } from "@/lib/import";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Button from "../Button";
 import { ChangeEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { Menu, Search, X } from "lucide-react";
 import Sidebar from "../Sidebar";
 import Dropdown from "../Dropdown";
@@ -14,7 +14,7 @@ import Navigation from "./Navigation";
 
 const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const router = useRouter();
+  const router = useTransitionRouter();
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 
 const BentoCard = ({
   image,
@@ -11,7 +11,7 @@ const BentoCard = ({
   label: string;
   spanCols?: boolean;
 }) => {
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   return (
     <div
