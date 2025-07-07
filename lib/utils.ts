@@ -12,8 +12,6 @@ export async function handleDownload({ url }: { url: string }) {
   const dataURL = URL.createObjectURL(blob);
 
   const hostname = new URL(url).hostname;
-  console.log(url);
-  console.log(hostname);
 
   const link = document.createElement("a");
   link.href = dataURL;

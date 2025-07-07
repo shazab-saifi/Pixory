@@ -5,6 +5,7 @@ import Image from "next/image";
 import Footer from "@/components/Footer/Footer";
 import HeroSection from "@/components/Advertise/HeroSection";
 import WhyAdvertise from "@/components/Advertise/WhyAdvertise";
+import Marquee from "react-fast-marquee";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -214,13 +215,14 @@ const page = () => {
           ))}
         </div>
         {/* Desktop/Medium+ screens: marquee effect */}
-        <div className="hidden flex-col gap-8 md:flex">
-          <div className="animate-marquee flex gap-8">
+        <div className="hidden flex-col gap-8 mask-r-from-85% mask-r-to-90% mask-l-from-85% mask-l-to-90% md:flex">
+          <Marquee pauseOnHover>
             {[...testimonials, ...testimonials].map(
               ({ name, avatar, review, stars }, idx) => (
                 <div
                   key={name + idx}
-                  className="relative mx-2 flex max-w-[400px] min-w-[320px] flex-col justify-between rounded-3xl bg-gray-100 p-4 transition-shadow hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                  className="relative mx-2 flex h-[220px] max-w-[400px] min-w-[320px] flex-col justify-between overflow-hidden rounded-3xl bg-gray-100 p-4 transition-shadow hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                  style={{ height: 220, minHeight: 220, maxHeight: 220 }}
                 >
                   <div className="mb-2 flex gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (
@@ -236,8 +238,8 @@ const page = () => {
                       </span>
                     ))}
                   </div>
-                  <p className="max-w-full text-sm text-wrap text-gray-600">{`"${review}"`}</p>
-                  <div className="mt-4 flex items-center gap-2">
+                  <p className="line-clamp-4 max-w-full flex-1 overflow-hidden text-sm text-wrap text-ellipsis text-gray-600">{`"${review}"`}</p>
+                  <div className="mt-8 flex items-center gap-2">
                     <Image
                       src={avatar}
                       alt="avatar"
@@ -250,13 +252,14 @@ const page = () => {
                 </div>
               ),
             )}
-          </div>
-          <div className="animate-reverse-marquee flex gap-8">
+          </Marquee>
+          <Marquee pauseOnHover direction="right">
             {[...testimonials, ...testimonials].map(
               ({ name, avatar, review, stars }, idx) => (
                 <div
                   key={name + idx}
-                  className="relative mx-2 flex max-w-[400px] min-w-[320px] flex-col justify-between rounded-3xl bg-gray-100 p-4 transition-shadow hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                  className="relative mx-2 flex h-[220px] max-w-[400px] min-w-[320px] flex-col justify-between overflow-hidden rounded-3xl bg-gray-100 p-4 transition-shadow hover:shadow-[0_3px_10px_rgb(0,0,0,0.2)]"
+                  style={{ height: 220, minHeight: 220, maxHeight: 220 }}
                 >
                   <div className="mb-2 flex gap-1">
                     {Array.from({ length: 5 }).map((_, i) => (
@@ -272,8 +275,8 @@ const page = () => {
                       </span>
                     ))}
                   </div>
-                  <p className="max-w-full text-sm text-wrap text-gray-600">{`"${review}"`}</p>
-                  <div className="mt-4 flex items-center gap-2">
+                  <p className="line-clamp-4 max-w-full flex-1 overflow-hidden text-sm text-wrap text-ellipsis text-gray-600">{`"${review}"`}</p>
+                  <div className="mt-8 flex items-center gap-2">
                     <Image
                       src={avatar}
                       alt="avatar"
@@ -286,7 +289,7 @@ const page = () => {
                 </div>
               ),
             )}
-          </div>
+          </Marquee>
         </div>
       </div>
       <Footer />
