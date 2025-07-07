@@ -1,4 +1,4 @@
-import arrow from '@/public/arrow.svg';
+import arrow from "@/public/arrow.svg";
 import heroImage1 from "@/public/heroImage1.png";
 import heroImage2 from "@/public/heroImage2.png";
 import heroImage3 from "@/public/heroImage3.png";
@@ -41,5 +41,5 @@ export {
   pixoryWhite,
   pixoryIcon,
   ad,
-  Gradient
+  Gradient,
 };

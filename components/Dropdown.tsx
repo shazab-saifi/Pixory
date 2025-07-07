@@ -26,11 +26,11 @@ const Dropdown = () => {
   };
 
   return (
-    <div className="flex flex-col relative">
+    <div className="relative flex flex-col">
       <button
         onMouseEnter={handleButtonMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="inline-flex rounded-l-xl items-center p-4 bg-white hover:bg-gray-100 hover:opacity-70 gap-2"
+        className="inline-flex items-center gap-2 rounded-l-xl bg-white p-4 hover:bg-gray-100 hover:opacity-70"
       >
         {dropdownItem === "photo" ? (
           <div className="flex items-center gap-2">
@@ -44,36 +44,38 @@ const Dropdown = () => {
           </div>
         )}
         <ChevronDown
-          className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""
-            }`}
+          className={`h-4 w-4 transition-transform duration-200 ${
+            isOpen ? "rotate-180" : ""
+          }`}
         />
       </button>
 
       {/* Always in DOM: animate opacity/scale based on isOpen */}
-      <div className="w-[120px] md:w-full pt-2 absolute top-full">
+      <div className="absolute top-full w-[120px] pt-2 md:w-full">
         <div
           onMouseEnter={handleDropdownMouseEnter}
           onMouseLeave={handleMouseLeave}
-          className={`transition-all duration-300 transform bg-white shadow-md space-y-4 p-4 rounded-lg ${isOpen
-              ? "opacity-100 scale-100 pointer-events-auto"
-              : "opacity-0 scale-95 pointer-events-none"
-            }`}
+          className={`transform space-y-4 rounded-lg bg-white p-4 shadow-md transition-all duration-300 ${
+            isOpen
+              ? "pointer-events-auto scale-100 opacity-100"
+              : "pointer-events-none scale-95 opacity-0"
+          }`}
         >
           <div
-            className="w-full flex items-center gap-2 hover:bg-gray-50 hover:text-red-500 rounded-lg cursor-pointer"
+            className="flex w-full cursor-pointer items-center gap-2 rounded-lg hover:bg-gray-50 hover:text-red-500"
             onClick={() => {
               setDropdownItem("photo");
-              setToPhotos()
+              setToPhotos();
             }}
           >
             <Images size={18} className="opacity-80" />
             <span>Photos</span>
           </div>
           <div
-            className="w-full flex items-center gap-2 hover:bg-gray-50 hover:text-green-500 rounded-lg cursor-pointer"
+            className="flex w-full cursor-pointer items-center gap-2 rounded-lg hover:bg-gray-50 hover:text-green-500"
             onClick={() => {
               setDropdownItem("video");
-              setToVideos()
+              setToVideos();
             }}
           >
             <CirclePlay size={18} className="opacity-80" />

@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import { useRouter } from "next/navigation"
-import Button from "../Button"
+import { useRouter } from "next/navigation";
+import Button from "../Button";
 
 const QueryButton = ({
-    query,
-    children
+  query,
+  children,
 }: {
-    query: string,
-    children: string
+  query: string;
+  children: string;
 }) => {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <Button
-            onClick={() => router.push(`/search?query=${query}`)}
-            variant="secondary"
-            className="shadow-none border"
-        >
-            {children}
-        </Button>
-    )
-}
+  return (
+    <Button
+      onClick={() => router.push(`/search?query=${query}`)}
+      variant="secondary"
+      className="border shadow-none"
+    >
+      {children}
+    </Button>
+  );
+};
 
-export default QueryButton
+export default QueryButton;

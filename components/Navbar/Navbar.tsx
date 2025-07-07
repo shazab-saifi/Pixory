@@ -16,9 +16,13 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full relative px-4 py-4 md:px-20 flex justify-between items-center text-base text-white">
+      <nav className="relative flex w-full items-center justify-between px-4 py-4 text-base text-white md:px-20">
         <Link href="/">
-          <Image className="aspect-auto w-[100px]" src={pixoryWhite} alt="Logo" />
+          <Image
+            className="aspect-auto w-[100px]"
+            src={pixoryWhite}
+            alt="Logo"
+          />
         </Link>
         <Navigation
           navigate={(path: string) => router.push(path)}
@@ -27,9 +31,9 @@ const Navbar = () => {
         />
         <button
           onClick={() => setIsOpen(true)}
-          className="md:hidden p-2 focus:outline-none"
+          className="p-2 focus:outline-none md:hidden"
         >
-          <Menu className="w-6 h-6" />
+          <Menu className="h-6 w-6" />
         </button>
       </nav>
       <Sidebar

@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { heroImage1, heroImage2, heroImage3, heroImage4, heroImage5 } from "@/lib/import";
-import arrow from '@/public/arrow.svg';
-import roundArrow from '@/public/roundArrow.svg';
+import {
+  heroImage1,
+  heroImage2,
+  heroImage3,
+  heroImage4,
+  heroImage5,
+} from "@/lib/import";
+import arrow from "@/public/arrow.svg";
+import roundArrow from "@/public/roundArrow.svg";
 import { Rocket } from "lucide-react";
 import Button from "../Button";
 
@@ -18,7 +24,8 @@ export default function HeroSection() {
           transition={{ ease: "easeInOut", duration: 0.3 }}
           className="text-4xl md:text-5xl lg:text-[64px] font-semibold text-center lg:leading-18"
         >
-          Advertise Where Creators<br className="hidden md:block" /> Discover and Engage
+          Advertise Where Creators
+          <br className="hidden md:block" /> Discover and Engage
         </motion.h1>
         <motion.h4
           initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
@@ -26,7 +33,10 @@ export default function HeroSection() {
           transition={{ ease: "easeInOut", duration: 0.4 }}
           className="text-base md:text-xl text-center"
         >
-          Tap into a high-intent audience of millions searching for stunning visuals.<br className="hidden md:block" /> Drive real results through native and targeted placements.
+          Tap into a high-intent audience of millions searching for stunning
+          visuals.
+          <br className="hidden md:block" /> Drive real results through native
+          and targeted placements.
         </motion.h4>
       </div>
       <motion.div
@@ -57,16 +67,16 @@ export default function HeroSection() {
         <div className="relative flex items-center justify-center">
           <motion.div
             className="z-10 -mr-[150px]"
-            initial={{ opacity: 0, transform: 'translateX(80%)', scale: 0.8 }}
-            animate={{ opacity: 1, transform: 'translateX(0)', scale: 1 }}
+            initial={{ opacity: 0, transform: "translateX(80%)", scale: 0.8 }}
+            animate={{ opacity: 1, transform: "translateX(0)", scale: 1 }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.6 }}
           >
             <Image src={heroImage5} width={300} height={400} alt="image5" />
           </motion.div>
           <motion.div
             className="z-20 -mr-[75px]"
-            initial={{ opacity: 0, transform: 'translateX(80%)' }}
-            animate={{ opacity: 1, transform: 'translateX(0)' }}
+            initial={{ opacity: 0, transform: "translateX(80%)" }}
+            animate={{ opacity: 1, transform: "translateX(0)" }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.3 }}
           >
             <Image src={heroImage4} width={300} height={400} alt="image4" />
@@ -81,16 +91,16 @@ export default function HeroSection() {
           </motion.div>
           <motion.div
             className="z-20 -ml-[75px]"
-            initial={{ opacity: 0, transform: 'translateX(-80%)' }}
-            animate={{ opacity: 1, transform: 'translateX(0)' }}
+            initial={{ opacity: 0, transform: "translateX(-80%)" }}
+            animate={{ opacity: 1, transform: "translateX(0)" }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.3 }}
           >
             <Image src={heroImage2} width={300} height={400} alt="image2" />
           </motion.div>
           <motion.div
             className="z-10 -ml-[150px]"
-            initial={{ opacity: 0, transform: 'translateX(-80%)' }}
-            animate={{ opacity: 1, transform: 'translateX(0)' }}
+            initial={{ opacity: 0, transform: "translateX(-80%)" }}
+            animate={{ opacity: 1, transform: "translateX(0)" }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.6 }}
           >
             <Image src={heroImage3} width={300} height={400} alt="image3" />
@@ -107,4 +117,4 @@ export default function HeroSection() {
       </div>
     </section>
   );
-} 
+}

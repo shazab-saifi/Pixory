@@ -34,9 +34,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReactQueryProvider>
-          <AuthProvider session={session}>
-            {children}
-          </AuthProvider>
+          <AuthProvider session={session}>{children}</AuthProvider>
         </ReactQueryProvider>
       </body>
     </html>

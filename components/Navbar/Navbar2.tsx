@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Image from "next/image";
 import SearchBar from "../SearchBar";
@@ -16,28 +16,32 @@ const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const router = useRouter();
   const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-  }
+  };
 
   const handleOnClick = () => {
     router.push(`/search?query=${inputValue}`);
-  }
+  };
 
   return (
     <>
-      {!isSearching ?
-        <nav className="fixed top-0 z-50 bg-white w-full px-4 py-4 2xl:px-20 flex justify-between items-center text-base text-black">
-          <div className="flex 2xl:gap-20 gap-8">
+      {!isSearching ? (
+        <nav className="fixed top-0 z-50 flex w-full items-center justify-between bg-white px-4 py-4 text-base text-black 2xl:px-20">
+          <div className="flex gap-8 2xl:gap-20">
             <Link href="/" className="inline-flex items-center">
-              <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
+              <Image
+                className="aspect-auto w-[100px]"
+                src={pixory}
+                alt="Logo"
+              />
             </Link>
             <SearchBar
               inputClassName="flex-1"
-              className="hidden xl:flex gap-2"
+              className="hidden gap-2 xl:flex"
             />
           </div>
           <Navigation
@@ -45,48 +49,44 @@ const Navbar2 = () => {
             isDropdownOpen={isDropdownOpen}
             setIsDropdownOpen={setIsDropdownOpen}
           />
-          <div className="xl:hidden space-x-4 flex items-center">
-            <Search
-              className="w-6 h-6"
-              onClick={() => setIsSearching(true)}
-            />
+          <div className="flex items-center space-x-4 xl:hidden">
+            <Search className="h-6 w-6" onClick={() => setIsSearching(true)} />
             <button
               onClick={() => setIsOpen(true)}
               className="p-2 focus:outline-none"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="h-6 w-6" />
             </button>
           </div>
         </nav>
-        :
+      ) : (
         <div className="flex items-center justify-center px-4">
-          <div className="w-full inline-flex items-center p-1 mt-2 rounded-xl bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+          <div className="mt-2 inline-flex w-full items-center rounded-xl bg-white p-1 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
             <Dropdown />
             <input
               value={inputValue}
               onChange={handleInput}
               type="text"
               placeholder="Search for free photos"
-              className="h-full outline-none flex-1 shrink w-[120px]"
+              className="h-full w-[120px] flex-1 shrink outline-none"
             />
             <Button
-              variant='secondary'
-              className="px-2 rounded-md shadow-none active:bg-gray-100"
+              variant="secondary"
+              className="rounded-md px-2 shadow-none active:bg-gray-100"
               onClick={() => setIsSearching(false)}
             >
-              <X className="opacity-80 w-5 h-5 shrink-0" />
+              <X className="h-5 w-5 shrink-0 opacity-80" />
             </Button>
             <Button
               onClick={handleOnClick}
-              variant='secondary'
-              className="pl-2 pr-4 rounded-md active:bg-gray-100 shadow-none"
+              variant="secondary"
+              className="rounded-md pr-4 pl-2 shadow-none active:bg-gray-100"
             >
-              <Search className="opacity-80 w-5 h-5 shrink-0"
-              />
+              <Search className="h-5 w-5 shrink-0 opacity-80" />
             </Button>
           </div>
         </div>
-      }
+      )}
       <Sidebar
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -94,6 +94,6 @@ const Navbar2 = () => {
       />
     </>
   );
-}
+};
 
-export default Navbar2
+export default Navbar2;

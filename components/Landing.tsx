@@ -1,6 +1,6 @@
-import OptionsSection from './OptionsSection'
-import ContentSection from './ContentSection'
-import Header from './Header'
+import OptionsSection from "./OptionsSection";
+import ContentSection from "./ContentSection";
+import Header from "./Header";
 
 const Landing = () => {
   return (
@@ -9,7 +9,7 @@ const Landing = () => {
       <OptionsSection />
       <ContentSection />
     </div>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

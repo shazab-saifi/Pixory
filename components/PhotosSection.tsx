@@ -10,10 +10,10 @@ import { useOptionsToggle } from "@/lib/store";
 import MediaCard from "./MediaCard";
 
 interface PhotoId {
-  id: number
+  id: number;
 }
 
-const PhotosSection = ({query}: {query?: string}) => {
+const PhotosSection = ({ query }: { query?: string }) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const photoIdsRef = useRef<PhotoId[]>([]);
   const [uniquePhotos, setUniquePhotos] = useState<PhotoType[]>([]);
@@ -21,20 +21,15 @@ const PhotosSection = ({query}: {query?: string}) => {
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoType | null>(null);
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ['photos', query, currentOption],
-    queryFn: ({ pageParam = 1 }) => {
-      return fetchData({ pageParam, currentOption, query })
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage) => lastPage.nextPage
-  });
+  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["photos", query, currentOption],
+      queryFn: ({ pageParam = 1 }) => {
+        return fetchData({ pageParam, currentOption, query });
+      },
+      initialPageParam: 1,
+      getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
 
   useEffect(() => {
     photoIdsRef.current = [];
@@ -42,15 +37,15 @@ const PhotosSection = ({query}: {query?: string}) => {
   }, [query]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [query])
-  
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [query]);
+
   useEffect(() => {
     const newPhotos: PhotoType[] = [];
 
-    data?.pages.forEach(page => {
+    data?.pages.forEach((page) => {
       page.data.photos.forEach((photo: PhotoType) => {
-        const alreadyExits = photoIdsRef.current.some(p => p.id === photo.id);
+        const alreadyExits = photoIdsRef.current.some((p) => p.id === photo.id);
 
         if (!alreadyExits) {
           photoIdsRef.current.push({ id: photo.id });
@@ -60,18 +55,18 @@ const PhotosSection = ({query}: {query?: string}) => {
     });
 
     if (newPhotos.length > 0) {
-      setUniquePhotos(prev => [...prev, ...newPhotos]);
+      setUniquePhotos((prev) => [...prev, ...newPhotos]);
     }
   }, [data]);
 
   useEffect(() => {
     if (isPhotoOpen) {
-      document.body.classList.add('overflow-hidden');
+      document.body.classList.add("overflow-hidden");
     } else {
-      document.body.classList.remove('overflow-hidden');
+      document.body.classList.remove("overflow-hidden");
     }
 
-    return () => document.body.classList.remove('overflow-hidden');
+    return () => document.body.classList.remove("overflow-hidden");
   }, [isPhotoOpen]);
 
   useIntersection({
@@ -79,14 +74,16 @@ const PhotosSection = ({query}: {query?: string}) => {
       if (hasNextPage && !isFetchingNextPage) fetchNextPage();
     },
     targetRef: loadMoreRef,
-    enabled: hasNextPage
+    enabled: hasNextPage,
   });
 
   if (error) return <div>Error loading photos: {(error as Error).message}</div>;
 
   return (
     <div>
-      <h1 className="my-6 font-medium text-2xl px-4 md:px-22 xl:px-52">Free Stock Photos</h1>
+      <h1 className="my-6 px-4 text-2xl font-medium md:px-22 xl:px-52">
+        Free Stock Photos
+      </h1>
 
       <Masonry
         breakpointCols={{ default: 3, 768: 2 }}
@@ -103,8 +100,8 @@ const PhotosSection = ({query}: {query?: string}) => {
               photoURL={photo.src.large}
               pexelsPhotoURL={photo.url}
               onClick={() => {
-                setIsPhotoOpen(true)
-                setSelectedPhoto(photo)
+                setIsPhotoOpen(true);
+                setSelectedPhoto(photo);
               }}
               alt={photo.alt}
             />
@@ -115,7 +112,7 @@ const PhotosSection = ({query}: {query?: string}) => {
         <div className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm" />
       )}
       {isPhotoOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+        <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
             <MediaCard
               ownerName={selectedPhoto?.photographer as string}
@@ -133,7 +130,6 @@ const PhotosSection = ({query}: {query?: string}) => {
       </div>
     </div>
   );
-
 };
 
 export default PhotosSection;

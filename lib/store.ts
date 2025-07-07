@@ -7,7 +7,7 @@ type State = {
 };
 
 export const useOptionsToggle = create<State>((set) => ({
-  currentOption: 'photos',
-  setToVideos: () => set({ currentOption: 'videos' }),
-  setToPhotos: () => set({ currentOption: 'photos' })
+  currentOption: "photos",
+  setToVideos: () => set({ currentOption: "videos" }),
+  setToPhotos: () => set({ currentOption: "photos" }),
 }));
