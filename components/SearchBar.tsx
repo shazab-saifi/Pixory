@@ -6,6 +6,7 @@ import { ChevronDown, Images, Play, PlayCircle, Search } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTransitionRouter } from "next-view-transitions";
 import { cn } from "@/lib/utils";
+import { useSearchOptions } from "@/lib/store";
 
 const SearchBar = ({
   className,
@@ -18,9 +19,7 @@ const SearchBar = ({
   const router = useTransitionRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [dropdownItem, setDropdownItem] = useState("photo");
-
-  console.log(inputValue);
+  const { currentSearchOption } = useSearchOptions();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -59,7 +58,7 @@ const SearchBar = ({
           onClick={() => setIsHovered((prev) => !prev)}
           className="inline-flex items-center gap-2 rounded-l-xl bg-white p-4 hover:bg-gray-100 hover:opacity-70"
         >
-          {dropdownItem === "photo" ? (
+          {currentSearchOption === "photos" ? (
             <div className="flex items-center gap-2">
               <Images size={18} className="opacity-80" />
               <span className="hidden md:block">Photos</span>
@@ -83,7 +82,6 @@ const SearchBar = ({
           icon2={PlayCircle}
           forSearch={true}
           isHovered={isHovered}
-          setDropdownItem={setDropdownItem}
         />
       </div>
       <input

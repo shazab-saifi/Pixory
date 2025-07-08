@@ -3,7 +3,6 @@ import Button from "../Button";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { LogOutIcon, User } from "lucide-react";
-import { useOutside } from "@/hooks/useOutside";
 import { useState } from "react";
 import { motion } from "motion/react";
 import Dropdown from "../Dropdown";
@@ -18,7 +17,6 @@ const Navigation = ({
   navigate: (path: string) => void;
 }) => {
   const { data: session, status } = useSession();
-  const ref = useOutside(() => setIsDropdownOpen(false), isDropdownOpen);
   const [isNavHovered, setIsNavHovered] = useState<number | null>(null);
 
   const navItems = [

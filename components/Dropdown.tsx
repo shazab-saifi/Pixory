@@ -1,6 +1,6 @@
 "use client";
 
-import { useOptionsToggle } from "@/lib/store";
+import { useSearchOptions } from "@/lib/store";
 import { signOut } from "next-auth/react";
 import { useTransitionRouter } from "next-view-transitions";
 
@@ -11,7 +11,6 @@ const Dropdown = ({
   text2,
   isHovered,
   forSearch,
-  setDropdownItem,
 }: {
   icon1: React.ElementType;
   icon2: React.ElementType;
@@ -19,10 +18,9 @@ const Dropdown = ({
   text2?: string;
   forSearch: boolean;
   isHovered: boolean;
-  setDropdownItem?: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const router = useTransitionRouter();
-  const { setToPhotos, setToVideos } = useOptionsToggle();
+  const { setSearchToPhotos, setSearchToVideos } = useSearchOptions();
 
   return (
     <div className="absolute inset-x-0 top-full z-50 pt-2 md:w-full">
@@ -37,8 +35,7 @@ const Dropdown = ({
           className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-100"
           onClick={() => {
             if (forSearch) {
-              setDropdownItem && setDropdownItem("photo");
-              setToPhotos();
+              setSearchToPhotos();
             } else {
               router.push("/profile");
             }
@@ -51,8 +48,7 @@ const Dropdown = ({
           className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-100"
           onClick={() => {
             if (forSearch) {
-              setDropdownItem && setDropdownItem("video");
-              setToVideos();
+              setSearchToVideos();
             } else {
               signOut({ callbackUrl: "/" });
             }
