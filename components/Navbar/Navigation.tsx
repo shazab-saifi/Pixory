@@ -1,11 +1,12 @@
 import { Link } from "next-view-transitions";
 import Button from "../Button";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
-import { LogOut, User } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { LogOutIcon, User } from "lucide-react";
 import { useOutside } from "@/hooks/useOutside";
 import { useState } from "react";
 import { motion } from "motion/react";
+import Dropdown from "../Dropdown";
 
 const Navigation = ({
   isDropdownOpen,
@@ -18,9 +19,7 @@ const Navigation = ({
 }) => {
   const { data: session, status } = useSession();
   const ref = useOutside(() => setIsDropdownOpen(false), isDropdownOpen);
-  const hoverEffect =
-    "p-4 rounded-full transition-colors hover:bg-black/30 absolute inset-0 h-full w-full";
-  const [isHovered, setIsHovered] = useState<number | null>(null);
+  const [isNavHovered, setIsNavHovered] = useState<number | null>(null);
 
   const navItems = [
     {
@@ -29,7 +28,7 @@ const Navigation = ({
     },
     {
       title: "Get Pixory+",
-      href: "/getpixory",
+      href: "/getpixory+",
     },
     {
       title: "Advertise",
@@ -45,32 +44,24 @@ const Navigation = ({
             className="relative flex cursor-pointer px-6 py-1"
             href={item.href}
             key={idx}
-            onMouseEnter={() => setIsHovered(idx)}
-            onMouseLeave={() => setIsHovered(null)}
+            onMouseEnter={() => setIsNavHovered(idx)}
+            onMouseLeave={() => setIsNavHovered(null)}
           >
-            {isHovered === idx && (
+            {isNavHovered === idx && (
               <motion.span
                 layoutId="hovered-span"
-                className="absolute inset-0 h-full w-full rounded-full bg-black/30 p-4"
+                className="absolute inset-0 -top-2 h-full w-full rounded-full bg-black/30 p-6"
               />
             )}
             <span className="relative z-50">{item.title}</span>
           </Link>
         ))}
-        {/* <Link className={hoverEffect} href="/">
-          Home
-        </Link>
-        <Link className={hoverEffect} href="/getpixory+">
-          Get Pixory+
-        </Link>
-        <Link className={hoverEffect} href="/advertise">
-          Advertise
-        </Link> */}
       </div>
       {status === "authenticated" ? (
         <div
-          className="relative flex justify-center"
-          onClick={() => setIsDropdownOpen((prev: boolean) => !prev)}
+          className="relative flex w-[120px] justify-center"
+          onMouseEnter={() => setIsDropdownOpen(true)}
+          onMouseLeave={() => setIsDropdownOpen(false)}
         >
           <Image
             className="size-13 cursor-pointer rounded-full"
@@ -83,33 +74,14 @@ const Navigation = ({
             height={50}
             alt="profile pic"
           />
-          <div
-            className={`absolute top-full z-40 origin-top transform pt-2 text-black transition-all ${
-              isDropdownOpen
-                ? "pointer-events-auto scale-100 opacity-100"
-                : "pointer-events-none scale-95 opacity-0"
-            }`}
-          >
-            <div
-              ref={ref}
-              className="flex cursor-pointer flex-col gap-2 rounded-lg border bg-white p-2 shadow-lg"
-            >
-              <div
-                onClick={() => navigate("/profile")}
-                className="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-all hover:bg-gray-100 hover:opacity-70"
-              >
-                <User className="size-5" />
-                <p>Profile</p>
-              </div>
-              <div
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-all hover:bg-gray-100 hover:opacity-70"
-              >
-                <LogOut className="size-5" />
-                <p>Logout</p>
-              </div>
-            </div>
-          </div>
+          <Dropdown
+            text1="Profile"
+            text2="Logout"
+            icon1={User}
+            icon2={LogOutIcon}
+            forSearch={false}
+            isHovered={isDropdownOpen}
+          />
         </div>
       ) : (
         <div className="space-x-4">

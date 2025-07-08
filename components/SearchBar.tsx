@@ -2,7 +2,7 @@
 
 import Dropdown from "./Dropdown";
 import Button from "./Button";
-import { Search } from "lucide-react";
+import { ChevronDown, Images, Play, PlayCircle, Search } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTransitionRouter } from "next-view-transitions";
 import { cn } from "@/lib/utils";
@@ -17,6 +17,8 @@ const SearchBar = ({
   const [inputValue, setInputValue] = useState<string>("");
   const router = useTransitionRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [dropdownItem, setDropdownItem] = useState("photo");
 
   console.log(inputValue);
 
@@ -48,7 +50,42 @@ const SearchBar = ({
         className,
       )}
     >
-      <Dropdown />
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="relative flex flex-col"
+      >
+        <button
+          onClick={() => setIsHovered((prev) => !prev)}
+          className="inline-flex items-center gap-2 rounded-l-xl bg-white p-4 hover:bg-gray-100 hover:opacity-70"
+        >
+          {dropdownItem === "photo" ? (
+            <div className="flex items-center gap-2">
+              <Images size={18} className="opacity-80" />
+              <span className="hidden md:block">Photos</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <PlayCircle size={18} className="opacity-80" />
+              <span className="hidden md:block">Videos</span>
+            </div>
+          )}
+          <ChevronDown
+            className={`h-4 w-4 transition-transform duration-200 ${
+              isHovered ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+        <Dropdown
+          text1="Photos"
+          text2="Videos"
+          icon1={Images}
+          icon2={PlayCircle}
+          forSearch={true}
+          isHovered={isHovered}
+          setDropdownItem={setDropdownItem}
+        />
+      </div>
       <input
         ref={inputRef}
         value={inputValue}

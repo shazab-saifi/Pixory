@@ -1,86 +1,65 @@
 "use client";
 
 import { useOptionsToggle } from "@/lib/store";
-import { Images, CirclePlay, ChevronDown } from "lucide-react";
-import { useState, useRef } from "react";
+import { signOut } from "next-auth/react";
+import { useTransitionRouter } from "next-view-transitions";
 
-const Dropdown = () => {
-  const [dropdownItem, setDropdownItem] = useState("photo");
-  const [isOpen, setIsOpen] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+const Dropdown = ({
+  icon1: Icon1,
+  icon2: Icon2,
+  text1,
+  text2,
+  isHovered,
+  forSearch,
+  setDropdownItem,
+}: {
+  icon1: React.ElementType;
+  icon2: React.ElementType;
+  text1?: string;
+  text2?: string;
+  forSearch: boolean;
+  isHovered: boolean;
+  setDropdownItem?: React.Dispatch<React.SetStateAction<string>>;
+}) => {
+  const router = useTransitionRouter();
   const { setToPhotos, setToVideos } = useOptionsToggle();
 
-  const handleButtonMouseEnter = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setIsOpen(true);
-  };
-
-  const handleDropdownMouseEnter = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsOpen(false);
-    }, 50);
-  };
-
   return (
-    <div className="relative flex flex-col">
-      <button
-        onMouseEnter={handleButtonMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="inline-flex items-center gap-2 rounded-l-xl bg-white p-4 hover:bg-gray-100 hover:opacity-70"
+    <div className="absolute inset-x-0 top-full z-50 pt-2 md:w-full">
+      <div
+        className={`transform space-y-2 rounded-lg bg-white p-2 text-black shadow-md transition-all duration-300 ${
+          isHovered
+            ? "pointer-events-auto scale-100 opacity-100"
+            : "pointer-events-none scale-95 opacity-0"
+        }`}
       >
-        {dropdownItem === "photo" ? (
-          <div className="flex items-center gap-2">
-            <Images size={18} className="opacity-80" />
-            <span className="hidden md:block">Photos</span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-2">
-            <CirclePlay size={18} className="opacity-80" />
-            <span className="hidden md:block">Videos</span>
-          </div>
-        )}
-        <ChevronDown
-          className={`h-4 w-4 transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-
-      {/* Always in DOM: animate opacity/scale based on isOpen */}
-      <div className="absolute top-full w-[120px] pt-2 md:w-full">
         <div
-          onMouseEnter={handleDropdownMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className={`transform space-y-4 rounded-lg bg-white p-4 shadow-md transition-all duration-300 ${
-            isOpen
-              ? "pointer-events-auto scale-100 opacity-100"
-              : "pointer-events-none scale-95 opacity-0"
-          }`}
-        >
-          <div
-            className="flex w-full cursor-pointer items-center gap-2 rounded-lg hover:bg-gray-50 hover:text-red-500"
-            onClick={() => {
-              setDropdownItem("photo");
+          className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-100"
+          onClick={() => {
+            if (forSearch) {
+              setDropdownItem && setDropdownItem("photo");
               setToPhotos();
-            }}
-          >
-            <Images size={18} className="opacity-80" />
-            <span>Photos</span>
-          </div>
-          <div
-            className="flex w-full cursor-pointer items-center gap-2 rounded-lg hover:bg-gray-50 hover:text-green-500"
-            onClick={() => {
-              setDropdownItem("video");
+            } else {
+              router.push("/profile");
+            }
+          }}
+        >
+          <Icon1 size={18} className="opacity-80" />
+          <span>{text1}</span>
+        </div>
+        <div
+          className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-100"
+          onClick={() => {
+            if (forSearch) {
+              setDropdownItem && setDropdownItem("video");
               setToVideos();
-            }}
-          >
-            <CirclePlay size={18} className="opacity-80" />
-            <span>Videos</span>
-          </div>
+            } else {
+              signOut({ callbackUrl: "/" });
+            }
+          }}
+        >
+          <Icon2 size={18} className="opacity-80" />
+          <span>{text2}</span>
         </div>
       </div>
     </div>
