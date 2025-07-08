@@ -55,6 +55,7 @@ const Navigation = ({
           </Link>
         ))}
       </div>
+      {/* Avatar and dropdown are wrapped together to keep dropdown open on hover */}
       {status === "authenticated" ? (
         <div
           className="relative flex w-[120px] justify-center"
@@ -79,6 +80,7 @@ const Navigation = ({
             icon2={LogOutIcon}
             forSearch={false}
             isHovered={isDropdownOpen}
+            pointerEventsNone={!isDropdownOpen}
           />
         </div>
       ) : (

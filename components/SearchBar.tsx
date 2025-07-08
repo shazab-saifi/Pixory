@@ -49,6 +49,7 @@ const SearchBar = ({
         className,
       )}
     >
+      {/* Hover area includes both button and dropdown to prevent accidental close */}
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -82,6 +83,7 @@ const SearchBar = ({
           icon2={PlayCircle}
           forSearch={true}
           isHovered={isHovered}
+          pointerEventsNone={!isHovered}
         />
       </div>
       <input

@@ -11,6 +11,7 @@ const Dropdown = ({
   text2,
   isHovered,
   forSearch,
+  pointerEventsNone = false,
 }: {
   icon1: React.ElementType;
   icon2: React.ElementType;
@@ -18,12 +19,16 @@ const Dropdown = ({
   text2?: string;
   forSearch: boolean;
   isHovered: boolean;
+  pointerEventsNone?: boolean;
 }) => {
   const router = useTransitionRouter();
   const { setSearchToPhotos, setSearchToVideos } = useSearchOptions();
 
   return (
-    <div className="absolute inset-x-0 top-full z-50 pt-2 md:w-full">
+    <div
+      className={`absolute inset-x-0 top-full z-50 pt-2 md:w-full ${pointerEventsNone ? "pointer-events-none" : ""}`}
+      style={{ marginTop: "-4px" }}
+    >
       <div
         className={`transform space-y-2 rounded-lg bg-white p-2 text-black shadow-md transition-all duration-300 ${
           isHovered

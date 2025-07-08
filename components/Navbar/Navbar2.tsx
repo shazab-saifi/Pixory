@@ -91,7 +91,6 @@ const Navbar2 = () => {
                 icon2={PlayCircle}
                 forSearch={true}
                 isHovered={isHovered}
-                setDropdownItem={setDropdownItem}
               />
             </div>
             <input

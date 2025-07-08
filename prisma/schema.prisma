@@ -14,11 +14,27 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String @unique
-  name String
-  image String?
-  password String?
-  provider String
-  createdAt DateTime @default(now())
+  id          Int @id      @default(autoincrement())
+  email       String       @unique
+  name        String
+  image       String?
+  password    String?
+  provider    String
+  collections Collection[]
+  createdAt   DateTime     @default(now())
+}
+
+model Item {
+  id           Int @unique
+  src          String
+  collection   Collection  @relation(fields: [collectionId], references: [id])
+  collectionId Int
+}
+
+model Collection {
+  id              Int @id @default(autoincrement())
+  collectionItems Item[]
+  user            User @relation(fields: [userId], references: [id])
+  userId          Int
+  createdAt       DateTime @default(now())
 }
