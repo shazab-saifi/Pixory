@@ -1,4 +1,5 @@
 import Navbar2 from "@/components/Navbar/Navbar2";
+import CollectionsGrid from "@/components/profile/CollectionsGrid";
 import { getSession } from "@/lib/auth";
 import Image from "next/image";
 
@@ -8,7 +9,7 @@ const page = async () => {
   return (
     <div className="min-h-screen w-full">
       <Navbar2 />
-      <div className="mt-30 flex h-full w-full flex-col">
+      <div className="mt-30 flex h-full w-full flex-col px-4 md:px-20">
         {/* User section */}
         <div className="flex flex-col items-center gap-8">
           <Image
@@ -22,12 +23,12 @@ const page = async () => {
             className="w-32 rounded-full"
           />
           <h1 className="text-5xl font-medium">{session?.user?.name}</h1>
-          <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-medium">Total Collections</h2>
-            <span className="border-x-2 border-gray-200 px-4 py-2 text-center text-2xl text-gray-600">
-              2
-            </span>
-          </div>
+        </div>
+        <div className="mx-auto mt-20 w-4xl">
+          <h1 className="py-8 text-left text-2xl font-medium">
+            Your Collections
+          </h1>
+          <CollectionsGrid />
         </div>
       </div>
     </div>

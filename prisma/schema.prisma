@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id          Int @id      @default(autoincrement())
+  id          Int          @id      @default(autoincrement())
   email       String       @unique
   name        String
   image       String?
@@ -25,16 +25,17 @@ model User {
 }
 
 model Item {
-  id           Int @unique
+  id           Int         @id      @unique
   src          String
   collection   Collection  @relation(fields: [collectionId], references: [id])
   collectionId Int
 }
 
 model Collection {
-  id              Int @id @default(autoincrement())
+  id              Int      @id             @default(autoincrement())
+  name            String
   collectionItems Item[]
-  user            User @relation(fields: [userId], references: [id])
+  user            User     @relation(fields: [userId], references: [id])
   userId          Int
   createdAt       DateTime @default(now())
 }
