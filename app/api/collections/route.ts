@@ -13,20 +13,28 @@ export async function GET() {
       );
     }
 
-    const user = await prisma.user.findUnique({
+    const collections = await prisma.user.findUnique({
       where: { email: session?.user?.email as string },
+      select: {
+        collections: {
+          include: {
+            collectionItems: {
+              orderBy: {
+                id: "desc",
+              },
+              take: 3,
+            },
+          },
+        },
+      },
     });
 
-    if (!user) {
+    if (!collections) {
       return NextResponse.json(
-        { message: "User with this email doesn't exists!" },
+        { message: "You have no collection!" },
         { status: 404 },
       );
     }
-
-    const collections = await prisma.collection.findMany({
-      where: { userId: user.id },
-    });
 
     return NextResponse.json(collections);
   } catch (error) {
