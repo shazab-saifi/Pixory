@@ -25,7 +25,7 @@ const page = async () => {
           <h1 className="text-5xl font-medium">{session?.user?.name}</h1>
         </div>
         <div className="mx-auto mt-20 w-4xl">
-          <h1 className="py-8 text-left text-2xl font-medium">
+          <h1 className="py-4 text-left text-2xl font-medium">
             Your Collections
           </h1>
           <CollectionsGrid />
