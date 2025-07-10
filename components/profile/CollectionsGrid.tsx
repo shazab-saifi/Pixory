@@ -1,45 +1,33 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { getSession } from "@/lib/auth";
 import CollectionCard from "./CollectionCard";
+import prisma from "@/lib/prismaClient";
 
-interface CollectionType {
-  id: number;
-  createdAt: string;
-  name: string;
-  userId: number;
-  collectionItems: {
-    id: number;
-    collectionId: number;
-    src: string;
-  }[];
-}
+export default async function CollectionsGrid() {
+  const session = await getSession();
 
-export default function CollectionsGrid() {
-  const [collections, setCollections] = useState<CollectionType[] | null>(null);
-
-  useEffect(() => {
-    const fetchCollections = async () => {
-      try {
-        const res = await fetch("/api/collections");
-        const allCollections = await res.json();
-        setCollections(allCollections.collections);
-        console.log(collections);
-      } catch (error) {
-        console.error("Failed to fetch collections:", error);
-      }
-    };
-
-    fetchCollections();
-  }, []);
+  const response = await prisma.user.findUnique({
+    where: { email: session?.user?.email as string },
+    select: {
+      collections: {
+        include: {
+          collectionItems: {
+            orderBy: {
+              id: "desc",
+            },
+            take: 3,
+          },
+        },
+      },
+    },
+  });
 
   return (
-    <div className="grip w-full grid-cols-3">
-      {collections &&
-        collections.map((collection, idx) => (
+    <div className="grid w-full grid-cols-3 gap-12">
+      {response?.collections &&
+        response?.collections.map((collection, idx) => (
           <CollectionCard
             key={idx}
-            onCardClick={() => console.log("love")}
+            collectionId={collection.id}
             collectionName={collection.name}
             preview={collection.collectionItems.map((item) => item.src)}
             totalItems={5}

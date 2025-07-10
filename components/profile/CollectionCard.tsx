@@ -1,27 +1,25 @@
-"use client";
-
-import { Images } from "lucide-react";
+import { Images, Plus } from "lucide-react";
 import Image from "next/image";
 
 const CollectionCard = ({
   collectionName,
   preview,
   totalItems,
-  onCardClick,
+  collectionId,
 }: {
   collectionName: string;
   preview: string[];
   totalItems: number;
-  onCardClick: () => void;
+  collectionId: number;
 }) => {
   return (
-    <div onClick={onCardClick} className="flex w-fit flex-col gap-4">
+    <div className="mx-auto flex w-fit flex-col gap-4">
       <div className="grid aspect-square w-70 cursor-pointer grid-cols-2 gap-2 overflow-hidden rounded-2xl transition-opacity hover:opacity-80">
         <Image
           className="h-full w-full object-cover"
           width={200}
           height={200}
-          src={preview[0]}
+          src={preview[0] || "/gray100.svg"}
           alt="preview image 1"
         />
         <div className="grid grid-rows-2 gap-2">
@@ -29,14 +27,14 @@ const CollectionCard = ({
             className="h-full w-full object-cover"
             width={200}
             height={200}
-            src={preview[1]}
+            src={preview[1] || "/gray100.svg"}
             alt="preview image 2"
           />
           <Image
             className="h-full w-full object-cover"
             width={200}
             height={200}
-            src={preview[2]}
+            src={preview[2] || "/gray100.svg"}
             alt="preview image 3"
           />
         </div>

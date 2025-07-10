@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer/Footer";
 import Navbar2 from "@/components/Navbar/Navbar2";
 import CollectionsGrid from "@/components/profile/CollectionsGrid";
 import { getSession } from "@/lib/auth";
@@ -24,13 +25,14 @@ const page = async () => {
           />
           <h1 className="text-5xl font-medium">{session?.user?.name}</h1>
         </div>
-        <div className="mx-auto mt-20 w-4xl">
+        <div className="mx-auto my-20">
           <h1 className="py-4 text-left text-2xl font-medium">
             Your Collections
           </h1>
           <CollectionsGrid />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
