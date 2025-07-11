@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id          Int          @id      @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   email       String       @unique
   name        String
   image       String?
@@ -24,18 +24,51 @@ model User {
   createdAt   DateTime     @default(now())
 }
 
-model Item {
-  id           Int         @id      @unique
-  src          String
-  collection   Collection  @relation(fields: [collectionId], references: [id])
-  collectionId Int
+model Collection {
+  id        Int      @id @default(autoincrement())
+  name      String
+  photos    Photo[]
+  videos    Video[]
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
 }
 
-model Collection {
-  id              Int      @id             @default(autoincrement())
-  name            String
-  collectionItems Item[]
-  user            User     @relation(fields: [userId], references: [id])
-  userId          Int
-  createdAt       DateTime @default(now())
+model Photo {
+  id              Int        @id
+  alt             String
+  height          Int
+  width           Int
+  photographer    String
+  photographerUrl String     @map("photographer_url")
+  original        String
+  large           String
+  portrait        String
+  landscape       String
+  collection      Collection @relation(fields: [collectionId], references: [id])
+  collectionId    Int
+}
+
+model Video {
+  id              Int          @id
+  width           Int
+  height          Int
+  url             String
+  image           String
+  videographer    String
+  videographerUrl String       @map("videographer_url")
+  videoFiles      VideoFile[]  
+  collection      Collection   @relation(fields: [collectionId], references: [id])
+  collectionId    Int
+}
+
+model VideoFile {
+  id       Int    @id
+  quality  String
+  width    Int
+  height   Int
+  fileType String @map("file_type")
+  link     String
+  video    Video  @relation(fields: [videoId], references: [id])
+  videoId  Int
 }

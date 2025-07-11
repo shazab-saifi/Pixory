@@ -1,5 +1,6 @@
 import { Images, Plus } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const CollectionCard = ({
   collectionName,
@@ -14,7 +15,10 @@ const CollectionCard = ({
 }) => {
   return (
     <div className="mx-auto flex w-fit flex-col gap-4">
-      <div className="grid aspect-square w-70 cursor-pointer grid-cols-2 gap-2 overflow-hidden rounded-2xl transition-opacity hover:opacity-80">
+      <Link
+        href={`/collection/${collectionId}`}
+        className="grid aspect-square w-70 cursor-pointer grid-cols-2 gap-2 overflow-hidden rounded-2xl transition-opacity hover:opacity-80"
+      >
         <Image
           className="h-full w-full object-cover"
           width={200}
@@ -38,13 +42,9 @@ const CollectionCard = ({
             alt="preview image 3"
           />
         </div>
-      </div>
-      <div className="flex w-full items-center justify-between">
+      </Link>
+      <div className="flex w-full items-center">
         <h2 className="w-fit text-xl">{collectionName}</h2>
-        <div className="flex w-fit items-center gap-2">
-          <Images className="size-5 text-gray-500" />
-          <span className="text-xl">{totalItems}</span>
-        </div>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export default async function CollectionsGrid() {
   });
 
   return (
-    <div className="grid w-full grid-cols-3 gap-12">
+    <div className="grid w-full grid-cols-4 gap-12">
       {response?.collections &&
         response?.collections.map((collection, idx) => (
           <CollectionCard
@@ -30,7 +30,7 @@ export default async function CollectionsGrid() {
             collectionId={collection.id}
             collectionName={collection.name}
             preview={collection.collectionItems.map((item) => item.src)}
-            totalItems={5}
+            totalItems={collection.collectionItems.length}
           />
         ))}
     </div>
