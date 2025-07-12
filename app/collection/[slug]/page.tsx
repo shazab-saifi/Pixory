@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer/Footer";
 import Navbar2 from "@/components/Navbar/Navbar2";
-import ItemMasonry from "@/components/profile/ItemMasonry";
+import Masonry from "@/components/collection/Masonry";
 import prisma from "@/lib/prismaClient";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
@@ -11,7 +11,12 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
         id: parseInt(slug),
       },
       select: {
-        collectionItems: true,
+        photos: true,
+        videos: {
+          include: {
+            videoFiles: true,
+          },
+        },
         name: true,
       },
     });
@@ -23,7 +28,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           <h1 className="text-4xl font-medium">
             {collection && collection.name}
           </h1>
-          <ItemMasonry collectionItems={collection?.collectionItems} />
+          {collection && <Masonry collectionItems={collection} />}
         </div>
         <Footer />
       </div>

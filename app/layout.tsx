@@ -5,6 +5,7 @@ import ReactQueryProvider from "@/components/ReactQueryProvider";
 import AuthProvider from "@/components/AuthProvider";
 import { getSession } from "@/lib/auth";
 import { ViewTransitions } from "next-view-transitions";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,10 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ReactQueryProvider>
-            <AuthProvider session={session}>{children}</AuthProvider>
+            <AuthProvider session={session}>
+              <Toaster richColors position="top-center" />
+              {children}
+            </AuthProvider>
           </ReactQueryProvider>
         </body>
       </html>

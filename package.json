@@ -27,6 +27,7 @@
     "react-fast-marquee": "^1.6.5",
     "react-hook-form": "^7.58.1",
     "react-masonry-css": "^1.0.16",
+    "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.0",
     "zod": "^3.25.67",
     "zustand": "^5.0.5"

@@ -10,7 +10,7 @@ export default async function CollectionsGrid() {
     select: {
       collections: {
         include: {
-          collectionItems: {
+          photos: {
             orderBy: {
               id: "desc",
             },
@@ -23,16 +23,16 @@ export default async function CollectionsGrid() {
 
   return (
     <div className="grid w-full grid-cols-4 gap-12">
-      {response?.collections &&
+      {/* {response?.collections &&
         response?.collections.map((collection, idx) => (
           <CollectionCard
             key={idx}
             collectionId={collection.id}
             collectionName={collection.name}
-            preview={collection.collectionItems.map((item) => item.src)}
+            preview={collectio.map((item) => item.src)}
             totalItems={collection.collectionItems.length}
           />
-        ))}
+        ))} */}
     </div>
   );
 }

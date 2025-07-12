@@ -45,7 +45,7 @@ const HeroSection = () => {
           ))}
         </div>
       </div>
-      <span className="text-shadow absolute right-4 bottom-4 text-[10px] text-white/70 sm:text-sm md:text-base md:font-semibold">
+      <span className="text-shadow absolute right-4 bottom-4 text-[10px] text-white/70 sm:text-sm md:font-semibold">
         Provided by
         <span className="font-bold text-white italic"> pexels</span>
       </span>
