@@ -2,16 +2,34 @@
 
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
-import { ArrowDownRight, CopyPlus } from "lucide-react";
+import { ArrowDownRight, CopyPlus, LoaderCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { Toaster, toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { queryClient } from "../lib/queryClient";
+import {
+  CreateCollectionSchema,
+  MAX_COLLECTIONS_PER_USER,
+} from "@/lib/validation";
 
 const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
+  const [validationError, setValidationError] = useState<string>("");
   const { status } = useSession();
+
+  const { data: collectionsData } = useQuery({
+    queryKey: ["collections"],
+    queryFn: async () => {
+      const res = await fetch("/api/collections");
+      if (!res.ok) throw new Error("Failed to fetch collections");
+      return res.json();
+    },
+    enabled: status === "authenticated",
+  });
+
+  const collections = collectionsData?.collections || [];
+  const hasReachedLimit = collections.length >= MAX_COLLECTIONS_PER_USER;
 
   useEffect(() => {
     document.body.classList.add("no-scroll");
@@ -30,23 +48,59 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
         },
         body: JSON.stringify(collectionData),
       });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to create collection");
+      }
+
       return res.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["collections"] });
       toast.success("Collection created successfully");
+      setIsClicked(false);
+      setInputValue("");
+      setValidationError("");
     },
-    onError: () => {
-      toast.error("Create Collection request failed");
+    onError: (error: Error) => {
+      toast.error(error.message || "Create Collection request failed");
     },
   });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+
+    if (validationError) {
+      setValidationError("");
+    }
+  };
 
   const handleClick = async () => {
     if (status === "authenticated") {
       try {
-        if (inputValue.length !== 0) {
-          createCollectionMutation.mutate({ name: inputValue });
+        if (hasReachedLimit) {
+          toast.error(
+            `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
+          );
+          return;
         }
+
+        const validationResult = CreateCollectionSchema.safeParse({
+          collectionName: inputValue,
+        });
+
+        if (!validationResult.success) {
+          const errorMessage =
+            validationResult.error.errors[0]?.message || "Invalid input";
+          setValidationError(errorMessage);
+          return;
+        }
+
+        createCollectionMutation.mutate({
+          name: validationResult.data.collectionName,
+        });
       } catch (error) {
         console.error("Internal server error : ", error);
       }
@@ -70,15 +124,38 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
               <div className="space-y-2">
                 <button
                   onClick={(e) => {
+                    if (hasReachedLimit) {
+                      toast.error(
+                        `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
+                      );
+                      return;
+                    }
                     setIsClicked(true);
                   }}
-                  className="group flex cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed border-gray-300 bg-gray-100 p-8 transition-colors hover:border-gray-400"
+                  disabled={hasReachedLimit}
+                  className={`group flex cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-colors ${
+                    hasReachedLimit
+                      ? "cursor-not-allowed border-gray-200 bg-gray-50"
+                      : "border-gray-300 bg-gray-100 hover:border-gray-400"
+                  }`}
                 >
-                  <CopyPlus className="size-18 text-gray-300 transition-colors group-hover:text-gray-400" />
+                  <CopyPlus
+                    className={`size-18 transition-colors ${
+                      hasReachedLimit
+                        ? "text-gray-200"
+                        : "text-gray-300 group-hover:text-gray-400"
+                    }`}
+                  />
                 </button>
                 <span className="text-sm font-semibold text-gray-700">
                   Create new Collection
                 </span>
+                {hasReachedLimit && (
+                  <span className="text-xs text-red-600">
+                    Limit reached ({collections.length}/
+                    {MAX_COLLECTIONS_PER_USER})
+                  </span>
+                )}
               </div>
             </div>
             <Button className="w-fit space-x-2 font-bold">
@@ -92,12 +169,20 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
               <span className="text-sm font-semibold text-gray-700">
                 Collection Name
               </span>
-              <input
-                type="text"
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Enter Collection Name"
-                className="w-full rounded-xl border p-4 text-gray-700"
-              />
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                  placeholder="Enter Collection Name"
+                  className={`w-90 rounded-xl border p-4 text-gray-700 ${
+                    validationError ? "border-red-500 focus:border-red-500" : ""
+                  }`}
+                />
+                {validationError && (
+                  <p className="text-sm text-red-600">{validationError}</p>
+                )}
+              </div>
             </div>
             <div className="mx-auto flex w-fit gap-4">
               <Button onClick={() => setIsClicked(false)} variant="secondary">
@@ -105,9 +190,14 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
               </Button>
               <Button
                 onClick={handleClick}
-                className="w-fit space-x-2 bg-green-500 font-bold hover:bg-green-600"
+                disabled={createCollectionMutation.isPending || hasReachedLimit}
+                className="flex w-40 items-center justify-center space-x-2 bg-green-500 font-bold hover:bg-green-600 disabled:opacity-50"
               >
-                Create Collection
+                {!createCollectionMutation.isPending ? (
+                  <span>Create Collection</span>
+                ) : (
+                  <LoaderCircle className="size-5 animate-spin" />
+                )}
               </Button>
             </div>
           </div>
