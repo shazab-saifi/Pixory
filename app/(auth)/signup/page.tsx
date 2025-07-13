@@ -2,28 +2,41 @@
 
 import Form from "@/components/Form";
 import { CredentialsTypes } from "@/lib/types";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const page = () => {
   const router = useRouter();
 
-  const handleSignUp = async ({ email, name, password }: CredentialsTypes) => {
-    try {
-      const user = await axios.post("/api/auth/signup", {
-        email,
-        name,
-        password,
+  const signupMutation = useMutation({
+    mutationFn: async ({ email, name, password }: CredentialsTypes) => {
+      const response = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, name, password }),
       });
 
-      if (user.statusText === "OK") {
-        router.push("/signin");
-      } else {
-        return;
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Signup failed");
       }
-    } catch (error) {
-      console.error(`Some internal server error occured : ${error}`);
-    }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      toast.success("Account created successfully!");
+      router.push("/signin");
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Signup failed. Please try again.");
+    },
+  });
+
+  const handleSignUp = async (credentials: CredentialsTypes) => {
+    signupMutation.mutate(credentials);
   };
 
   return (

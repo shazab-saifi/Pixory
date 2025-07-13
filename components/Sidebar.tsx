@@ -54,9 +54,8 @@ const Sidebar = ({
               <div className="flex w-full gap-4">
                 <Image
                   src={
-                    session
-                      ? (session?.user?.image as string)
-                      : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                    (session && (session?.user?.image as string)) ||
+                    "/profileAvatar.webp"
                   }
                   width={48}
                   height={48}

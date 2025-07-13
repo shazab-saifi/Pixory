@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import { ArrowDownRight, CopyPlus } from "lucide-react";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { Toaster, toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient } from "../lib/queryClient";
 
 const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -20,21 +21,31 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
     };
   }, []);
 
+  const createCollectionMutation = useMutation({
+    mutationFn: async (collectionData: { name: string }) => {
+      const res = await fetch("/api/collection", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(collectionData),
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["collections"] });
+      toast.success("Collection created successfully");
+    },
+    onError: () => {
+      toast.error("Create Collection request failed");
+    },
+  });
+
   const handleClick = async () => {
     if (status === "authenticated") {
       try {
         if (inputValue.length !== 0) {
-          const response = await axios.post("/api/collection", {
-            collectionName: inputValue,
-          });
-
-          if (response.status === 200 || response.status === 201) {
-            console.log(response.data);
-            return toast.success("Collection created successfully");
-          } else {
-            console.log(response);
-            return toast.error("Create Collection request failed");
-          }
+          createCollectionMutation.mutate({ name: inputValue });
         }
       } catch (error) {
         console.error("Internal server error : ", error);
@@ -85,11 +96,10 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
                 type="text"
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Enter Collection Name"
-                className="w-full rounded-xl border px-4 py-4 text-gray-700"
+                className="w-full rounded-xl border p-4 text-gray-700"
               />
             </div>
             <div className="mx-auto flex w-fit gap-4">
-              <Toaster />
               <Button onClick={() => setIsClicked(false)} variant="secondary">
                 Back
               </Button>

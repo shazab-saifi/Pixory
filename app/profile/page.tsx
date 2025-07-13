@@ -15,8 +15,8 @@ const page = async () => {
         <div className="flex flex-col items-center gap-8">
           <Image
             src={
-              session?.user?.image ||
-              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+              (session?.user?.image && session.user.image) ||
+              "/profileAvatar.webp"
             }
             alt="avatar"
             width={100}
