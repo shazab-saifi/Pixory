@@ -8,6 +8,7 @@ import Link from "next/link";
 import { handleDownload } from "@/lib/utils";
 import BookmarkDialog from "./BookmarkDialog";
 import { useOutside } from "@/hooks/useOutside";
+import { CollectionPhoto } from "@/lib/types";
 
 const PhotoPreviewCard = React.memo(
   ({
@@ -18,6 +19,7 @@ const PhotoPreviewCard = React.memo(
     pexelsPhotoURL,
     onClick,
     alt,
+    photo,
   }: {
     photoURL: string;
     originalPhotoURL: string;
@@ -26,6 +28,7 @@ const PhotoPreviewCard = React.memo(
     pexelsPhotoURL: string;
     onClick: () => void;
     alt: string;
+    photo: CollectionPhoto;
   }) => {
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
     const ref = useOutside(() => setIsBookmarkOpen(false), isBookmarkOpen);
@@ -83,7 +86,7 @@ const PhotoPreviewCard = React.memo(
             </div>
           </div>
         ) : (
-          <BookmarkDialog ref={ref} />
+          <BookmarkDialog ref={ref} photo={photo} />
         )}
       </>
     );

@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     if (!validationResult.success) {
       return NextResponse.json(
         {
-          message: "Validation failed!",
+          error: "Validation failed!",
           errors: validationResult.error.errors,
         },
         { status: 400 },
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { message: "User doesn't exist with this email!" },
+        { error: "User doesn't exist with this email!" },
         { status: 404 },
       );
     }
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
     if (existingCollectionsCount >= 10) {
       return NextResponse.json(
-        { message: "You can only have a maximum of 10 collections!" },
+        { error: "You can only have a maximum of 10 collections!" },
         { status: 400 },
       );
     }
@@ -56,13 +56,16 @@ export async function POST(req: NextRequest) {
 
     if (findCollection) {
       return NextResponse.json(
-        { message: "Collection with this name already exists!" },
+        { error: "Collection with this name already exists!" },
         { status: 409 },
       );
     }
 
     const collection = await prisma.collection.create({
-      data: { name: collectionName, userId: user.id },
+      data: {
+        name: collectionName,
+        userId: user.id,
+      },
     });
 
     return NextResponse.json(
@@ -72,7 +75,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Error creating collection:", error);
     return NextResponse.json(
-      { message: "Internal server error in collection endpoint!" },
+      { error: "Internal server error in collection endpoint!" },
       { status: 500 },
     );
   }

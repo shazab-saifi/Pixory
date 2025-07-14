@@ -104,6 +104,15 @@ const PhotosSection = ({ query }: { query?: string }) => {
                 setSelectedPhoto(photo);
               }}
               alt={photo.alt}
+              photo={{
+                ...photo,
+                photographerUrl: photo.photographer_url,
+                portrait: photo.src.portrait,
+                photographer: photo.photographer,
+                landscape: photo.src.landscape,
+                original: photo.src.original,
+                large: photo.src.large,
+              }}
             />
           );
         })}

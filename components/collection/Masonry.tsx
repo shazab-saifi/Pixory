@@ -26,19 +26,19 @@ type Video = Partial<VideoData> & {
   videoFiles: VideoFile[];
 };
 
-interface CollectionItems {
+interface Collection {
   name: string;
   photos: Photo[];
   videos: Video[];
 }
 
 interface MasonryProps {
-  collectionItems: CollectionItems;
+  collection: Collection;
 }
 
-const Masonry: React.FC<MasonryProps> = ({ collectionItems }) => (
+const Masonry: React.FC<MasonryProps> = ({ collection }) => (
   <div className="columns-1 gap-4 p-4 sm:columns-2 md:columns-3 lg:columns-4">
-    {collectionItems?.photos?.map((photo) => (
+    {collection?.photos?.map((photo) => (
       <div key={photo.id} className="mb-4 break-inside-avoid">
         {/* <PhotoPreviewCard photo={photo} /> */}
       </div>

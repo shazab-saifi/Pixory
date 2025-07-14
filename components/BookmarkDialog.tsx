@@ -11,8 +11,16 @@ import {
   CreateCollectionSchema,
   MAX_COLLECTIONS_PER_USER,
 } from "@/lib/validation";
+import { Collection, CollectionPhoto } from "@/lib/types";
+import Image from "next/image";
 
-const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
+const BookmarkDialog = ({
+  ref,
+  photo,
+}: {
+  ref: React.Ref<HTMLDivElement>;
+  photo: CollectionPhoto;
+}) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [validationError, setValidationError] = useState<string>("");
@@ -40,7 +48,7 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
   }, []);
 
   const createCollectionMutation = useMutation({
-    mutationFn: async (collectionData: { name: string }) => {
+    mutationFn: async (collectionData: { collectionName: string }) => {
       const res = await fetch("/api/collection", {
         method: "POST",
         headers: {
@@ -98,8 +106,9 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
           return;
         }
 
+        // Thing to figure out: Need to send collectionId with the photo
         createCollectionMutation.mutate({
-          name: validationResult.data.collectionName,
+          collectionName: validationResult.data.collectionName,
         });
       } catch (error) {
         console.error("Internal server error : ", error);
@@ -120,7 +129,7 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
         </h1>
         {!isClicked ? (
           <>
-            <div className="flex w-full overflow-x-auto">
+            <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto">
               <div className="space-y-2">
                 <button
                   onClick={(e) => {
@@ -133,14 +142,14 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
                     setIsClicked(true);
                   }}
                   disabled={hasReachedLimit}
-                  className={`group flex cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-colors ${
+                  className={`group flex size-35 cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-colors ${
                     hasReachedLimit
                       ? "cursor-not-allowed border-gray-200 bg-gray-50"
                       : "border-gray-300 bg-gray-100 hover:border-gray-400"
                   }`}
                 >
                   <CopyPlus
-                    className={`size-18 transition-colors ${
+                    className={`size-12 transition-colors ${
                       hasReachedLimit
                         ? "text-gray-200"
                         : "text-gray-300 group-hover:text-gray-400"
@@ -148,7 +157,7 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
                   />
                 </button>
                 <span className="text-sm font-semibold text-gray-700">
-                  Create new Collection
+                  New Collection
                 </span>
                 {hasReachedLimit && (
                   <span className="text-xs text-red-600">
@@ -157,6 +166,29 @@ const BookmarkDialog = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
                   </span>
                 )}
               </div>
+              {collections.map((collection: Collection, idx: number) => (
+                <div key={idx} className="space-y-2">
+                  <button className="relative size-35 cursor-pointer overflow-hidden rounded-2xl">
+                    <Image
+                      src={
+                        collection.photos?.[0]?.large
+                          ? collection.photos[0].large
+                          : "/heroImage5.png"
+                      }
+                      alt="collection thumbnail"
+                      width={200}
+                      height={200}
+                      className="object-cover"
+                    />
+                    <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
+                      <CopyPlus className="size-12 text-transparent transition-colors group-hover:text-white" />
+                    </div>
+                  </button>
+                  <span className="text-sm font-semibold text-gray-700">
+                    {collection.name}
+                  </span>
+                </div>
+              ))}
             </div>
             <Button className="w-fit space-x-2 font-bold">
               <span>Your Collections</span>

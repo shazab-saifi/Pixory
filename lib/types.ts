@@ -73,3 +73,54 @@ export interface CredentialsTypes {
   name: string;
   password: string;
 }
+
+// Collection types based on Prisma schema
+export interface CollectionPhoto {
+  id: number;
+  alt: string;
+  height: number;
+  width: number;
+  photographer: string;
+  photographerUrl: string;
+  original: string;
+  large: string;
+  portrait: string;
+  landscape: string;
+  collectionId?: number;
+}
+
+export interface CollectionVideoFile {
+  id: number;
+  quality: string;
+  width: number;
+  height: number;
+  fileType: string;
+  link: string;
+  videoId: number;
+}
+
+export interface CollectionVideo {
+  id: number;
+  width: number;
+  height: number;
+  url: string;
+  image: string;
+  videographer: string;
+  videographerUrl: string;
+  videoFiles: CollectionVideoFile[];
+  collectionId: number;
+}
+
+export interface Collection {
+  id: number;
+  name: string;
+  photos: CollectionPhoto[];
+  videos: CollectionVideo[];
+  userId: number;
+  createdAt: string;
+}
+
+export interface CollectionsResponse {
+  collections: Collection[];
+  total: number;
+}
