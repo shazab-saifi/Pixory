@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { ArrowDownRight, CopyPlus, LoaderCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -25,6 +25,7 @@ const BookmarkDialog = ({
   const [inputValue, setInputValue] = useState<string>("");
   const [validationError, setValidationError] = useState<string>("");
   const { status } = useSession();
+  const collectionId = useRef<number>(null);
 
   const { data: collectionsData } = useQuery({
     queryKey: ["collections"],
@@ -76,6 +77,28 @@ const BookmarkDialog = ({
     },
   });
 
+  const addPhotoMutation = useMutation({
+    mutationFn: async (photoData: { photoData: CollectionPhoto }) => {
+      const res = await fetch(
+        `/api/storePhoto?collectionId=${collectionId.current}`,
+        {
+          method: "POST",
+          headers: {
+            "content-Type": "application/json",
+          },
+          body: JSON.stringify(photoData),
+        },
+      );
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to add photo");
+      }
+
+      return res.json();
+    },
+  });
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
@@ -107,8 +130,14 @@ const BookmarkDialog = ({
         }
 
         // Thing to figure out: Need to send collectionId with the photo
-        createCollectionMutation.mutate({
+        const collectiondata = await createCollectionMutation.mutateAsync({
           collectionName: validationResult.data.collectionName,
+        });
+
+        collectionId.current = collectiondata.collection.id;
+
+        addPhotoMutation.mutate({
+          photoData: photo,
         });
       } catch (error) {
         console.error("Internal server error : ", error);
@@ -160,10 +189,10 @@ const BookmarkDialog = ({
                   New Collection
                 </span>
                 {hasReachedLimit && (
-                  <span className="text-xs text-red-600">
+                  <div className="text-xs text-red-600">
                     Limit reached ({collections.length}/
                     {MAX_COLLECTIONS_PER_USER})
-                  </span>
+                  </div>
                 )}
               </div>
               {collections.map((collection: Collection, idx: number) => (
@@ -178,7 +207,7 @@ const BookmarkDialog = ({
                       alt="collection thumbnail"
                       width={200}
                       height={200}
-                      className="object-cover"
+                      className="h-full w-full object-cover"
                     />
                     <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
                       <CopyPlus className="size-12 text-transparent transition-colors group-hover:text-white" />

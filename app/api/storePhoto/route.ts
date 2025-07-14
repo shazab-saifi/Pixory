@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const validatedResult = CollectionPhotoSchema.safeParse(body);
+    const validatedResult = CollectionPhotoSchema.safeParse(body.photoData);
     if (!validatedResult.success) {
       return NextResponse.json(
         {

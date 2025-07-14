@@ -12,22 +12,12 @@ import { CollectionPhoto } from "@/lib/types";
 
 const PhotoPreviewCard = React.memo(
   ({
-    photoURL,
-    originalPhotoURL,
-    width,
-    height,
     pexelsPhotoURL,
     onClick,
-    alt,
     photo,
   }: {
-    photoURL: string;
-    originalPhotoURL: string;
-    width: number;
-    height: number;
     pexelsPhotoURL: string;
     onClick: () => void;
-    alt: string;
     photo: CollectionPhoto;
   }) => {
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
@@ -38,14 +28,14 @@ const PhotoPreviewCard = React.memo(
         {!isBookmarkOpen ? (
           <div
             onClick={onClick}
-            className={`relative w-[${width}px] h-[${height}px] group overflow-hidden rounded-xl lg:rounded-2xl`}
+            className={`relative w-[${photo.width}px] h-[${photo.height}px] group overflow-hidden rounded-xl lg:rounded-2xl`}
           >
             <Image
               className="z-0 h-full w-full object-cover"
-              src={photoURL}
-              width={width}
-              height={height}
-              alt={alt}
+              src={photo.large}
+              width={photo.width}
+              height={photo.height}
+              alt={photo.alt}
               loading="lazy"
               decoding="async"
             />
@@ -76,7 +66,7 @@ const PhotoPreviewCard = React.memo(
                   className="z-50 hidden md:block"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDownload({ url: originalPhotoURL });
+                    handleDownload({ url: photo.original });
                   }}
                 >
                   Download

@@ -94,18 +94,16 @@ const PhotosSection = ({ query }: { query?: string }) => {
           return (
             <PhotoPreviewCard
               key={photo.id}
-              width={photo.width}
-              originalPhotoURL={photo.src.original}
-              height={photo.height}
-              photoURL={photo.src.large}
               pexelsPhotoURL={photo.url}
               onClick={() => {
                 setIsPhotoOpen(true);
                 setSelectedPhoto(photo);
               }}
-              alt={photo.alt}
               photo={{
-                ...photo,
+                id: photo.id,
+                width: photo.width,
+                height: photo.height,
+                alt: photo.alt,
                 photographerUrl: photo.photographer_url,
                 portrait: photo.src.portrait,
                 photographer: photo.photographer,
