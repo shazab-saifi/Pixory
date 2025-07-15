@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
-import { ArrowDownRight, CopyPlus, LoaderCircle } from "lucide-react";
+import { ArrowDownRight, CopyPlus, Cross, LoaderCircle, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -13,19 +13,27 @@ import {
 } from "@/lib/validation";
 import { Collection, CollectionPhoto } from "@/lib/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
+// Fix the db tables
 const BookmarkDialog = ({
   ref,
   photo,
+  setBookmarkOpen,
 }: {
   ref: React.Ref<HTMLDivElement>;
   photo: CollectionPhoto;
+  setBookmarkOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [validationError, setValidationError] = useState<string>("");
   const { status } = useSession();
-  const collectionId = useRef<number>(null);
+  const collectionIdRef = useRef<number>(null);
+  const [activeCollectionId, setActiveCollectionId] = useState<number | null>(
+    null,
+  );
+  const router = useRouter();
 
   const { data: collectionsData } = useQuery({
     queryKey: ["collections"],
@@ -35,6 +43,7 @@ const BookmarkDialog = ({
       return res.json();
     },
     enabled: status === "authenticated",
+    staleTime: 0,
   });
 
   const collections = collectionsData?.collections || [];
@@ -68,7 +77,7 @@ const BookmarkDialog = ({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["collections"] });
       toast.success("Collection created successfully");
-      setIsClicked(false);
+      setBookmarkOpen(false);
       setInputValue("");
       setValidationError("");
     },
@@ -78,15 +87,18 @@ const BookmarkDialog = ({
   });
 
   const addPhotoMutation = useMutation({
-    mutationFn: async (photoData: { photoData: CollectionPhoto }) => {
+    mutationFn: async (data: {
+      photoData: CollectionPhoto;
+      collectionId: number;
+    }) => {
       const res = await fetch(
-        `/api/storePhoto?collectionId=${collectionId.current}`,
+        `/api/storePhoto?collectionId=${data.collectionId}`,
         {
           method: "POST",
           headers: {
             "content-Type": "application/json",
           },
-          body: JSON.stringify(photoData),
+          body: JSON.stringify(data.photoData),
         },
       );
 
@@ -96,6 +108,14 @@ const BookmarkDialog = ({
       }
 
       return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["collections"] });
+      toast.success("Photo bookmarked successfully");
+      setBookmarkOpen(false);
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Photo storing request failed");
     },
   });
 
@@ -134,10 +154,11 @@ const BookmarkDialog = ({
           collectionName: validationResult.data.collectionName,
         });
 
-        collectionId.current = collectiondata.collection.id;
+        collectionIdRef.current = collectiondata.collection.id;
 
         addPhotoMutation.mutate({
           photoData: photo,
+          collectionId: collectionIdRef.current as number,
         });
       } catch (error) {
         console.error("Internal server error : ", error);
@@ -151,11 +172,17 @@ const BookmarkDialog = ({
     <div className="fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm">
       <div
         ref={ref}
-        className="mx-4 flex flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
+        className="relative mx-4 flex flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
       >
         <h1 className="text-2xl font-semibold md:text-3xl">
           Save to Collection
         </h1>
+        <button
+          onClick={() => setBookmarkOpen(false)}
+          className="group absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
+        >
+          <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
+        </button>
         {!isClicked ? (
           <>
             <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto">
@@ -197,7 +224,16 @@ const BookmarkDialog = ({
               </div>
               {collections.map((collection: Collection, idx: number) => (
                 <div key={idx} className="space-y-2">
-                  <button className="relative size-35 cursor-pointer overflow-hidden rounded-2xl">
+                  <button
+                    className="relative size-35 cursor-pointer overflow-hidden rounded-2xl"
+                    onClick={() => {
+                      addPhotoMutation.mutate({
+                        photoData: photo,
+                        collectionId: collection.id,
+                      });
+                      setActiveCollectionId(collection.id);
+                    }}
+                  >
                     <Image
                       src={
                         collection.photos?.[0]?.large
@@ -210,7 +246,12 @@ const BookmarkDialog = ({
                       className="h-full w-full object-cover"
                     />
                     <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
-                      <CopyPlus className="size-12 text-transparent transition-colors group-hover:text-white" />
+                      {addPhotoMutation.isPending &&
+                      activeCollectionId === collection.id ? (
+                        <LoaderCircle className="size-12 animate-spin text-white" />
+                      ) : (
+                        <CopyPlus className="size-12 text-transparent transition-colors group-hover:text-white" />
+                      )}
                     </div>
                   </button>
                   <span className="text-sm font-semibold text-gray-700">
@@ -219,7 +260,10 @@ const BookmarkDialog = ({
                 </div>
               ))}
             </div>
-            <Button className="w-fit space-x-2 font-bold">
+            <Button
+              onClick={() => router.push("/profile")}
+              className="w-fit space-x-2 font-bold"
+            >
               <span>Your Collections</span>
               <ArrowDownRight className="size-5 -rotate-45" />
             </Button>

@@ -38,7 +38,13 @@ const MediaCard = React.memo(
         </div>
         <div className="h-full overflow-hidden rounded-lg">
           {!isVideo ? (
-            <Image src={Url} width={400} height={400} alt="photo" />
+            <Image
+              src={Url}
+              width={400}
+              height={400}
+              alt="photo"
+              loading="eager"
+            />
           ) : (
             <video
               src={Url}

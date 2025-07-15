@@ -76,7 +76,11 @@ const PhotoPreviewCard = React.memo(
             </div>
           </div>
         ) : (
-          <BookmarkDialog ref={ref} photo={photo} />
+          <BookmarkDialog
+            ref={ref}
+            photo={photo}
+            setBookmarkOpen={setIsBookmarkOpen}
+          />
         )}
       </>
     );

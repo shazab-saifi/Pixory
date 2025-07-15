@@ -1,7 +1,6 @@
 import { CollectionPhotoSchema } from "@/lib/validation";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prismaClient";
-import { Prisma } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   try {
@@ -20,7 +19,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const validatedResult = CollectionPhotoSchema.safeParse(body.photoData);
+    const validatedResult = CollectionPhotoSchema.safeParse(body);
     if (!validatedResult.success) {
       return NextResponse.json(
         {
@@ -44,35 +43,23 @@ export async function POST(req: NextRequest) {
       portrait,
     } = validatedResult.data;
 
-    try {
-      const collectionPhoto = await prisma.photo.create({
-        data: {
-          id,
-          width,
-          height,
-          alt,
-          landscape,
-          large,
-          original,
-          portrait,
-          photographer,
-          photographerUrl,
-          collectionId,
-        },
-      });
-      return NextResponse.json(collectionPhoto, { status: 201 });
-    } catch (prismaError) {
-      if (
-        prismaError instanceof Prisma.PrismaClientKnownRequestError &&
-        prismaError.code === "P2002"
-      ) {
-        return NextResponse.json(
-          { error: "A photo with this ID already exists." },
-          { status: 409 },
-        );
-      }
-      throw prismaError;
-    }
+    const collectionPhoto = await prisma.photo.create({
+      data: {
+        id,
+        width,
+        height,
+        alt,
+        landscape,
+        large,
+        original,
+        portrait,
+        photographer,
+        photographerUrl,
+        collectionId,
+      },
+    });
+
+    return NextResponse.json(collectionPhoto, { status: 201 });
   } catch (error) {
     console.error("Error while storing Photo in db:", error);
     return NextResponse.json(
