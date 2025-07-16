@@ -15,6 +15,8 @@ import { Collection, CollectionPhoto } from "@/lib/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchCollection } from "@/lib/utils";
+import Skeleton from "react-loading-skeleton";
+import Spinner from "./Spinner";
 
 const BookmarkDialog = ({
   ref,
@@ -159,6 +161,8 @@ const BookmarkDialog = ({
     }
   };
 
+  console.log(isLoading);
+
   return (
     <div className="fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm">
       <div
@@ -213,44 +217,64 @@ const BookmarkDialog = ({
                   </div>
                 )}
               </div>
-              {collectionArray.map((collection: Collection, idx: number) => (
-                <div key={idx} className="space-y-2">
-                  <button
-                    className="relative size-35 cursor-pointer overflow-hidden rounded-2xl"
-                    onClick={() => {
-                      addPhotoMutation.mutate({
-                        photoData: photo,
-                        collectionId: collection.id,
-                      });
-                      setActiveCollectionId(collection.id);
-                      console.log(collection.media[0]?.photo?.large);
-                    }}
-                  >
-                    <Image
-                      src={
-                        collection.media[0]?.photo?.large
-                          ? collection.media[0]?.photo?.large
-                          : "/heroImage5.png"
-                      }
-                      alt="collection thumbnail"
-                      width={200}
-                      height={200}
-                      className="h-full w-full object-cover"
-                    />
-                    <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
-                      {addPhotoMutation.isPending &&
-                      activeCollectionId === collection.id ? (
-                        <LoaderCircle className="size-12 animate-spin text-white" />
-                      ) : (
-                        <CopyPlus className="size-12 text-transparent transition-colors group-hover:text-white" />
-                      )}
+              {isLoading ? (
+                <>
+                  {/* Skeleton from react-loading-skeleton is not working here for some reason */}
+                  {[1, 2, 3].map((n: number) => (
+                    <div key={n}>
+                      <div
+                        role="status"
+                        className="h-full max-w-sm animate-pulse space-y-4"
+                      >
+                        <div className="size-35 rounded-2xl bg-gray-200 dark:bg-gray-700"></div>
+                        <div className="h-3 w-10 rounded-md bg-gray-200 dark:bg-gray-700"></div>
+                      </div>
                     </div>
-                  </button>
-                  <div className="text-sm font-semibold text-gray-700">
-                    {collection.name}
-                  </div>
-                </div>
-              ))}
+                  ))}
+                </>
+              ) : (
+                <>
+                  {collectionArray.map(
+                    (collection: Collection, idx: number) => (
+                      <div key={idx} className="space-y-4">
+                        <button
+                          className="relative size-35 cursor-pointer overflow-hidden rounded-2xl"
+                          onClick={() => {
+                            addPhotoMutation.mutate({
+                              photoData: photo,
+                              collectionId: collection.id,
+                            });
+                            setActiveCollectionId(collection.id);
+                          }}
+                        >
+                          <Image
+                            src={
+                              collection.media[0]?.photo?.large
+                                ? collection.media[0]?.photo?.large
+                                : "/heroImage5.png"
+                            }
+                            alt="collection thumbnail"
+                            width={200}
+                            height={200}
+                            className="h-full w-full object-cover"
+                          />
+                          <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
+                            {addPhotoMutation.isPending &&
+                            activeCollectionId === collection.id ? (
+                              <LoaderCircle className="size-12 animate-spin text-white" />
+                            ) : (
+                              <CopyPlus className="size-12 text-transparent transition-colors group-hover:text-white" />
+                            )}
+                          </div>
+                        </button>
+                        <div className="text-sm font-semibold text-gray-700">
+                          {collection.name}
+                        </div>
+                      </div>
+                    ),
+                  )}
+                </>
+              )}
             </div>
             <Button
               onClick={() => router.push("/profile")}
