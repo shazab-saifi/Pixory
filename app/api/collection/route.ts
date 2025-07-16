@@ -10,23 +10,33 @@ export async function POST(req: NextRequest) {
 
     if (!session?.user?.email) {
       return NextResponse.json(
-        { message: "Not authenticated!" },
+        { error: "Not authenticated!" },
         { status: 401 },
       );
     }
 
-    const validationResult = CreateCollectionSchema.safeParse(body);
-    if (!validationResult.success) {
+    if (!body.photoData && !body.videoData) {
       return NextResponse.json(
         {
-          error: "Validation failed!",
-          errors: validationResult.error.errors,
+          error:
+            "Photo or Video at least one of them should be provided while creating collection!",
         },
         { status: 400 },
       );
     }
 
-    const { collectionName } = validationResult.data;
+    const validation = CreateCollectionSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Validation failed!",
+          errors: validation.error.errors,
+        },
+        { status: 400 },
+      );
+    }
+
+    const { collectionName, photoData } = validation.data;
 
     const user = await prisma.user.findUnique({
       where: { email: session.user.email },
@@ -39,26 +49,36 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const existingCollectionsCount = await prisma.collection.count({
+    const collectionsCount = await prisma.collection.count({
       where: { userId: user.id },
     });
-
-    if (existingCollectionsCount >= 10) {
+    if (collectionsCount >= 10) {
       return NextResponse.json(
         { error: "You can only have a maximum of 10 collections!" },
         { status: 400 },
       );
     }
 
-    const findCollection = await prisma.collection.findFirst({
+    const duplicate = await prisma.collection.findFirst({
       where: { name: collectionName, userId: user.id },
     });
-
-    if (findCollection) {
+    if (duplicate) {
       return NextResponse.json(
         { error: "Collection with this name already exists!" },
         { status: 409 },
       );
+    }
+
+    let photoId: number | undefined = undefined;
+
+    if (photoData) {
+      let photo = await prisma.photo.findUnique({
+        where: { id: photoData.id },
+      });
+      if (!photo) {
+        photo = await prisma.photo.create({ data: photoData });
+      }
+      photoId = photo.id;
     }
 
     const collection = await prisma.collection.create({
@@ -67,6 +87,15 @@ export async function POST(req: NextRequest) {
         userId: user.id,
       },
     });
+
+    if (photoId !== undefined) {
+      await prisma.collectionMedia.create({
+        data: {
+          collectionId: collection.id,
+          photoId: photoId,
+        },
+      });
+    }
 
     return NextResponse.json(
       { collection, message: "Collection created successfully!" },

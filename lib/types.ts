@@ -86,7 +86,6 @@ export interface CollectionPhoto {
   large: string;
   portrait: string;
   landscape: string;
-  collectionId?: number;
 }
 
 export interface CollectionVideoFile {
@@ -108,14 +107,12 @@ export interface CollectionVideo {
   videographer: string;
   videographerUrl: string;
   videoFiles: CollectionVideoFile[];
-  collectionId: number;
 }
 
 export interface Collection {
   id: number;
   name: string;
-  photos: CollectionPhoto[];
-  videos: CollectionVideo[];
+  media: Media[];
   userId: number;
   createdAt: string;
 }
@@ -123,4 +120,14 @@ export interface Collection {
 export interface CollectionsResponse {
   collections: Collection[];
   total: number;
+}
+
+// Polymorphic media interface for CollectionMedia
+export interface Media {
+  id?: number;
+  photoId?: number;
+  photo?: CollectionPhoto;
+  videoId?: number;
+  video?: CollectionVideo;
+  collectionId: number;
 }

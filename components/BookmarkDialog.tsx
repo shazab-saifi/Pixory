@@ -15,7 +15,6 @@ import { Collection, CollectionPhoto } from "@/lib/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-// Fix the db tables
 const BookmarkDialog = ({
   ref,
   photo,
@@ -29,13 +28,12 @@ const BookmarkDialog = ({
   const [inputValue, setInputValue] = useState<string>("");
   const [validationError, setValidationError] = useState<string>("");
   const { status } = useSession();
-  const collectionIdRef = useRef<number>(null);
   const [activeCollectionId, setActiveCollectionId] = useState<number | null>(
     null,
   );
   const router = useRouter();
 
-  const { data: collectionsData } = useQuery({
+  const { data: collectionsData, isLoading } = useQuery({
     queryKey: ["collections"],
     queryFn: async () => {
       const res = await fetch("/api/collections");
@@ -58,7 +56,10 @@ const BookmarkDialog = ({
   }, []);
 
   const createCollectionMutation = useMutation({
-    mutationFn: async (collectionData: { collectionName: string }) => {
+    mutationFn: async (collectionData: {
+      collectionName: string;
+      photoData: CollectionPhoto;
+    }) => {
       const res = await fetch("/api/collection", {
         method: "POST",
         headers: {
@@ -104,7 +105,7 @@ const BookmarkDialog = ({
 
       if (!res.ok) {
         const errorData = await res.json();
-        throw new Error(errorData.message || "Failed to add photo");
+        throw new Error(errorData.error || "Failed to add photo");
       }
 
       return res.json();
@@ -149,16 +150,9 @@ const BookmarkDialog = ({
           return;
         }
 
-        // Thing to figure out: Need to send collectionId with the photo
-        const collectiondata = await createCollectionMutation.mutateAsync({
+        await createCollectionMutation.mutateAsync({
           collectionName: validationResult.data.collectionName,
-        });
-
-        collectionIdRef.current = collectiondata.collection.id;
-
-        addPhotoMutation.mutate({
           photoData: photo,
-          collectionId: collectionIdRef.current as number,
         });
       } catch (error) {
         console.error("Internal server error : ", error);
@@ -232,12 +226,13 @@ const BookmarkDialog = ({
                         collectionId: collection.id,
                       });
                       setActiveCollectionId(collection.id);
+                      console.log(collection.media[0]?.photo?.large);
                     }}
                   >
                     <Image
                       src={
-                        collection.photos?.[0]?.large
-                          ? collection.photos[0].large
+                        collection.media[0]?.photo?.large
+                          ? collection.media[0]?.photo?.large
                           : "/heroImage5.png"
                       }
                       alt="collection thumbnail"
@@ -254,9 +249,9 @@ const BookmarkDialog = ({
                       )}
                     </div>
                   </button>
-                  <span className="text-sm font-semibold text-gray-700">
+                  <div className="text-sm font-semibold text-gray-700">
                     {collection.name}
-                  </span>
+                  </div>
                 </div>
               ))}
             </div>

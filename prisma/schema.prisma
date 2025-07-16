@@ -29,7 +29,7 @@ model Collection {
   name      String
   user      User              @relation(fields: [userId], references: [id])
   userId    Int
-  photos    CollectionMedia[]
+  media     CollectionMedia[]
   createdAt DateTime          @default(now())
 }
 
@@ -40,7 +40,7 @@ model Photo {
   width           Int
   photographer    String
   photographerUrl String            @map("photographer_url")
-  original        String
+  original        String            
   large           String
   portrait        String
   landscape       String
@@ -73,9 +73,9 @@ model VideoFile {
 model CollectionMedia {
   id           Int        @id @default(autoincrement())
   photoId      Int?
-  photo        Photo?          @relation(fields: [photoId], references: [id])
+  photo        Photo?         @relation(fields: [photoId], references: [id])
   videoId      Int?
-  video        Video?          @relation(fields: [videoId], references: [id])
+  video        Video?         @relation(fields: [videoId], references: [id])
   collectionId Int
   collection   Collection     @relation(fields: [collectionId], references: [id])
   @@unique([photoId, collectionId])

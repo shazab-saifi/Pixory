@@ -5,11 +5,8 @@ export const MAX_COLLECTIONS_PER_USER = 10;
 
 // Photo validation schema
 export const CollectionPhotoSchema = z.object({
-  id: z.number().int().positive("Photo ID must be a positive integer"),
-  alt: z
-    .string()
-    .min(1, "Alt text is required")
-    .max(500, "Alt text cannot exceed 500 characters"),
+  id: z.number(),
+  alt: z.string().max(500, "Alt text cannot exceed 500 characters"),
   height: z.number().int().positive("Height must be a positive integer"),
   width: z.number().int().positive("Width must be a positive integer"),
   photographer: z
@@ -31,6 +28,7 @@ export const CreateCollectionSchema = z.object({
     .max(100, "Collection name cannot exceed 100 characters!")
     .trim()
     .refine((name) => name.length > 0, "Collection name cannot be empty!"),
+  photoData: CollectionPhotoSchema.optional(),
 });
 
 // User authentication schemas
@@ -51,7 +49,41 @@ export const SigninSchema = z.object({
   password: z.string().min(1, { message: "Password is required!" }),
 });
 
+// Video file validation schema for CollectionMedia
+export const CollectionVideoFileSchema = z.object({
+  id: z.number(),
+  quality: z.string(),
+  width: z.number().int().positive("Width must be a positive integer"),
+  height: z.number().int().positive("Height must be a positive integer"),
+  fileType: z.string(),
+  link: z.string().url("Video file link must be a valid URL"),
+  videoId: z.number(),
+});
+
+// Video validation schema for CollectionMedia
+export const CollectionVideoSchema = z.object({
+  id: z.number(),
+  width: z.number().int().positive("Width must be a positive integer"),
+  height: z.number().int().positive("Height must be a positive integer"),
+  url: z.string().url("Video URL must be a valid URL"),
+  image: z.string().url("Image URL must be a valid URL"),
+  videographer: z.string().min(1, "Videographer name is required"),
+  videographerUrl: z.string().url("Videographer URL must be a valid URL"),
+  videoFiles: z.array(CollectionVideoFileSchema),
+});
+
+// CollectionMedia validation schema
+export const CollectionMediaSchema = z.object({
+  id: z.number().optional(),
+  photoId: z.number().optional(),
+  photo: CollectionPhotoSchema.optional(),
+  videoId: z.number().optional(),
+  video: CollectionVideoSchema.optional(),
+  collectionId: z.number(),
+});
+
 // Type exports
 export type CreateCollectionInput = z.infer<typeof CreateCollectionSchema>;
 export type SignupInput = z.infer<typeof SignupSchema>;
 export type SigninInput = z.infer<typeof SigninSchema>;
+export type CollectionMediaInput = z.infer<typeof CollectionMediaSchema>;

@@ -1,6 +1,7 @@
 import { CollectionPhotoSchema } from "@/lib/validation";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prismaClient";
+import { Prisma } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   try {
@@ -30,41 +31,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const {
-      id,
-      photographer,
-      photographerUrl,
-      width,
-      height,
-      alt,
-      landscape,
-      large,
-      original,
-      portrait,
-    } = validatedResult.data;
+    const photoData = validatedResult.data;
 
     const collectionPhoto = await prisma.photo.create({
-      data: {
-        id,
-        width,
-        height,
-        alt,
-        landscape,
-        large,
-        original,
-        portrait,
-        photographer,
-        photographerUrl,
-        collectionId,
-      },
+      data: photoData,
     });
 
     return NextResponse.json(collectionPhoto, { status: 201 });
   } catch (error) {
-    console.error("Error while storing Photo in db:", error);
-    return NextResponse.json(
-      { error: "Internal server error while storing Photo" },
-      { status: 500 },
-    );
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        return NextResponse.json(
+          { error: "This photo already exists in this collection!" },
+          { status: 409 },
+        );
+      }
+    } else {
+      console.error("Error while storing Photo in db:", error);
+      return NextResponse.json(
+        { error: "Internal server error in storePhoto endpoint!" },
+        { status: 500 },
+      );
+    }
   }
 }

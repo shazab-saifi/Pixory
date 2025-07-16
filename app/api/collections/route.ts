@@ -27,14 +27,10 @@ export async function GET() {
     const collections = await prisma.collection.findMany({
       where: { userId: user.id },
       include: {
-        photos: {
-          orderBy: {
-            id: "desc",
-          },
-        },
-        videos: {
-          orderBy: {
-            id: "desc",
+        media: {
+          include: {
+            photo: true,
+            video: true,
           },
         },
       },

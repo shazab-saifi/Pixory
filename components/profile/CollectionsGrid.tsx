@@ -5,22 +5,6 @@ import prisma from "@/lib/prismaClient";
 export default async function CollectionsGrid() {
   const session = await getSession();
 
-  const response = await prisma.user.findUnique({
-    where: { email: session?.user?.email as string },
-    select: {
-      collections: {
-        include: {
-          photos: {
-            orderBy: {
-              id: "desc",
-            },
-            take: 3,
-          },
-        },
-      },
-    },
-  });
-
   return (
     <div className="grid w-full grid-cols-4 gap-12">
       {/* {response?.collections &&
