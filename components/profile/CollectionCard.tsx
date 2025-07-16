@@ -1,16 +1,13 @@
-import { Images, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const CollectionCard = ({
   collectionName,
   preview,
-  totalItems,
   collectionId,
 }: {
   collectionName: string;
   preview: string[];
-  totalItems: number;
   collectionId: number;
 }) => {
   return (

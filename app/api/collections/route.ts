@@ -39,10 +39,7 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json({
-      collections,
-      total: collections.length,
-    });
+    return NextResponse.json(collections);
   } catch (error) {
     console.error("Error fetching collections:", error);
     return NextResponse.json(

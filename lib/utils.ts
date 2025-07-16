@@ -1,8 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { z } from "zod";
-import { getSession } from "./auth";
-import prisma from "./prismaClient";
+import { Collection } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,14 +23,10 @@ export async function handleDownload({ url }: { url: string }) {
   URL.revokeObjectURL(dataURL);
 }
 
-export const FormSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  name: z
-    .string()
-    .min(1, { message: "Name is required!" })
-    .max(40, { message: "Name cannnot be longer than 40 characters!" }),
-  password: z
-    .string()
-    .min(8, { message: "Password should have at least 8 characters" })
-    .max(40, { message: "Password cannot be longer than 40 characters" }),
-});
+export async function fetchCollection(): Promise<Collection[]> {
+  const res = await fetch("/api/collections");
+  if (!res.ok) {
+    throw new Error("Failed to fetch collection!");
+  }
+  return res.json();
+}

@@ -1,22 +1,49 @@
-import { getSession } from "@/lib/auth";
-import CollectionCard from "./CollectionCard";
-import prisma from "@/lib/prismaClient";
+"use client";
 
-export default async function CollectionsGrid() {
-  const session = await getSession();
+import CollectionCard from "./CollectionCard";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCollection } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import { Collection } from "@/lib/types";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+
+export default function CollectionsGrid() {
+  const { status } = useSession();
+
+  const { data: collections, isLoading } = useQuery({
+    queryKey: ["collections"],
+    queryFn: fetchCollection,
+    enabled: status === "authenticated",
+  });
 
   return (
-    <div className="grid w-full grid-cols-4 gap-12">
-      {/* {response?.collections &&
-        response?.collections.map((collection, idx) => (
-          <CollectionCard
-            key={idx}
-            collectionId={collection.id}
-            collectionName={collection.name}
-            preview={collectio.map((item) => item.src)}
-            totalItems={collection.collectionItems.length}
-          />
-        ))} */}
+    <div className="w-full">
+      {isLoading ? (
+        <div className="grid w-full grid-cols-4 gap-12">
+          {[1, 2, 3, 4].map((n) => (
+            <div key={n}>
+              <Skeleton width={280} height={280} borderRadius={16} />
+              <Skeleton width={100} height={16} borderRadius={4} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid w-full grid-cols-4 gap-12">
+          {collections?.map((collection: Collection, idx: number) => (
+            <CollectionCard
+              key={idx}
+              collectionId={collection.id}
+              collectionName={collection.name}
+              preview={collection.media.map((item) =>
+                item.photo?.large
+                  ? (item.photo.large as string)
+                  : (item.video?.image as string),
+              )}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

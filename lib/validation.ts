@@ -82,6 +82,18 @@ export const CollectionMediaSchema = z.object({
   collectionId: z.number(),
 });
 
+export const FormSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  name: z
+    .string()
+    .min(1, { message: "Name is required!" })
+    .max(40, { message: "Name cannnot be longer than 40 characters!" }),
+  password: z
+    .string()
+    .min(8, { message: "Password should have at least 8 characters" })
+    .max(40, { message: "Password cannot be longer than 40 characters" }),
+});
+
 // Type exports
 export type CreateCollectionInput = z.infer<typeof CreateCollectionSchema>;
 export type SignupInput = z.infer<typeof SignupSchema>;

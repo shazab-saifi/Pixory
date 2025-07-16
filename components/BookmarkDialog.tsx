@@ -14,6 +14,7 @@ import {
 import { Collection, CollectionPhoto } from "@/lib/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { fetchCollection } from "@/lib/utils";
 
 const BookmarkDialog = ({
   ref,
@@ -35,17 +36,13 @@ const BookmarkDialog = ({
 
   const { data: collectionsData, isLoading } = useQuery({
     queryKey: ["collections"],
-    queryFn: async () => {
-      const res = await fetch("/api/collections");
-      if (!res.ok) throw new Error("Failed to fetch collections");
-      return res.json();
-    },
+    queryFn: fetchCollection,
     enabled: status === "authenticated",
     staleTime: 0,
   });
 
-  const collections = collectionsData?.collections || [];
-  const hasReachedLimit = collections.length >= MAX_COLLECTIONS_PER_USER;
+  const collectionArray = collectionsData || [];
+  const hasReachedLimit = collectionArray.length >= MAX_COLLECTIONS_PER_USER;
 
   useEffect(() => {
     document.body.classList.add("no-scroll");
@@ -211,12 +208,12 @@ const BookmarkDialog = ({
                 </span>
                 {hasReachedLimit && (
                   <div className="text-xs text-red-600">
-                    Limit reached ({collections.length}/
+                    Limit reached ({collectionArray.length}/
                     {MAX_COLLECTIONS_PER_USER})
                   </div>
                 )}
               </div>
-              {collections.map((collection: Collection, idx: number) => (
+              {collectionArray.map((collection: Collection, idx: number) => (
                 <div key={idx} className="space-y-2">
                   <button
                     className="relative size-35 cursor-pointer overflow-hidden rounded-2xl"

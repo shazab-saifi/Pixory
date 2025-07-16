@@ -3,7 +3,7 @@ import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import Button from "./Button";
 import { CredentialsTypes } from "@/lib/types";
 import { z } from "zod";
-import { FormSchema } from "@/lib/utils";
+import { FormSchema } from "@/lib/validation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
