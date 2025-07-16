@@ -13,9 +13,7 @@ export async function POST(req: NextRequest) {
 
     if (isNaN(collectionId)) {
       return NextResponse.json(
-        {
-          message: "collectionId must be provided as a valid integer param!",
-        },
+        { message: "collectionId must be provided as a valid integer param!" },
         { status: 400 },
       );
     }
@@ -33,25 +31,51 @@ export async function POST(req: NextRequest) {
 
     const photoData = validatedResult.data;
 
-    const collectionPhoto = await prisma.photo.create({
-      data: photoData,
+    let photo = await prisma.photo.findUnique({
+      where: { id: photoData.id },
     });
 
-    return NextResponse.json(collectionPhoto, { status: 201 });
+    if (!photo) {
+      photo = await prisma.photo.create({
+        data: photoData,
+      });
+    }
+
+    const existingCollectionMedia = await prisma.collectionMedia.findFirst({
+      where: { photoId: photo.id, collectionId },
+    });
+
+    if (existingCollectionMedia) {
+      return NextResponse.json(
+        { message: "This photo already exists in this collection!" },
+        { status: 409 },
+      );
+    }
+
+    const collectionMedia = await prisma.collectionMedia.create({
+      data: {
+        photoId: photo.id,
+        collectionId,
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Photo added to collection successfully!", collectionMedia },
+      { status: 201 },
+    );
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         return NextResponse.json(
-          { error: "This photo already exists in this collection!" },
+          { error: "Unique constraint failed!" },
           { status: 409 },
         );
       }
-    } else {
-      console.error("Error while storing Photo in db:", error);
-      return NextResponse.json(
-        { error: "Internal server error in storePhoto endpoint!" },
-        { status: 500 },
-      );
     }
+    console.error("Error while storing Photo in db:", error);
+    return NextResponse.json(
+      { error: "Internal server error in storePhoto endpoint!" },
+      { status: 500 },
+    );
   }
 }

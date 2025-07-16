@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import { ArrowDownRight, CopyPlus, Cross, LoaderCircle, X } from "lucide-react";
 import { useSession } from "next-auth/react";
