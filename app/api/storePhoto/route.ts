@@ -41,6 +41,16 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    const collection = await prisma.collection.findUnique({
+      where: { id: collectionId },
+    });
+    if (!collection) {
+      return NextResponse.json(
+        { message: "Collection does not exist!" },
+        { status: 404 },
+      );
+    }
+
     const existingCollectionMedia = await prisma.collectionMedia.findFirst({
       where: { photoId: photo.id, collectionId },
     });
