@@ -1,6 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Collection } from "./types";
+import { Collection, VideoData } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -29,4 +29,18 @@ export async function fetchCollection(): Promise<Collection[]> {
     throw new Error("Failed to fetch collection!");
   }
   return res.json();
+}
+
+export function findVideoFile(video: VideoData) {
+  const videoFile =
+    video.video_files.find(
+      (file) => file.quality === "sd" && file.file_type === "video/mp4",
+    ) || video.video_files[0];
+
+  const hdVideoFIle =
+    video.video_files.find(
+      (file) => file.quality === "hd" && file.file_type === "video/mp4",
+    ) || video.video_files[0];
+
+  return { videoFile, hdVideoFIle };
 }

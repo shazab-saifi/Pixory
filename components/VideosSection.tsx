@@ -8,6 +8,7 @@ import { fetchData } from "@/lib/fetchdata";
 import { useOptionsToggle } from "@/lib/store";
 import Masonry from "react-masonry-css";
 import MediaCard from "./MediaCard";
+import { findVideoFile } from "@/lib/utils";
 
 const VideosSection = ({ query }: { query?: string }) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -53,17 +54,7 @@ const VideosSection = ({ query }: { query?: string }) => {
       >
         {data.pages.flatMap((page) =>
           page.data.videos.map((video: VideoData) => {
-            const videoFile =
-              video.video_files.find(
-                (file) =>
-                  file.quality === "sd" && file.file_type === "video/mp4",
-              ) || video.video_files[0];
-
-            const hdVideoFIle =
-              video.video_files.find(
-                (file) =>
-                  file.quality === "hd" && file.file_type === "video/mp4",
-              ) || video.video_files[0];
+            const { videoFile, hdVideoFIle } = findVideoFile(video);
 
             return (
               <VideoPreviewCard

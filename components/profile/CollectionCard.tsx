@@ -5,13 +5,15 @@ const CollectionCard = ({
   collectionName,
   preview,
   collectionId,
+  onClick,
 }: {
   collectionName: string;
   preview: string[];
   collectionId: number;
+  onClick: () => void;
 }) => {
   return (
-    <div className="mx-auto flex w-fit flex-col gap-4">
+    <div onClick={onClick} className="mx-auto flex w-fit flex-col gap-4">
       <Link
         href={`/collection/${collectionId}`}
         className="grid aspect-square w-70 cursor-pointer grid-cols-2 gap-2 overflow-hidden rounded-2xl transition-opacity hover:opacity-80"

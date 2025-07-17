@@ -7,9 +7,11 @@ import { useSession } from "next-auth/react";
 import { Collection } from "@/lib/types";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useRouter } from "next/navigation";
 
 export default function CollectionsGrid() {
   const { status } = useSession();
+  const router = useRouter();
 
   const { data: collections, isLoading } = useQuery({
     queryKey: ["collections"],
@@ -23,8 +25,13 @@ export default function CollectionsGrid() {
         <div className="grid w-full grid-cols-4 gap-12">
           {[1, 2, 3, 4].map((n) => (
             <div key={n}>
-              <Skeleton width={280} height={280} borderRadius={16} />
-              <Skeleton width={100} height={16} borderRadius={4} />
+              <Skeleton
+                width={280}
+                className="mb-4"
+                height={280}
+                borderRadius={16}
+              />
+              <Skeleton width={100} height={20} borderRadius={4} />
             </div>
           ))}
         </div>
@@ -33,6 +40,7 @@ export default function CollectionsGrid() {
           {collections?.map((collection: Collection, idx: number) => (
             <CollectionCard
               key={idx}
+              onClick={() => router.push(`/collection/${collection.id}`)}
               collectionId={collection.id}
               collectionName={collection.name}
               preview={collection.media.map((item) =>

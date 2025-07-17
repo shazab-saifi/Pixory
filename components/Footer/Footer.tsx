@@ -117,7 +117,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="border-t-2 pt-4 text-center">@ 2025 Pixory</div>
+      <div className="border-t-2 py-4 text-center">@ 2025 Pixory</div>
     </div>
   );
 };

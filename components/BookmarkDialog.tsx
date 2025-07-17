@@ -15,8 +15,6 @@ import { Collection, CollectionPhoto } from "@/lib/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchCollection } from "@/lib/utils";
-import Skeleton from "react-loading-skeleton";
-import Spinner from "./Spinner";
 
 const BookmarkDialog = ({
   ref,
@@ -180,7 +178,7 @@ const BookmarkDialog = ({
         </button>
         {!isClicked ? (
           <>
-            <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto">
+            <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto scroll-smooth">
               <div className="space-y-2">
                 <button
                   onClick={(e) => {
@@ -236,7 +234,7 @@ const BookmarkDialog = ({
                 <>
                   {collectionArray.map(
                     (collection: Collection, idx: number) => (
-                      <div key={idx} className="space-y-4">
+                      <div key={idx} className="space-y-2">
                         <button
                           className="relative size-35 cursor-pointer overflow-hidden rounded-2xl"
                           onClick={() => {
@@ -267,7 +265,7 @@ const BookmarkDialog = ({
                             )}
                           </div>
                         </button>
-                        <div className="text-sm font-semibold text-gray-700">
+                        <div className="mt-1 text-sm font-semibold text-gray-700">
                           {collection.name}
                         </div>
                       </div>

@@ -2,19 +2,24 @@ import Footer from "@/components/Footer/Footer";
 import Navbar2 from "@/components/Navbar/Navbar2";
 import Masonry from "@/components/collection/Masonry";
 import prisma from "@/lib/prismaClient";
+import { Collection } from "@/lib/types";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   try {
     const { slug } = await params;
-    const collection = await prisma.collection.findFirst({
+    const collection = await prisma.collection.findUnique({
       where: {
         id: parseInt(slug),
       },
       select: {
-        photos: true,
-        videos: {
+        media: {
           include: {
-            videoFiles: true,
+            photo: true,
+            video: {
+              include: {
+                videoFiles: true,
+              },
+            },
           },
         },
         name: true,
@@ -24,11 +29,13 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
     return (
       <div className="min-h-screen w-full">
         <Navbar2 />
-        <div className="mt-30 w-full">
+        <div className="my-40 w-full space-y-6 px-4 md:px-20 xl:px-50">
           <h1 className="text-4xl font-medium">
             {collection && collection.name}
           </h1>
-          {collection && <Masonry collectionItems={collection} />}
+          {collection && (
+            <Masonry collection={collection as unknown as Collection} />
+          )}
         </div>
         <Footer />
       </div>

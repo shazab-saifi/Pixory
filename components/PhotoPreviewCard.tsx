@@ -15,10 +15,12 @@ const PhotoPreviewCard = React.memo(
     pexelsPhotoURL,
     onClick,
     photo,
+    showBookmark = true,
   }: {
     pexelsPhotoURL: string;
     onClick: () => void;
     photo: CollectionPhoto;
+    showBookmark?: boolean;
   }) => {
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
     const ref = useOutside(() => setIsBookmarkOpen(false), isBookmarkOpen);
@@ -42,15 +44,17 @@ const PhotoPreviewCard = React.memo(
             <div className="invisible absolute inset-0 top-0 left-0 hidden h-full w-full bg-gradient-to-t from-black/30 via-transparent to-black/30 opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100 sm:block"></div>
             <div className="absolute inset-0 z-10 flex flex-col justify-between p-2 md:p-4">
               <div className="flex justify-end">
-                <div className="w-fit cursor-pointer rounded-md p-2 transition-colors hover:bg-black/30">
-                  <Bookmark
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsBookmarkOpen(true);
-                    }}
-                    className="size-6 text-white md:invisible md:translate-x-full md:opacity-0 md:transition-all md:duration-300 md:group-hover:visible md:group-hover:translate-x-0 md:group-hover:opacity-100"
-                  />
-                </div>
+                {showBookmark && (
+                  <div className="w-fit cursor-pointer rounded-md p-2 transition-colors hover:bg-black/30">
+                    <Bookmark
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsBookmarkOpen(true);
+                      }}
+                      className="size-6 text-white md:invisible md:translate-x-full md:opacity-0 md:transition-all md:duration-300 md:group-hover:visible md:group-hover:translate-x-0 md:group-hover:opacity-100"
+                    />
+                  </div>
+                )}
               </div>
               <div className="flex w-full items-center justify-between p-2 md:invisible md:translate-y-full md:opacity-0 md:transition-all md:duration-300 md:group-hover:visible md:group-hover:translate-y-0 md:group-hover:opacity-100">
                 <Link
