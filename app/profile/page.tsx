@@ -2,7 +2,14 @@ import Footer from "@/components/Footer/Footer";
 import Navbar2 from "@/components/Navbar/Navbar2";
 import CollectionsGrid from "@/components/profile/CollectionsGrid";
 import { getSession } from "@/lib/auth";
+import { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Your Profile | Pixory",
+  description:
+    "View and manage your Pixory profile, including your collections and personal information.",
+};
 
 const page = async () => {
   const session = await getSession();

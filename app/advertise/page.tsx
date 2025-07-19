@@ -6,6 +6,7 @@ import Footer from "@/components/Footer/Footer";
 import HeroSection from "@/components/Advertise/HeroSection";
 import WhyAdvertise from "@/components/Advertise/WhyAdvertise";
 import Marquee from "react-fast-marquee";
+import { Metadata } from "next";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -118,6 +119,12 @@ const testimonials: Testimonial[] = [
     stars: 5,
   },
 ];
+
+export const metadata: Metadata = {
+  title: "Advertise your business with Pixory",
+  description:
+    "Promote your brand to a creative, engaged audience on Pixory. Launch visually integrated ad campaigns and connect with millions of creators worldwide.",
+};
 
 const page = () => {
   return (

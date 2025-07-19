@@ -2,6 +2,13 @@ import Footer from "@/components/Footer/Footer";
 import FAQ from "@/components/GetPixory+/FAQ";
 import Pricing from "@/components/GetPixory+/Pricing";
 import Navbar2 from "@/components/Navbar/Navbar2";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Get Pixory+ | Pixory",
+  description:
+    "Unlock premium features and exclusive benefits with Pixory+. Choose the best plan for your creative needs.",
+};
 
 const page = () => {
   return (
