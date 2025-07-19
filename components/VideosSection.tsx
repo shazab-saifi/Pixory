@@ -17,15 +17,21 @@ const VideosSection = ({ query }: { query?: string }) => {
   const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
   const [hdVideo, setHdVideo] = useState<string>();
 
-  const { data, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["videos", query],
-      queryFn: ({ pageParam = 1 }) => {
-        return fetchData({ pageParam, currentOption, query });
-      },
-      initialPageParam: 1,
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    });
+  const {
+    data,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
+    queryKey: ["videos", query],
+    queryFn: ({ pageParam = 1 }) => {
+      return fetchData({ pageParam, currentOption, query });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+  });
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -41,6 +47,12 @@ const VideosSection = ({ query }: { query?: string }) => {
 
   if (error) return <div>Error loading videos: {(error as Error).message}</div>;
   if (data === undefined) return;
+  if (isLoading)
+    return (
+      <div className="mt-20 flex min-w-full items-center justify-center">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div>
@@ -87,7 +99,8 @@ const VideosSection = ({ query }: { query?: string }) => {
               src={selectedVideo?.video_files}
               isVideo={true}
               Url={hdVideo as string}
-              onXClick={() => setIsVideoOpen(false)}
+              isOpen={isVideoOpen}
+              setIsOpen={setIsVideoOpen}
             />
           </div>
         </div>

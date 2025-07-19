@@ -21,15 +21,21 @@ const PhotosSection = ({ query }: { query?: string }) => {
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoType | null>(null);
 
-  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["photos", query, currentOption],
-      queryFn: ({ pageParam = 1 }) => {
-        return fetchData({ pageParam, currentOption, query });
-      },
-      initialPageParam: 1,
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-    });
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useInfiniteQuery({
+    queryKey: ["photos", query, currentOption],
+    queryFn: ({ pageParam = 1 }) => {
+      return fetchData({ pageParam, currentOption, query });
+    },
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+  });
 
   useEffect(() => {
     photoIdsRef.current = [];
@@ -78,6 +84,12 @@ const PhotosSection = ({ query }: { query?: string }) => {
   });
 
   if (error) return <div>Error loading photos: {(error as Error).message}</div>;
+  if (isLoading)
+    return (
+      <div className="mt-20 flex min-w-full items-center justify-center">
+        <Spinner />
+      </div>
+    );
 
   return (
     <div>
@@ -116,7 +128,7 @@ const PhotosSection = ({ query }: { query?: string }) => {
         })}
       </Masonry>
       {isPhotoOpen && (
-        <div className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm" />
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
       {isPhotoOpen && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
@@ -127,7 +139,8 @@ const PhotosSection = ({ query }: { query?: string }) => {
               src={selectedPhoto?.src}
               isVideo={false}
               Url={selectedPhoto?.src.large as string}
-              onXClick={() => setIsPhotoOpen(false)}
+              isOpen={isPhotoOpen}
+              setIsOpen={setIsPhotoOpen}
             />
           </div>
         </div>

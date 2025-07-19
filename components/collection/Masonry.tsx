@@ -85,7 +85,8 @@ const Masonry = ({ collection }: { collection: Collection }) => {
               }
               isVideo={false}
               Url={selectedPhoto?.large as string}
-              onXClick={() => setIsPhotoOpen(false)}
+              isOpen={isPhotoOpen}
+              setIsOpen={setIsPhotoOpen}
             />
           </div>
         </div>
