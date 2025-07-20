@@ -35,7 +35,7 @@ const Navigation = ({
   ];
 
   return (
-    <div className="hidden space-x-8 xl:flex xl:items-center">
+    <div className="hidden xl:flex xl:items-center">
       <div className="flex items-center font-medium text-shadow-md">
         {navItems.map((item, idx) => (
           <Link

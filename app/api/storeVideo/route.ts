@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     if (!collectionId) {
       return NextResponse.json(
         {
-          message: "Collection id must be provided as a param!",
+          error: "Collection id must be provided as a param!",
         },
         { status: 400 },
       );
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     if (!validateVideo.success) {
       return NextResponse.json(
         {
-          message: "validation failed!",
+          error: "validation failed!",
           errors: validateVideo.error.errors,
         },
         { status: 400 },
@@ -47,11 +47,14 @@ export async function POST(req: NextRequest) {
           width: videoData.width,
           videographer: videoData.videographer,
           videographerUrl: videoData.videographerUrl,
-          videoFiles: {
-            create: videoData.videoFiles,
-          },
         },
       });
+
+      if (videoData.videoFiles !== undefined) {
+        await prisma.videoFile.createMany({
+          data: videoData.videoFiles,
+        });
+      }
     }
 
     const existingCollection = await prisma.collection.findUnique({
@@ -61,7 +64,7 @@ export async function POST(req: NextRequest) {
     if (!existingCollection) {
       return NextResponse.json(
         {
-          message: "Collection does not exists!",
+          error: "Collection does not exists!",
         },
         { status: 404 },
       );
@@ -74,7 +77,7 @@ export async function POST(req: NextRequest) {
     if (existingCollectionMedia) {
       return NextResponse.json(
         {
-          message: "This video already exists in this collection!",
+          error: "This video already exists in this collection!",
         },
         { status: 409 },
       );

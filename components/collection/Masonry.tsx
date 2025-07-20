@@ -60,6 +60,7 @@ const Masonry = ({ collection }: { collection: Collection }) => {
                   videoPreviewURL={video.image}
                   pexelsVideoURL={video.url}
                   onClick={() => console.log("video")}
+                  showBookmark={false}
                 />
               ) : null}
             </div>

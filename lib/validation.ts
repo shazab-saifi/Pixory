@@ -20,36 +20,6 @@ export const CollectionPhotoSchema = z.object({
   landscape: z.string().url("Landscape image URL must be a valid URL"),
 });
 
-// Collection validation schemas
-export const CreateCollectionSchema = z.object({
-  collectionName: z
-    .string()
-    .min(1, "Collection name is required!")
-    .max(100, "Collection name cannot exceed 100 characters!")
-    .trim()
-    .refine((name) => name.length > 0, "Collection name cannot be empty!"),
-  photoData: CollectionPhotoSchema.optional(),
-});
-
-// User authentication schemas
-export const SignupSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  name: z
-    .string()
-    .min(1, { message: "Name is required!" })
-    .max(40, { message: "Name cannot be longer than 40 characters!" }),
-  password: z
-    .string()
-    .min(8, { message: "Password should have at least 8 characters" })
-    .max(40, { message: "Password cannot be longer than 40 characters" }),
-});
-
-export const SigninSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  password: z.string().min(1, { message: "Password is required!" }),
-});
-
-// Video file validation schema for CollectionMedia
 export const CollectionVideoFileSchema = z.object({
   id: z.number(),
   quality: z.string(),
@@ -69,7 +39,37 @@ export const CollectionVideoSchema = z.object({
   image: z.string().url("Image URL must be a valid URL"),
   videographer: z.string().min(1, "Videographer name is required"),
   videographerUrl: z.string().url("Videographer URL must be a valid URL"),
-  videoFiles: z.array(CollectionVideoFileSchema),
+  videoFiles: z.array(CollectionVideoFileSchema).optional(),
+});
+
+// Collection validation schemas
+export const CreateCollectionSchema = z.object({
+  collectionName: z
+    .string()
+    .min(1, "Collection name is required!")
+    .max(100, "Collection name cannot exceed 100 characters!")
+    .trim()
+    .refine((name) => name.length > 0, "Collection name cannot be empty!"),
+  photoData: CollectionPhotoSchema.optional(),
+  videoData: CollectionVideoSchema.optional(),
+});
+
+// User authentication schemas
+export const SignupSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  name: z
+    .string()
+    .min(1, { message: "Name is required!" })
+    .max(40, { message: "Name cannot be longer than 40 characters!" }),
+  password: z
+    .string()
+    .min(8, { message: "Password should have at least 8 characters" })
+    .max(40, { message: "Password cannot be longer than 40 characters" }),
+});
+
+export const SigninSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z.string().min(1, { message: "Password is required!" }),
 });
 
 // CollectionMedia validation schema

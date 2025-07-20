@@ -25,13 +25,12 @@ const MediaCard = React.memo(
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
   }) => {
-    console.log(typeof setIsOpen);
     const ref = useOutside(() => setIsOpen(false), isOpen);
 
     return (
       <div
         ref={ref}
-        className="relative flex h-full max-h-[610px] flex-col gap-4 rounded-2xl bg-white p-4 md:flex-row md:gap-6 md:p-6 lg:gap-8 xl:max-h-none"
+        className="relative flex h-full max-h-[610px] flex-col gap-4 rounded-2xl bg-white p-4 md:flex-row md:gap-6 lg:gap-8 xl:max-h-none"
       >
         <button
           onClick={() => setIsOpen(false)}

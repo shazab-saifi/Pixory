@@ -46,13 +46,13 @@ const VideosSection = ({ query }: { query?: string }) => {
   });
 
   if (error) return <div>Error loading videos: {(error as Error).message}</div>;
-  if (data === undefined) return;
   if (isLoading)
     return (
       <div className="mt-20 flex min-w-full items-center justify-center">
         <Spinner />
       </div>
     );
+  if (data === undefined) return;
 
   return (
     <div>
@@ -71,12 +71,25 @@ const VideosSection = ({ query }: { query?: string }) => {
             return (
               <VideoPreviewCard
                 key={video.id}
-                width={video.width}
-                height={video.height}
-                videoURL={videoFile.link}
-                originalVideoURL={hdVideoFIle.link}
-                videoPreviewURL={video.image}
-                pexelsVideoURL={video.url}
+                originalVideoUrl={hdVideoFIle.link}
+                video={{
+                  id: video.id,
+                  width: video.width,
+                  height: video.height,
+                  url: video.url,
+                  image: video.image,
+                  videographer: video.user.name,
+                  videographerUrl: video.user.url,
+                  videoFiles: video.video_files.map((f) => ({
+                    id: f.id,
+                    quality: f.quality,
+                    width: f.width,
+                    height: f.height,
+                    fileType: f.file_type,
+                    link: f.link,
+                    videoId: video.id,
+                  })),
+                }}
                 onClick={() => {
                   setIsVideoOpen(true);
                   setSelectedVideo(video);

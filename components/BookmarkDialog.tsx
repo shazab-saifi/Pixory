@@ -11,7 +11,7 @@ import {
   CreateCollectionSchema,
   MAX_COLLECTIONS_PER_USER,
 } from "@/lib/validation";
-import { Collection, CollectionPhoto } from "@/lib/types";
+import { Collection, CollectionPhoto, CollectionVideo } from "@/lib/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchCollection } from "@/lib/utils";
@@ -19,10 +19,12 @@ import { fetchCollection } from "@/lib/utils";
 const BookmarkDialog = ({
   ref,
   photo,
+  video,
   setBookmarkOpen,
 }: {
   ref: React.Ref<HTMLDivElement>;
-  photo: CollectionPhoto;
+  photo?: CollectionPhoto;
+  video?: CollectionVideo;
   setBookmarkOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -55,7 +57,8 @@ const BookmarkDialog = ({
   const createCollectionMutation = useMutation({
     mutationFn: async (collectionData: {
       collectionName: string;
-      photoData: CollectionPhoto;
+      photoData?: CollectionPhoto;
+      videoData?: CollectionVideo;
     }) => {
       const res = await fetch("/api/collection", {
         method: "POST",
@@ -117,6 +120,39 @@ const BookmarkDialog = ({
     },
   });
 
+  const addVideoMutation = useMutation({
+    mutationFn: async (data: {
+      videoData: CollectionVideo;
+      collectionId: number;
+    }) => {
+      const res = await fetch(
+        `/api/storeVideo?collectionId=${data.collectionId}`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(data.videoData),
+        },
+      );
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to add video");
+      }
+
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["collections"] });
+      toast.success("Video bookmarked successfully");
+      setBookmarkOpen(false);
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Video storing request failed");
+    },
+  });
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
@@ -126,7 +162,10 @@ const BookmarkDialog = ({
     }
   };
 
-  const handleClick = async () => {
+  const handleClick = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.stopPropagation();
     if (status === "authenticated") {
       try {
         if (hasReachedLimit) {
@@ -146,11 +185,19 @@ const BookmarkDialog = ({
           setValidationError(errorMessage);
           return;
         }
+        if (photo) {
+          createCollectionMutation.mutate({
+            collectionName: validationResult.data.collectionName,
+            photoData: photo,
+          });
+        }
 
-        await createCollectionMutation.mutateAsync({
-          collectionName: validationResult.data.collectionName,
-          photoData: photo,
-        });
+        if (video) {
+          createCollectionMutation.mutate({
+            collectionName: validationResult.data.collectionName,
+            videoData: video,
+          });
+        }
       } catch (error) {
         console.error("Internal server error : ", error);
       }
@@ -159,10 +206,11 @@ const BookmarkDialog = ({
     }
   };
 
-  console.log(isLoading);
-
   return (
-    <div className="fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm">
+    <div
+      onClick={(e) => e.stopPropagation()}
+      className="fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm"
+    >
       <div
         ref={ref}
         className="relative mx-4 flex flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
@@ -171,7 +219,9 @@ const BookmarkDialog = ({
           Save to Collection
         </h1>
         <button
-          onClick={() => setBookmarkOpen(false)}
+          onClick={() => {
+            setBookmarkOpen(false);
+          }}
           className="group absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
         >
           <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
@@ -181,7 +231,7 @@ const BookmarkDialog = ({
             <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto scroll-smooth">
               <div className="space-y-2">
                 <button
-                  onClick={(e) => {
+                  onClick={() => {
                     if (hasReachedLimit) {
                       toast.error(
                         `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
@@ -238,10 +288,18 @@ const BookmarkDialog = ({
                         <button
                           className="relative size-35 cursor-pointer overflow-hidden rounded-2xl"
                           onClick={() => {
-                            addPhotoMutation.mutate({
-                              photoData: photo,
-                              collectionId: collection.id,
-                            });
+                            if (photo) {
+                              addPhotoMutation.mutate({
+                                photoData: photo,
+                                collectionId: collection.id,
+                              });
+                            }
+                            if (video) {
+                              addVideoMutation.mutate({
+                                videoData: video,
+                                collectionId: collection.id,
+                              });
+                            }
                             setActiveCollectionId(collection.id);
                           }}
                         >
@@ -275,7 +333,9 @@ const BookmarkDialog = ({
               )}
             </div>
             <Button
-              onClick={() => router.push("/profile")}
+              onClick={() => {
+                router.push("/profile");
+              }}
               className="w-fit space-x-2 font-bold"
             >
               <span>Your Collections</span>
@@ -304,7 +364,12 @@ const BookmarkDialog = ({
               </div>
             </div>
             <div className="mx-auto flex w-fit gap-4">
-              <Button onClick={() => setIsClicked(false)} variant="secondary">
+              <Button
+                onClick={() => {
+                  setIsClicked(false);
+                }}
+                variant="secondary"
+              >
                 Back
               </Button>
               <Button
