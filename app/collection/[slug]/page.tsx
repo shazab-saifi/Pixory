@@ -3,6 +3,20 @@ import Navbar2 from "@/components/Navbar/Navbar2";
 import Masonry from "@/components/collection/Masonry";
 import prisma from "@/lib/prismaClient";
 import { Collection } from "@/lib/types";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  return {
+    title: `${slug} | Your Collection - Pixory`,
+    description: `View your personal collection "${slug}" on Pixory.`,
+  };
+}
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   try {
