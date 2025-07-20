@@ -1,38 +1,69 @@
-"use client";
+import { Metadata } from "next";
+import SearchPageClient from "./SearchPageClient";
 
-import Navbar2 from "@/components/Navbar/Navbar2";
-import OptionsSection from "@/components/OptionsSection";
-import PhotosSection from "@/components/PhotosSection";
-import VideosSection from "@/components/VideosSection";
-import { useOptionsToggle, useSearchOptions } from "@/lib/store";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: { query?: string };
+}): Promise<Metadata> {
+  const query = searchParams.query;
+
+  if (query) {
+    return {
+      title: `Search Results for "${query}" - Pixory`,
+      description: `Find photos and videos related to "${query}" on Pixory. Discover high-quality visual content.`,
+      keywords: [query, "photos", "videos", "visual content", "search"],
+      openGraph: {
+        title: `Search Results for "${query}" - Pixory`,
+        description: `Find photos and videos related to "${query}" on Pixory.`,
+        type: "website",
+        images: [
+          {
+            url: "/ogImage.svg",
+            width: 1200,
+            height: 630,
+            alt: "Pixory - Visual Content Platform",
+          },
+        ],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `Search Results for "${query}" - Pixory`,
+        description: `Find photos and videos related to "${query}" on Pixory.`,
+        images: ["/ogImage.svg"],
+      },
+    };
+  }
+
+  return {
+    title: "Search - Pixory",
+    description:
+      "Search for photos and videos on Pixory. Find high-quality visual content.",
+    keywords: ["search", "photos", "videos", "visual content"],
+    openGraph: {
+      title: "Search - Pixory",
+      description: "Search for photos and videos on Pixory.",
+      type: "website",
+      images: [
+        {
+          url: "/ogImage.svg",
+          width: 1200,
+          height: 630,
+          alt: "Pixory - Visual Content Platform",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Search - Pixory",
+      description: "Search for photos and videos on Pixory.",
+      images: ["/ogImage.svg"],
+    },
+  };
+}
 
 const page = () => {
-  const searchParams = useSearchParams();
-  const { currentOption, setToPhotos, setToVideos } = useOptionsToggle();
-  const { currentSearchOption } = useSearchOptions();
-  const query = searchParams.get("query") || undefined;
-
-  useEffect(() => {
-    const whichSection = () =>
-      currentSearchOption === "photos" ? setToPhotos() : setToVideos();
-    whichSection();
-  }, []);
-
-  return (
-    <div>
-      <Navbar2 />
-      <div className="mt-17 xl:mt-25">
-        <OptionsSection />
-      </div>
-      {currentOption === "photos" ? (
-        <PhotosSection query={query} />
-      ) : (
-        <VideosSection query={query} />
-      )}
-    </div>
-  );
+  return <SearchPageClient />;
 };
 
 export default page;
