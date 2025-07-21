@@ -16,13 +16,13 @@ import Button from "../Button";
 
 export default function HeroSection() {
   return (
-    <section className="px-6 xl:px-20 mt-24 lg:mt-32 xl:mt-48">
-      <div className="space-y-4 lg:space-y-6 z-20">
+    <section className="mt-24 px-6 lg:mt-32 xl:mt-48 xl:px-20">
+      <div className="z-20 space-y-4 lg:space-y-6">
         <motion.h1
           initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ ease: "easeInOut", duration: 0.3 }}
-          className="text-4xl md:text-5xl lg:text-[64px] font-semibold text-center lg:leading-18"
+          className="text-center text-4xl font-semibold md:text-5xl lg:text-[64px] lg:leading-18"
         >
           Advertise Where Creators
           <br className="hidden md:block" /> Discover and Engage
@@ -31,7 +31,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ ease: "easeInOut", duration: 0.4 }}
-          className="text-base md:text-xl text-center"
+          className="text-center text-base md:text-xl"
         >
           Tap into a high-intent audience of millions searching for stunning
           visuals.
@@ -43,11 +43,11 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ ease: "easeInOut", duration: 0.5 }}
-        className="relative flex justify-center py-10 md:py-8 z-20"
+        className="relative z-20 flex justify-center py-10 md:py-8"
       >
         <Button className="relative space-x-2 font-semibold">
           <Image
-            className="absolute top-4 -left-52 hidden md:block w-[200px] h-auto"
+            className="absolute top-4 -left-52 hidden h-auto w-[200px] md:block"
             src={arrow}
             alt="arrow svg"
           />

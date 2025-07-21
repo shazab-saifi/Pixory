@@ -1,3 +1,4 @@
+import { Ref } from "react";
 import BentoCard from "./HeroSection/BentoCard";
 import SearchBar from "./SearchBar";
 
