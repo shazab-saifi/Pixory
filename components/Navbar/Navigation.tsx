@@ -36,7 +36,7 @@ const Navigation = ({
 
   return (
     <div className="hidden xl:flex xl:items-center">
-      <div className="flex items-center font-medium text-shadow-md">
+      <div className="flex items-center text-shadow-md">
         {navItems.map((item, idx) => (
           <Link
             className="relative flex cursor-pointer px-6 py-1"

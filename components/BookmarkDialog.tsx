@@ -15,6 +15,7 @@ import { Collection, CollectionPhoto, CollectionVideo } from "@/lib/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchCollection } from "@/lib/utils";
+import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 
 const BookmarkDialog = ({
   ref,
@@ -36,6 +37,8 @@ const BookmarkDialog = ({
   );
   const router = useRouter();
 
+  useOverflowHidden(true);
+
   const { data: collectionsData, isLoading } = useQuery({
     queryKey: ["collections"],
     queryFn: fetchCollection,
@@ -45,14 +48,6 @@ const BookmarkDialog = ({
 
   const collectionArray = collectionsData || [];
   const hasReachedLimit = collectionArray.length >= MAX_COLLECTIONS_PER_USER;
-
-  useEffect(() => {
-    document.body.classList.add("no-scroll");
-
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, []);
 
   const createCollectionMutation = useMutation({
     mutationFn: async (collectionData: {

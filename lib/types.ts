@@ -45,8 +45,18 @@ export interface VideoFile {
   file_type: string;
   width: number;
   height: number;
-  fps: number;
+  fps?: number;
   link: string;
+}
+
+export interface CollectionVideoFile {
+  id: number;
+  quality: string;
+  width: number;
+  height: number;
+  fileType: string;
+  link: string;
+  videoId: number;
 }
 
 interface VideoPicture {
@@ -86,16 +96,6 @@ export interface CollectionPhoto {
   large: string;
   portrait: string;
   landscape: string;
-}
-
-export interface CollectionVideoFile {
-  id: number;
-  quality: string;
-  width: number;
-  height: number;
-  fileType: string;
-  link: string;
-  videoId: number;
 }
 
 export interface CollectionVideo {

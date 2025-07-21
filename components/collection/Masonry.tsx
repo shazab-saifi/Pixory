@@ -1,21 +1,24 @@
 "use client";
 
-import {
-  Collection,
-  CollectionPhoto,
-  CollectionVideo,
-  PhotoURLsTypes,
-} from "@/lib/types";
+import { Collection, CollectionPhoto, CollectionVideo } from "@/lib/types";
 import PhotoPreviewCard from "../PhotoPreviewCard";
 import VideoPreviewCard from "../VideoPreviewCard";
 import { useState } from "react";
 import MediaCard from "../MediaCard";
+import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 
 const Masonry = ({ collection }: { collection: Collection }) => {
-  const [isPhotoOpen, setIsPhotoOpen] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState<CollectionPhoto | null>(
-    null,
-  );
+  const [isMediaOpen, setIsMediaOpen] = useState(false);
+  const [selectedMedia, setSelectedMedia] = useState<
+    | { type: "photo"; data: CollectionPhoto }
+    | {
+        type: "video";
+        data: CollectionVideo & { videoFile: any; hdVideoFIle: any };
+      }
+    | null
+  >(null);
+
+  useOverflowHidden(isMediaOpen);
 
   return (
     <>
@@ -46,20 +49,40 @@ const Masonry = ({ collection }: { collection: Collection }) => {
                   photo={photo}
                   pexelsPhotoURL={photo.photographerUrl}
                   onClick={() => {
-                    setIsPhotoOpen(true);
-                    setSelectedPhoto(photo);
+                    setIsMediaOpen(true);
+                    setSelectedMedia({ type: "photo", data: photo });
                   }}
                   showBookmark={false}
                 />
               ) : video && videoFile && hdVideoFIle ? (
                 <VideoPreviewCard
-                  videoURL={videoFile.link}
-                  width={video.width}
-                  height={video.height}
-                  originalVideoURL={hdVideoFIle.link}
-                  videoPreviewURL={video.image}
-                  pexelsVideoURL={video.url}
-                  onClick={() => console.log("video")}
+                  key={video.id}
+                  originalVideoUrl={hdVideoFIle.link}
+                  video={{
+                    id: video.id,
+                    width: video.width,
+                    height: video.height,
+                    url: video.url,
+                    image: video.image,
+                    videographer: video.videographer,
+                    videographerUrl: video.videographerUrl,
+                    videoFiles: video.videoFiles.map((f) => ({
+                      id: f.id,
+                      quality: f.quality,
+                      width: f.width,
+                      height: f.height,
+                      fileType: f.fileType,
+                      link: f.link,
+                      videoId: video.id,
+                    })),
+                  }}
+                  onClick={() => {
+                    setIsMediaOpen(true);
+                    setSelectedMedia({
+                      type: "video",
+                      data: { ...video, videoFile, hdVideoFIle },
+                    });
+                  }}
                   showBookmark={false}
                 />
               ) : null}
@@ -67,28 +90,47 @@ const Masonry = ({ collection }: { collection: Collection }) => {
           );
         })}
       </div>
-      {isPhotoOpen && (
+      {isMediaOpen && (
         <div className="fixed inset-0 z-50 min-h-screen bg-black/80 backdrop-blur-sm" />
       )}
-      {isPhotoOpen && (
+      {isMediaOpen && selectedMedia && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
-            <MediaCard
-              ownerName={selectedPhoto?.photographer as string}
-              ownerUrl={selectedPhoto?.photographerUrl as string}
-              src={
-                {
-                  original: selectedPhoto?.original,
-                  large: selectedPhoto?.large,
-                  portrait: selectedPhoto?.portrait,
-                  landscape: selectedPhoto?.landscape,
-                } as PhotoURLsTypes
-              }
-              isVideo={false}
-              Url={selectedPhoto?.large as string}
-              isOpen={isPhotoOpen}
-              setIsOpen={setIsPhotoOpen}
-            />
+            {selectedMedia.type === "photo" ? (
+              <MediaCard
+                ownerName={selectedMedia.data.photographer}
+                ownerUrl={selectedMedia.data.photographerUrl}
+                src={{
+                  original: selectedMedia.data.original,
+                  large: selectedMedia.data.large,
+                  portrait: selectedMedia.data.portrait,
+                  landscape: selectedMedia.data.landscape,
+                }}
+                isVideo={false}
+                Url={selectedMedia.data.large}
+                isOpen={isMediaOpen}
+                setIsOpen={setIsMediaOpen}
+              />
+            ) : (
+              <MediaCard
+                ownerName={selectedMedia.data.videographer}
+                ownerUrl={selectedMedia.data.videographerUrl}
+                src={selectedMedia.data.videoFiles.map((file) => {
+                  return {
+                    file_type: file.fileType,
+                    height: file.height,
+                    width: file.width,
+                    link: file.link,
+                    quality: file.quality,
+                    id: file.id,
+                  };
+                })}
+                isVideo={true}
+                Url={selectedMedia.data.hdVideoFIle.link}
+                isOpen={isMediaOpen}
+                setIsOpen={setIsMediaOpen}
+              />
+            )}
           </div>
         </div>
       )}

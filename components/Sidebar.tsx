@@ -5,6 +5,7 @@ import { Home, LogOut, Megaphone, Plus, User, X } from "lucide-react";
 import Link from "next/link";
 import Button from "./Button";
 import { signOut, useSession } from "next-auth/react";
+import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 
 const Sidebar = ({
   isOpen,
@@ -17,17 +18,7 @@ const Sidebar = ({
 }) => {
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-
-    return () => {
-      document.body.classList.remove("no-scroll");
-    };
-  }, [isOpen]);
+  useOverflowHidden(isOpen);
 
   return (
     <>

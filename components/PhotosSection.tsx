@@ -8,6 +8,7 @@ import useIntersection from "@/hooks/useIntersection";
 import { fetchData } from "@/lib/fetchdata";
 import { useOptionsToggle } from "@/lib/store";
 import MediaCard from "./MediaCard";
+import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 
 interface PhotoId {
   id: number;
@@ -65,15 +66,7 @@ const PhotosSection = ({ query }: { query?: string }) => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (isPhotoOpen) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-
-    return () => document.body.classList.remove("overflow-hidden");
-  }, [isPhotoOpen]);
+  useOverflowHidden(isPhotoOpen);
 
   useIntersection({
     onIntersect: () => {

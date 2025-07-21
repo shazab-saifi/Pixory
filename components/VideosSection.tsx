@@ -8,6 +8,7 @@ import { fetchData } from "@/lib/fetchdata";
 import { useOptionsToggle } from "@/lib/store";
 import Masonry from "react-masonry-css";
 import MediaCard from "./MediaCard";
+import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 import { findVideoFile } from "@/lib/utils";
 
 const VideosSection = ({ query }: { query?: string }) => {
@@ -36,6 +37,8 @@ const VideosSection = ({ query }: { query?: string }) => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [query]);
+
+  useOverflowHidden(isVideoOpen);
 
   useIntersection({
     onIntersect: () => {
@@ -66,7 +69,7 @@ const VideosSection = ({ query }: { query?: string }) => {
       >
         {data.pages.flatMap((page) =>
           page.data.videos.map((video: VideoData) => {
-            const { videoFile, hdVideoFIle } = findVideoFile(video);
+            const { hdVideoFIle } = findVideoFile(video);
 
             return (
               <VideoPreviewCard
