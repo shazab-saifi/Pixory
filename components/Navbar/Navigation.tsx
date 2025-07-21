@@ -35,7 +35,7 @@ const Navigation = ({
   ];
 
   return (
-    <div className="hidden xl:flex xl:items-center">
+    <div className="hidden gap-6 md:flex md:items-center">
       <div className="flex items-center text-shadow-md">
         {navItems.map((item, idx) => (
           <Link
@@ -58,7 +58,7 @@ const Navigation = ({
       {/* Avatar and dropdown are wrapped together to keep dropdown open on hover */}
       {status === "authenticated" ? (
         <div
-          className="relative flex w-[120px] justify-center"
+          className="relative flex justify-center"
           onMouseEnter={() => setIsDropdownOpen(true)}
           onMouseLeave={() => setIsDropdownOpen(false)}
         >

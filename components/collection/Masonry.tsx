@@ -22,7 +22,7 @@ const Masonry = ({ collection }: { collection: Collection }) => {
 
   return (
     <>
-      <div className="columns-3 gap-6">
+      <div className="columns-2 gap-4 md:columns-3 md:gap-6">
         {collection.media.map((item) => {
           const photo: CollectionPhoto | undefined = item.photo;
           const video: CollectionVideo | undefined = item.video;
@@ -43,7 +43,7 @@ const Masonry = ({ collection }: { collection: Collection }) => {
           }
 
           return (
-            <div key={item.id} className="mb-6 break-inside-avoid">
+            <div key={item.id} className="mb-4 break-inside-avoid md:mb-6">
               {photo ? (
                 <PhotoPreviewCard
                   photo={photo}

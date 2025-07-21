@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
-import Button from "./Button";
-import { Bookmark, X } from "lucide-react";
+import { X } from "lucide-react";
 import DownloadMenu from "./DownloadMenu";
 import PhotoLinkCopy from "./PhotoLinkCopy";
 import { PhotoURLsTypes, VideoFile } from "@/lib/types";
@@ -34,18 +33,18 @@ const MediaCard = React.memo(
       >
         <button
           onClick={() => setIsOpen(false)}
-          className="group absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
+          className="group absolute top-4 right-4 z-50 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
         >
           <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
         </button>
-        <div className="flex w-full justify-between md:hidden">
+        <div className="w-full md:hidden">
           <DownloadMenu src={src} />
-          <Button
+          {/* <Button
             variant="secondary"
             className="shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] hover:bg-gray-100"
           >
             <Bookmark className="h-5 w-5" />
-          </Button>
+          </Button> */}
         </div>
         <div className="h-full overflow-hidden rounded-lg">
           {!isVideo ? (

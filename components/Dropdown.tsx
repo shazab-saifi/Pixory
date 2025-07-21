@@ -26,7 +26,7 @@ const Dropdown = ({
 
   return (
     <div
-      className={`absolute inset-x-0 top-full z-50 pt-2 md:w-full ${pointerEventsNone ? "pointer-events-none" : ""}`}
+      className={`absolute top-full z-50 min-w-[120px] pt-2 md:w-full ${pointerEventsNone ? "pointer-events-none" : ""}`}
       style={{ marginTop: "-4px" }}
     >
       <div

@@ -206,181 +206,187 @@ const BookmarkDialog = ({
       onClick={(e) => e.stopPropagation()}
       className="fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm"
     >
-      <div
-        ref={ref}
-        className="relative mx-4 flex flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
-      >
-        <h1 className="text-2xl font-semibold md:text-3xl">
-          Save to Collection
-        </h1>
-        <button
-          onClick={() => {
-            setBookmarkOpen(false);
-          }}
-          className="group absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
+      <div className="max-w-full px-4">
+        <div
+          ref={ref}
+          className="relative flex max-w-full flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
         >
-          <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
-        </button>
-        {!isClicked ? (
-          <>
-            <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto scroll-smooth">
-              <div className="space-y-2">
-                <button
-                  onClick={() => {
-                    if (hasReachedLimit) {
-                      toast.error(
-                        `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
-                      );
-                      return;
-                    }
-                    setIsClicked(true);
-                  }}
-                  disabled={hasReachedLimit}
-                  className={`group flex size-35 cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-colors ${
-                    hasReachedLimit
-                      ? "cursor-not-allowed border-gray-200 bg-gray-50"
-                      : "border-gray-300 bg-gray-100 hover:border-gray-400"
-                  }`}
-                >
-                  <CopyPlus
-                    className={`size-12 transition-colors ${
+          <h1 className="text-2xl font-semibold md:text-3xl">
+            Save to Collection
+          </h1>
+          <button
+            onClick={() => {
+              setBookmarkOpen(false);
+            }}
+            className="group absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
+          >
+            <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
+          </button>
+          {!isClicked ? (
+            <>
+              <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto scroll-smooth">
+                <div className="space-y-2">
+                  <button
+                    onClick={() => {
+                      if (hasReachedLimit) {
+                        toast.error(
+                          `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
+                        );
+                        return;
+                      }
+                      setIsClicked(true);
+                    }}
+                    disabled={hasReachedLimit}
+                    className={`group flex size-25 cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-colors sm:size-35 ${
                       hasReachedLimit
-                        ? "text-gray-200"
-                        : "text-gray-300 group-hover:text-gray-400"
+                        ? "cursor-not-allowed border-gray-200 bg-gray-50"
+                        : "border-gray-300 bg-gray-100 hover:border-gray-400"
                     }`}
-                  />
-                </button>
-                <span className="text-sm font-semibold text-gray-700">
-                  New Collection
-                </span>
-                {hasReachedLimit && (
-                  <div className="text-xs text-red-600">
-                    Limit reached ({collectionArray.length}/
-                    {MAX_COLLECTIONS_PER_USER})
-                  </div>
-                )}
-              </div>
-              {isLoading ? (
-                <>
-                  {/* Skeleton from react-loading-skeleton is not working here for some reason */}
-                  {[1, 2, 3].map((n: number) => (
-                    <div key={n}>
-                      <div
-                        role="status"
-                        className="h-full max-w-sm animate-pulse space-y-4"
-                      >
-                        <div className="size-35 rounded-2xl bg-gray-200 dark:bg-gray-700"></div>
-                        <div className="h-3 w-10 rounded-md bg-gray-200 dark:bg-gray-700"></div>
-                      </div>
+                  >
+                    <CopyPlus
+                      className={`size-8 transition-colors sm:size-12 ${
+                        hasReachedLimit
+                          ? "text-gray-200"
+                          : "text-gray-300 group-hover:text-gray-400"
+                      }`}
+                    />
+                  </button>
+                  <span className="text-sm font-semibold text-gray-700">
+                    New Collection
+                  </span>
+                  {hasReachedLimit && (
+                    <div className="text-xs text-red-600">
+                      Limit reached ({collectionArray.length}/
+                      {MAX_COLLECTIONS_PER_USER})
                     </div>
-                  ))}
-                </>
-              ) : (
-                <>
-                  {collectionArray.map(
-                    (collection: Collection, idx: number) => (
-                      <div key={idx} className="space-y-2">
-                        <button
-                          className="relative size-35 cursor-pointer overflow-hidden rounded-2xl"
-                          onClick={() => {
-                            if (photo) {
-                              addPhotoMutation.mutate({
-                                photoData: photo,
-                                collectionId: collection.id,
-                              });
-                            }
-                            if (video) {
-                              addVideoMutation.mutate({
-                                videoData: video,
-                                collectionId: collection.id,
-                              });
-                            }
-                            setActiveCollectionId(collection.id);
-                          }}
+                  )}
+                </div>
+                {isLoading ? (
+                  <>
+                    {/* Skeleton from react-loading-skeleton is not working here for some reason */}
+                    {[1, 2, 3].map((n: number) => (
+                      <div key={n}>
+                        <div
+                          role="status"
+                          className="h-full max-w-sm animate-pulse space-y-4"
                         >
-                          <Image
-                            src={
-                              collection.media[0]?.photo?.large
-                                ? collection.media[0]?.photo?.large
-                                : "/heroImage5.png"
-                            }
-                            alt="collection thumbnail"
-                            width={200}
-                            height={200}
-                            className="h-full w-full object-cover"
-                          />
-                          <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
-                            {addPhotoMutation.isPending &&
-                            activeCollectionId === collection.id ? (
-                              <LoaderCircle className="size-12 animate-spin text-white" />
-                            ) : (
-                              <CopyPlus className="size-12 text-transparent transition-colors group-hover:text-white" />
-                            )}
-                          </div>
-                        </button>
-                        <div className="mt-1 text-sm font-semibold text-gray-700">
-                          {collection.name}
+                          <div className="size-35 rounded-2xl bg-gray-200 dark:bg-gray-700"></div>
+                          <div className="h-3 w-10 rounded-md bg-gray-200 dark:bg-gray-700"></div>
                         </div>
                       </div>
-                    ),
-                  )}
-                </>
-              )}
-            </div>
-            <Button
-              onClick={() => {
-                router.push("/profile");
-              }}
-              className="w-fit space-x-2 font-bold"
-            >
-              <span>Your Collections</span>
-              <ArrowDownRight className="size-5 -rotate-45" />
-            </Button>
-          </>
-        ) : (
-          <div className="w-full space-y-8">
-            <div className="space-y-8">
-              <span className="text-sm font-semibold text-gray-700">
-                Collection Name
-              </span>
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  placeholder="Enter Collection Name"
-                  className={`w-90 rounded-xl border p-4 text-gray-700 ${
-                    validationError ? "border-red-500 focus:border-red-500" : ""
-                  }`}
-                />
-                {validationError && (
-                  <p className="text-sm text-red-600">{validationError}</p>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    {collectionArray.map(
+                      (collection: Collection, idx: number) => (
+                        <div key={idx} className="space-y-2">
+                          <button
+                            className="relative size-25 cursor-pointer overflow-hidden rounded-2xl sm:size-35"
+                            onClick={() => {
+                              if (photo) {
+                                addPhotoMutation.mutate({
+                                  photoData: photo,
+                                  collectionId: collection.id,
+                                });
+                              }
+                              if (video) {
+                                addVideoMutation.mutate({
+                                  videoData: video,
+                                  collectionId: collection.id,
+                                });
+                              }
+                              setActiveCollectionId(collection.id);
+                            }}
+                          >
+                            <Image
+                              src={
+                                collection.media[0]?.photo?.large
+                                  ? collection.media[0]?.photo?.large
+                                  : "/heroImage5.png"
+                              }
+                              alt="collection thumbnail"
+                              width={200}
+                              height={200}
+                              className="h-full w-full object-cover"
+                            />
+                            <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
+                              {addPhotoMutation.isPending &&
+                              activeCollectionId === collection.id ? (
+                                <LoaderCircle className="size-12 animate-spin text-white" />
+                              ) : (
+                                <CopyPlus className="size-8 text-transparent transition-colors group-hover:text-white sm:size-12" />
+                              )}
+                            </div>
+                          </button>
+                          <div className="text-sm font-semibold text-gray-700 sm:mt-1">
+                            {collection.name}
+                          </div>
+                        </div>
+                      ),
+                    )}
+                  </>
                 )}
               </div>
-            </div>
-            <div className="mx-auto flex w-fit gap-4">
               <Button
                 onClick={() => {
-                  setIsClicked(false);
+                  router.push("/profile");
                 }}
-                variant="secondary"
+                className="w-fit space-x-2 font-bold"
               >
-                Back
+                <span>Your Collections</span>
+                <ArrowDownRight className="size-5 -rotate-45" />
               </Button>
-              <Button
-                onClick={handleClick}
-                disabled={createCollectionMutation.isPending || hasReachedLimit}
-                className="flex w-40 items-center justify-center space-x-2 bg-green-500 font-bold hover:bg-green-600 disabled:opacity-50"
-              >
-                {!createCollectionMutation.isPending ? (
-                  <span>Create Collection</span>
-                ) : (
-                  <LoaderCircle className="size-5 animate-spin" />
-                )}
-              </Button>
+            </>
+          ) : (
+            <div className="w-full space-y-8">
+              <div className="space-y-8">
+                <span className="text-sm font-semibold text-gray-700">
+                  Collection Name
+                </span>
+                <div className="space-y-2">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    placeholder="Enter Collection Name"
+                    className={`w-90 rounded-xl border p-4 text-gray-700 ${
+                      validationError
+                        ? "border-red-500 focus:border-red-500"
+                        : ""
+                    }`}
+                  />
+                  {validationError && (
+                    <p className="text-sm text-red-600">{validationError}</p>
+                  )}
+                </div>
+              </div>
+              <div className="mx-auto flex w-fit gap-4">
+                <Button
+                  onClick={() => {
+                    setIsClicked(false);
+                  }}
+                  variant="secondary"
+                >
+                  Back
+                </Button>
+                <Button
+                  onClick={handleClick}
+                  disabled={
+                    createCollectionMutation.isPending || hasReachedLimit
+                  }
+                  className="flex w-40 items-center justify-center space-x-2 bg-green-500 font-bold hover:bg-green-600 disabled:opacity-50"
+                >
+                  {!createCollectionMutation.isPending ? (
+                    <span>Create Collection</span>
+                  ) : (
+                    <LoaderCircle className="size-5 animate-spin" />
+                  )}
+                </Button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

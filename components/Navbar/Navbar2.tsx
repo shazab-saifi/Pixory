@@ -47,7 +47,7 @@ const Navbar2 = () => {
             isDropdownOpen={isDropdownOpen}
             setIsDropdownOpen={setIsDropdownOpen}
           />
-          <div className="flex items-center space-x-4 xl:hidden">
+          <div className="flex items-center space-x-4 md:hidden">
             <Search className="h-6 w-6" onClick={() => setIsSearching(true)} />
             <button
               onClick={() => setIsOpen(true)}

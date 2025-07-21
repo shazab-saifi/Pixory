@@ -22,7 +22,7 @@ export default function CollectionsGrid() {
   return (
     <div className="w-full">
       {isLoading ? (
-        <div className="grid w-full grid-cols-4 gap-12">
+        <div className="grid w-full grid-cols-1 gap-12 md:grid-cols-4">
           {[1, 2, 3, 4].map((n) => (
             <div key={n}>
               <Skeleton
@@ -36,7 +36,7 @@ export default function CollectionsGrid() {
           ))}
         </div>
       ) : (
-        <div className="grid w-full grid-cols-4 gap-12">
+        <div className="grid w-full grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
           {collections?.map((collection: Collection, idx: number) => (
             <CollectionCard
               key={idx}

@@ -53,7 +53,7 @@ const VideoPreviewCard = React.memo(
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onClick={onClick}
-          className={`relative rounded-xl ${fixedHeight ? "h-[250px] sm:h-[400px] md:h-[500px] xl:h-[800px]" : "h-[100px] md:h-[200px] xl:h-[279.73px]"} group overflow-hidden lg:rounded-2xl`}
+          className={`group relative ${fixedHeight ? "aspect-[9/14]" : "aspect-video"} overflow-hidden rounded-xl lg:rounded-2xl`}
         >
           <Image
             src={video.image}
@@ -85,14 +85,14 @@ const VideoPreviewCard = React.memo(
                     setIsBookmarkOpen(true);
                   }}
                 >
-                  <Bookmark className="invisible h-4 w-4 translate-x-full text-white opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-x-0 group-hover:opacity-100 md:h-6 md:w-6" />
+                  <Bookmark className="size-6 text-white md:invisible md:translate-x-full md:opacity-0 md:transition-all md:duration-300 md:group-hover:visible md:group-hover:translate-x-0 md:group-hover:opacity-100" />
                 </button>
               )}
             </div>
-            <div className="invisible flex w-full translate-y-full items-center justify-between opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+            <div className="flex w-full items-center justify-between p-2 md:invisible md:translate-y-full md:opacity-0 md:transition-all md:duration-300 md:group-hover:visible md:group-hover:translate-y-0 md:group-hover:opacity-100">
               <Link
                 href={video.url}
-                className="text-shadow text-[10px] text-white/70 sm:text-sm md:text-base md:font-semibold"
+                className="text-shadow invisible text-[10px] text-white/70 sm:text-sm md:visible md:text-base md:font-semibold"
               >
                 Provided by
                 <span className="font-bold text-white italic"> pexels</span>
@@ -108,7 +108,7 @@ const VideoPreviewCard = React.memo(
               >
                 Download
               </Button>
-              <Download size={20} className="text-white md:hidden" />
+              <Download className="size-6 text-white md:hidden" />
             </div>
           </div>
           {isBookmarkOpen && (

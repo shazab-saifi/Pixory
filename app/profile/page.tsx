@@ -19,7 +19,7 @@ const page = async () => {
       <Navbar2 />
       <div className="mt-30 flex h-full w-full flex-col px-4 md:px-20">
         {/* User section */}
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-4 py-6 sm:gap-6 md:gap-8">
           <Image
             src={
               (session?.user?.image && session.user.image) ||
@@ -28,11 +28,13 @@ const page = async () => {
             alt="avatar"
             width={100}
             height={100}
-            className="w-32 rounded-full"
+            className="h-20 w-20 rounded-full object-cover sm:h-28 sm:w-28 md:h-32 md:w-32"
           />
-          <h1 className="text-5xl font-medium">{session?.user?.name}</h1>
+          <h1 className="text-center text-2xl font-medium break-words sm:text-3xl md:text-5xl">
+            {session?.user?.name}
+          </h1>
         </div>
-        <div className="mx-auto my-20">
+        <div className="mx-auto my-10 md:my-20">
           <h1 className="py-4 text-left text-2xl font-medium">
             Your Collections
           </h1>
