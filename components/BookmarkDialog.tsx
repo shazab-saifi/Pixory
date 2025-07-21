@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "./Button";
-import { ArrowDownRight, CopyPlus, Cross, LoaderCircle, X } from "lucide-react";
+import { ArrowDownRight, CopyPlus, LoaderCircle, X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -16,6 +16,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { fetchCollection } from "@/lib/utils";
 import { useOverflowHidden } from "@/hooks/useOverflowHidden";
+import { motion } from "motion/react";
 
 const BookmarkDialog = ({
   ref,
@@ -206,7 +207,12 @@ const BookmarkDialog = ({
       onClick={(e) => e.stopPropagation()}
       className="fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm"
     >
-      <div className="max-w-full px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.3 }}
+        className="max-w-full px-4"
+      >
         <div
           ref={ref}
           className="relative flex max-w-full flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
@@ -387,7 +393,7 @@ const BookmarkDialog = ({
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import HeroSection from "@/components/Advertise/HeroSection";
 import WhyAdvertise from "@/components/Advertise/WhyAdvertise";
 import Marquee from "react-fast-marquee";
 import { Metadata } from "next";
+import { CampaignSection } from "@/components/Advertise/CampaignSection";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -166,21 +167,7 @@ const page = () => {
         </div>
       </div>
       {/* Campaign */}
-      <div className="mx-4 flex max-w-full flex-col justify-between gap-20 rounded-2xl bg-gray-100 p-4 md:flex-row md:gap-30 md:p-6 xl:mx-40 2xl:mx-90">
-        <div className="flex min-h-full flex-col items-baseline-last justify-between gap-8 md:gap-0 md:p-4">
-          <div className="space-y-4 md:space-y-8">
-            <h1 className="text-2xl font-medium md:text-4xl">
-              Launch Your Campaign And thrive your business
-            </h1>
-            <p>
-              Connect with millions of creatives worldwide through high-impact,
-              visually integrated ad experiences.
-            </p>
-          </div>
-          <Button>Launch Now</Button>
-        </div>
-        <div className="aspect-square w-[300px] rounded-2xl bg-[url(/ad.jpg)] bg-cover bg-no-repeat md:w-[400px]"></div>
-      </div>
+      <CampaignSection />
       {/* Testimonials marquee */}
       <div className="relative flex w-full flex-col gap-8 overflow-x-auto py-8 md:overflow-hidden">
         {/* Mobile/Small screens: horizontal scroll, no marquee */}

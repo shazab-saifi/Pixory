@@ -67,40 +67,72 @@ export default function HeroSection() {
         <div className="relative flex items-center justify-center">
           <motion.div
             className="z-10 -mr-[150px]"
-            initial={{ opacity: 0, transform: "translateX(80%)", scale: 0.8 }}
-            animate={{ opacity: 1, transform: "translateX(0)", scale: 1 }}
+            initial={{
+              opacity: 0,
+              transform: "translateX(80%)",
+              filter: "blur(10px)",
+            }}
+            animate={{
+              opacity: 1,
+              transform: "translateX(0)",
+              filter: "blur(0px)",
+            }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.6 }}
           >
             <Image src={heroImage5} width={300} height={400} alt="image5" />
           </motion.div>
           <motion.div
             className="z-20 -mr-[75px]"
-            initial={{ opacity: 0, transform: "translateX(80%)" }}
-            animate={{ opacity: 1, transform: "translateX(0)" }}
+            initial={{
+              opacity: 0,
+              transform: "translateX(80%)",
+              filter: "blur(10px)",
+            }}
+            animate={{
+              opacity: 1,
+              transform: "translateX(0)",
+              filter: "blur(0px)",
+            }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.3 }}
           >
             <Image src={heroImage4} width={300} height={400} alt="image4" />
           </motion.div>
           <motion.div
             className="z-30"
-            initial={{ opacity: 0, y: 120 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 120, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0 }}
           >
             <Image src={heroImage1} width={300} height={400} alt="image1" />
           </motion.div>
           <motion.div
             className="z-20 -ml-[75px]"
-            initial={{ opacity: 0, transform: "translateX(-80%)" }}
-            animate={{ opacity: 1, transform: "translateX(0)" }}
+            initial={{
+              opacity: 0,
+              transform: "translateX(-80%)",
+              filter: "blur(10px)",
+            }}
+            animate={{
+              opacity: 1,
+              transform: "translateX(0)",
+              filter: "blur(0px)",
+            }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.3 }}
           >
             <Image src={heroImage2} width={300} height={400} alt="image2" />
           </motion.div>
           <motion.div
             className="z-10 -ml-[150px]"
-            initial={{ opacity: 0, transform: "translateX(-80%)" }}
-            animate={{ opacity: 1, transform: "translateX(0)" }}
+            initial={{
+              opacity: 0,
+              transform: "translateX(-80%)",
+              filter: "blur(10px)",
+            }}
+            animate={{
+              opacity: 1,
+              transform: "translateX(0)",
+              filter: "blur(0px)",
+            }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0.6 }}
           >
             <Image src={heroImage3} width={300} height={400} alt="image3" />

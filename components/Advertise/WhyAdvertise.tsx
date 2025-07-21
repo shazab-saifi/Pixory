@@ -27,8 +27,8 @@ export default function WhyAdvertise() {
       </div>
       <div className="flex shrink-0">
         <motion.div
-          initial={{ opacity: 0, rotate: 90 }}
-          whileInView={{ opacity: 1, rotate: 0 }}
+          initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.3 }}
           viewport={{ once: true }}
           className="z-10"
@@ -41,8 +41,8 @@ export default function WhyAdvertise() {
           />
         </motion.div>
         <motion.div
-          initial={{ opacity: 0, rotate: -90 }}
-          whileInView={{ opacity: 1, rotate: 0 }}
+          initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.3 }}
           viewport={{ once: true }}
           className="z-20 mt-20 -ml-[35px]"
