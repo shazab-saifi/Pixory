@@ -23,3 +23,13 @@ export const useSearchOptions = create<SearchState>((set) => ({
   setSearchToVideos: () => set({ currentSearchOption: "videos" }),
   setSearchToPhotos: () => set({ currentSearchOption: "photos" }),
 }));
+
+export const useThanksDialog = create<{
+  thanksOpen: boolean;
+  openThanks: () => void;
+  closeThanks: () => void;
+}>((set) => ({
+  thanksOpen: false,
+  openThanks: () => set({ thanksOpen: true }),
+  closeThanks: () => set({ thanksOpen: false }),
+}));

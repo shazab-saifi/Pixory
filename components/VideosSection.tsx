@@ -5,11 +5,12 @@ import { VideoData } from "@/lib/types";
 import useIntersection from "@/hooks/useIntersection";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchData } from "@/lib/fetchdata";
-import { useOptionsToggle } from "@/lib/store";
+import { useOptionsToggle, useThanksDialog } from "@/lib/store";
 import Masonry from "react-masonry-css";
 import MediaCard from "./MediaCard";
 import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 import { findVideoFile } from "@/lib/utils";
+import ThanksDialog from "./ThanksDialog";
 
 const VideosSection = ({ query }: { query?: string }) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -17,6 +18,7 @@ const VideosSection = ({ query }: { query?: string }) => {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
   const [hdVideo, setHdVideo] = useState<string>();
+  const { thanksOpen } = useThanksDialog();
 
   const {
     data,
@@ -103,10 +105,10 @@ const VideosSection = ({ query }: { query?: string }) => {
           }),
         )}
       </Masonry>
-      {isVideoOpen && (
+      {(isVideoOpen || thanksOpen) && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
-      {isVideoOpen && (
+      {isVideoOpen && !thanksOpen && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
             <MediaCard
@@ -119,6 +121,21 @@ const VideosSection = ({ query }: { query?: string }) => {
               mediaHeight={selectedVideo?.height as number}
               mediaWidth={selectedVideo?.width as number}
               setIsOpen={setIsVideoOpen}
+            />
+          </div>
+        </div>
+      )}
+      {thanksOpen && (
+        <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+          <div className="pointer-events-auto">
+            <ThanksDialog
+              image={{
+                url: selectedVideo?.image as string,
+                width: selectedVideo?.width as number,
+                height: selectedVideo?.height as number,
+              }}
+              ownerName={selectedVideo?.user.name as string}
+              ownerPexelsUrl={selectedVideo?.user.url as string}
             />
           </div>
         </div>

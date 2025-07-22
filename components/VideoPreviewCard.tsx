@@ -9,6 +9,7 @@ import { handleDownload } from "@/lib/utils";
 import { CollectionVideo } from "@/lib/types";
 import BookmarkDialog from "./BookmarkDialog";
 import { useOutside } from "@/hooks/useOutside";
+import { useThanksDialog } from "@/lib/store";
 
 const VideoPreviewCard = React.memo(
   ({
@@ -26,6 +27,7 @@ const VideoPreviewCard = React.memo(
     const [isHovered, setIsHovered] = useState(false);
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
     const ref = useOutside(() => setIsBookmarkOpen(false), isBookmarkOpen);
+    const { openThanks } = useThanksDialog();
 
     const handleMouseEnter = () => {
       setIsHovered(true);
@@ -103,7 +105,10 @@ const VideoPreviewCard = React.memo(
                 className="hidden md:block"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDownload({ url: originalVideoUrl });
+                  handleDownload({
+                    url: originalVideoUrl,
+                    onStart: openThanks,
+                  });
                 }}
               >
                 Download

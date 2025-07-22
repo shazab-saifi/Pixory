@@ -9,6 +9,7 @@ import { handleDownload } from "@/lib/utils";
 import BookmarkDialog from "./BookmarkDialog";
 import { useOutside } from "@/hooks/useOutside";
 import { CollectionPhoto } from "@/lib/types";
+import { useThanksDialog } from "@/lib/store";
 
 const PhotoPreviewCard = React.memo(
   ({
@@ -24,6 +25,7 @@ const PhotoPreviewCard = React.memo(
   }) => {
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
     const ref = useOutside(() => setIsBookmarkOpen(false), isBookmarkOpen);
+    const { openThanks } = useThanksDialog();
 
     return (
       <>
@@ -69,7 +71,7 @@ const PhotoPreviewCard = React.memo(
                 className="z-50 hidden md:block"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleDownload({ url: photo.original });
+                  handleDownload({ url: photo.original, onStart: openThanks });
                 }}
               >
                 Download

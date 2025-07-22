@@ -6,7 +6,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export async function handleDownload({ url }: { url: string }) {
+export async function handleDownload({
+  url,
+  onStart,
+}: {
+  url: string;
+  onStart?: () => void;
+}) {
   const data = await fetch(url);
   const blob = await data.blob();
   const dataURL = URL.createObjectURL(blob);
@@ -18,6 +24,7 @@ export async function handleDownload({ url }: { url: string }) {
   link.download = `downloaded-${hostname === "images.pexels.com" ? "image.jpg" : "video.mp4"}`;
   document.body.appendChild(link);
   link.click();
+  onStart?.();
   document.body.removeChild(link);
 
   URL.revokeObjectURL(dataURL);

@@ -1,4 +1,5 @@
 import { useOutside } from "@/hooks/useOutside";
+import { useThanksDialog } from "@/lib/store";
 import { PhotoURLsTypes, VideoFile } from "@/lib/types";
 import { handleDownload } from "@/lib/utils";
 import { ChevronDown, Check } from "lucide-react";
@@ -8,6 +9,7 @@ const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>();
   const ref = useOutside(() => setIsOpen(false), isOpen);
+  const { openThanks } = useThanksDialog();
 
   const photoDropdownItems = [
     {
@@ -79,7 +81,7 @@ const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
       }
     }
 
-    handleDownload({ url: Url });
+    handleDownload({ url: Url, onStart: openThanks });
   };
 
   const dropdownItems = Array.isArray(src)

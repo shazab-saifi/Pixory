@@ -6,9 +6,10 @@ import Masonry from "react-masonry-css";
 import { PhotoType } from "@/lib/types";
 import useIntersection from "@/hooks/useIntersection";
 import { fetchData } from "@/lib/fetchdata";
-import { useOptionsToggle } from "@/lib/store";
+import { useOptionsToggle, useThanksDialog } from "@/lib/store";
 import MediaCard from "./MediaCard";
 import { useOverflowHidden } from "@/hooks/useOverflowHidden";
+import ThanksDialog from "./ThanksDialog";
 
 interface PhotoId {
   id: number;
@@ -21,6 +22,7 @@ const PhotosSection = ({ query }: { query?: string }) => {
   const { currentOption } = useOptionsToggle();
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoType | null>(null);
+  const { thanksOpen } = useThanksDialog();
 
   const {
     data,
@@ -75,6 +77,7 @@ const PhotosSection = ({ query }: { query?: string }) => {
     targetRef: loadMoreRef,
     enabled: hasNextPage,
   });
+  console.log(thanksOpen);
 
   if (error) return <div>Error loading photos: {(error as Error).message}</div>;
   if (isLoading)
@@ -89,7 +92,6 @@ const PhotosSection = ({ query }: { query?: string }) => {
       <h1 className="my-6 px-4 text-2xl font-medium md:px-22 xl:px-52">
         Free Stock Photos
       </h1>
-
       <Masonry
         breakpointCols={{ default: 3, 768: 2 }}
         className="my-masonry-grid px-4 md:px-20 xl:px-50"
@@ -120,10 +122,10 @@ const PhotosSection = ({ query }: { query?: string }) => {
           );
         })}
       </Masonry>
-      {isPhotoOpen && (
+      {(isPhotoOpen || thanksOpen) && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
-      {isPhotoOpen && (
+      {isPhotoOpen && !thanksOpen && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
             <MediaCard
@@ -136,6 +138,21 @@ const PhotosSection = ({ query }: { query?: string }) => {
               mediaHeight={selectedPhoto?.height as number}
               isOpen={isPhotoOpen}
               setIsOpen={setIsPhotoOpen}
+            />
+          </div>
+        </div>
+      )}
+      {thanksOpen && (
+        <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+          <div className="pointer-events-auto">
+            <ThanksDialog
+              image={{
+                url: selectedPhoto?.src.large as string,
+                width: selectedPhoto?.width as number,
+                height: selectedPhoto?.height as number,
+              }}
+              ownerName={selectedPhoto?.photographer as string}
+              ownerPexelsUrl={selectedPhoto?.photographer_url as string}
             />
           </div>
         </div>
