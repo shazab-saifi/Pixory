@@ -45,7 +45,7 @@ const VideoPreviewCard = React.memo(
       }
     }, [isHovered]);
 
-    const fixedHeight = video.height > video.width;
+    const videoAspect = video.height > video.width;
 
     return (
       <>
@@ -53,7 +53,7 @@ const VideoPreviewCard = React.memo(
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onClick={onClick}
-          className={`group relative ${fixedHeight ? "aspect-[9/14]" : "aspect-video"} overflow-hidden rounded-xl lg:rounded-2xl`}
+          className={`group relative ${videoAspect ? "aspect-[9/14]" : "aspect-video"} overflow-hidden rounded-xl lg:rounded-2xl`}
         >
           <Image
             src={video.image}

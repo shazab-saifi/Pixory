@@ -15,6 +15,8 @@ const MediaCard = React.memo(
     isVideo,
     isOpen,
     setIsOpen,
+    mediaWidth,
+    mediaHeight,
   }: {
     ownerName: string;
     ownerUrl: string;
@@ -23,8 +25,11 @@ const MediaCard = React.memo(
     isVideo: boolean;
     isOpen: boolean;
     setIsOpen: Dispatch<SetStateAction<boolean>>;
+    mediaWidth: number;
+    mediaHeight: number;
   }) => {
     const ref = useOutside(() => setIsOpen(false), isOpen);
+    const mediaAspect = mediaWidth > mediaHeight;
 
     return (
       <div
@@ -50,8 +55,8 @@ const MediaCard = React.memo(
           {!isVideo ? (
             <Image
               src={Url}
-              width={400}
-              height={400}
+              width={mediaAspect ? 600 : 400}
+              height={mediaAspect ? 600 : 400}
               alt="photo"
               loading="eager"
             />
@@ -59,8 +64,8 @@ const MediaCard = React.memo(
             <video
               src={Url}
               muted
-              width={400}
-              height={500}
+              width={mediaAspect ? 600 : 400}
+              height={mediaAspect ? 600 : 400}
               controls
               className="h-full"
             />

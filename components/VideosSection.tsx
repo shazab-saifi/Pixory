@@ -104,7 +104,7 @@ const VideosSection = ({ query }: { query?: string }) => {
         )}
       </Masonry>
       {isVideoOpen && (
-        <div className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm" />
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
       {isVideoOpen && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
@@ -116,6 +116,8 @@ const VideosSection = ({ query }: { query?: string }) => {
               isVideo={true}
               Url={hdVideo as string}
               isOpen={isVideoOpen}
+              mediaHeight={selectedVideo?.height as number}
+              mediaWidth={selectedVideo?.width as number}
               setIsOpen={setIsVideoOpen}
             />
           </div>

@@ -132,6 +132,8 @@ const PhotosSection = ({ query }: { query?: string }) => {
               src={selectedPhoto?.src}
               isVideo={false}
               Url={selectedPhoto?.src.large as string}
+              mediaWidth={selectedPhoto?.width as number}
+              mediaHeight={selectedPhoto?.height as number}
               isOpen={isPhotoOpen}
               setIsOpen={setIsPhotoOpen}
             />
