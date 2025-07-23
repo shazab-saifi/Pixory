@@ -8,6 +8,7 @@ import React from "react";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
+import { motion } from "motion/react";
 
 type PropsType = {
   image: {
@@ -26,7 +27,10 @@ const ThanksDialog = ({ image, ownerName, ownerPexelsUrl }: PropsType) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm sm:px-0">
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.3 }}
         ref={ref}
         className="relative z-60 flex h-fit w-fit flex-col gap-4 sm:flex-row"
       >
@@ -63,7 +67,7 @@ const ThanksDialog = ({ image, ownerName, ownerPexelsUrl }: PropsType) => {
             Follow
           </Button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -6,6 +6,7 @@ import AuthProvider from "@/components/AuthProvider";
 import { getSession } from "@/lib/auth";
 import { ViewTransitions } from "next-view-transitions";
 import { Toaster } from "sonner";
+import ProgressBar from "@/components/ProgressBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,12 +34,18 @@ export default async function RootLayout({
     <ViewTransitions>
       <html lang="en">
         <link rel="icon" type="image/png" href="/pixoryIcon.png" />
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ReactQueryProvider>
             <AuthProvider session={session}>
               <Toaster richColors position="top-center" />
+              <ProgressBar />
               {children}
             </AuthProvider>
           </ReactQueryProvider>

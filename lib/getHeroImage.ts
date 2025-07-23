@@ -6,11 +6,14 @@ export async function getHeroImage(): Promise<HeroImageResponse> {
   const TWO_HOUR = 2 * 60 * 60 * 1000;
   const now = Date.now();
 
-  const imageIndex = Math.floor(now / TWO_HOUR) % 10;
+  const date = new Date(now);
+  const day = date.getUTCDate();
+  const hour = date.getUTCHours();
+  const seed = day * 24 + hour;
 
   try {
     const res = await fetch(
-      `https://api.pexels.com/v1/search?query=nature&per_page=1&page=${imageIndex + 1}`,
+      `https://api.pexels.com/v1/search?query=Colorful%20Abstract&per_page=20&page=1`,
       {
         headers: {
           Authorization: process.env.PEXELS_API_KEY || "",
@@ -24,10 +27,16 @@ export async function getHeroImage(): Promise<HeroImageResponse> {
     }
 
     const data = await res.json();
-    const image = data.photos[0];
+    const photos = data.photos;
+    if (!photos || photos.length === 0) {
+      throw new Error("No photos found");
+    }
+
+    const imageIndex = seed % photos.length;
+    const image = photos[imageIndex];
 
     return {
-      imageUrl: image.src.landscape,
+      imageUrl: image.src.original,
     };
   } catch (error) {
     console.error("Error fetching hero image:", error);

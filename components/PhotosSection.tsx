@@ -77,7 +77,6 @@ const PhotosSection = ({ query }: { query?: string }) => {
     targetRef: loadMoreRef,
     enabled: hasNextPage,
   });
-  console.log(thanksOpen);
 
   if (error) return <div>Error loading photos: {(error as Error).message}</div>;
   if (isLoading)
