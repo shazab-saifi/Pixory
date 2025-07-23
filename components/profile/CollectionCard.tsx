@@ -53,7 +53,7 @@ const CollectionCard = ({
             deleteMutation.mutate();
           }}
           disabled={deleteMutation.isPending}
-          className="absolute top-4 right-4 translate-x-12 cursor-pointer rounded-lg p-2 font-bold text-white transition-all group-hover:translate-x-0 hover:bg-neutral-100 hover:text-red-600 hover:shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"
+          className="absolute top-4 right-4 translate-x-14 cursor-pointer rounded-lg bg-neutral-100 p-2 font-bold text-red-600 transition-all group-hover:translate-x-0 hover:shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"
         >
           <Trash />
         </button>

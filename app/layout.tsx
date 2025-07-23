@@ -6,7 +6,7 @@ import AuthProvider from "@/components/AuthProvider";
 import { getSession } from "@/lib/auth";
 import { ViewTransitions } from "next-view-transitions";
 import { Toaster } from "sonner";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/lib/ProgressBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
