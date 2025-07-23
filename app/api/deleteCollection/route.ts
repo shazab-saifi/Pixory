@@ -26,7 +26,13 @@ export async function DELETE(req: NextRequest) {
       );
     }
 
-    await prisma.collection.delete({ where: { id: collection.id } });
+    await prisma.collectionMedia.deleteMany({
+      where: { collectionId: parseInt(collectionIdParam) },
+    });
+
+    await prisma.collection.delete({
+      where: { id: parseInt(collectionIdParam) },
+    });
 
     return NextResponse.json({ message: "Collection Deleted Successfully" });
   } catch (error) {
