@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="relative flex w-full items-center justify-between px-4 py-4 text-base font-medium text-white md:px-20 xl:px-50">
+      <nav className="relative flex w-full items-center justify-between px-4 py-4 text-base font-medium text-white md:px-20 xl:px-30 2xl:px-50">
         <Link href="/">
           <Image
             className="aspect-auto w-[100px]"

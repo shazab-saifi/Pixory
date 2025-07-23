@@ -45,7 +45,7 @@ const SearchBar = ({
   return (
     <div
       className={cn(
-        "inline-flex items-center justify-between gap-2 rounded-xl bg-white shadow-md",
+        "inline-flex w-full items-center justify-between gap-2 rounded-xl bg-white shadow-md",
         className,
       )}
     >

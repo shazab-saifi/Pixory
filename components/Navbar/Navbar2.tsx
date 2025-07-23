@@ -28,11 +28,11 @@ const Navbar2 = () => {
   return (
     <>
       {!isSearching ? (
-        <nav className="fixed top-0 z-50 flex w-full items-center justify-between bg-white px-4 py-4 text-base text-black 2xl:px-50">
+        <nav className="fixed top-0 z-50 flex w-full items-center justify-between bg-white px-4 py-4 text-base text-black md:px-20 xl:px-30 2xl:px-50">
           <div className="flex gap-8 2xl:gap-20">
             <Link href="/" className="inline-flex items-center">
               <Image
-                className="aspect-auto w-[100px]"
+                className="aspect-auto w-[100px] xl:w-[130px]"
                 src={pixory}
                 alt="Logo"
               />
@@ -58,7 +58,7 @@ const Navbar2 = () => {
           </div>
         </nav>
       ) : (
-        <div className="flex items-center justify-center px-4">
+        <div className="absolute top-0 flex w-full items-center justify-center px-4">
           <div className="mt-2 inline-flex w-full items-center rounded-xl bg-white p-1 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
             <div
               onMouseEnter={() => setIsHovered(true)}

@@ -110,6 +110,8 @@ const Masonry = ({ collection }: { collection: Collection }) => {
                 Url={selectedMedia.data.large}
                 isOpen={isMediaOpen}
                 setIsOpen={setIsMediaOpen}
+                mediaHeight={selectedMedia.data.height}
+                mediaWidth={selectedMedia.data.width}
               />
             ) : (
               <MediaCard
@@ -129,6 +131,8 @@ const Masonry = ({ collection }: { collection: Collection }) => {
                 Url={selectedMedia.data.hdVideoFIle.link}
                 isOpen={isMediaOpen}
                 setIsOpen={setIsMediaOpen}
+                mediaHeight={selectedMedia.data.height}
+                mediaWidth={selectedMedia.data.width}
               />
             )}
           </div>
