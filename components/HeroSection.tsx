@@ -2,12 +2,11 @@ import SearchBar from "./SearchBar";
 
 const HeroSection = () => {
   return (
-    <div className="relative flex w-full items-center justify-center px-4 py-28 sm:px-20 md:px-40">
+    <div className="relative flex w-full items-center justify-center px-4 py-32 sm:px-20 md:px-40">
       <div className="flex w-full flex-col items-center justify-center space-y-8 lg:max-w-[650px]">
         <div className="space-y-2 text-white text-shadow-lg md:text-3xl">
-          <h2 className="text-2xl font-medium text-wrap lg:text-4xl">
-            Browse thousands of high-quality free photos for personal and
-            commercial use.
+          <h2 className="text-2xl font-semibold text-wrap lg:text-4xl">
+            Stunning Free Photos & Videos for Every Creative Need
           </h2>
         </div>
         <SearchBar />

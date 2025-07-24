@@ -243,7 +243,7 @@ const BookmarkDialog = ({
                       setIsClicked(true);
                     }}
                     disabled={hasReachedLimit}
-                    className={`group flex size-25 cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-colors sm:size-35 ${
+                    className={`group/here flex size-25 cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed p-8 transition-colors sm:size-35 ${
                       hasReachedLimit
                         ? "cursor-not-allowed border-gray-200 bg-gray-50"
                         : "border-gray-300 bg-gray-100 hover:border-gray-400"
@@ -253,7 +253,7 @@ const BookmarkDialog = ({
                       className={`size-8 transition-colors sm:size-12 ${
                         hasReachedLimit
                           ? "text-gray-200"
-                          : "text-gray-300 group-hover:text-gray-400"
+                          : "text-gray-300 group-hover/here:text-gray-400"
                       }`}
                     />
                   </button>
@@ -316,12 +316,19 @@ const BookmarkDialog = ({
                               height={200}
                               className="h-full w-full object-cover"
                             />
-                            <div className="group absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
-                              {addPhotoMutation.isPending &&
-                              activeCollectionId === collection.id ? (
+                            <div className="group/here absolute top-0 left-0 z-20 flex h-full w-full items-center justify-center bg-transparent transition-colors hover:bg-black/50">
+                              {photo ? (
+                                addPhotoMutation.isPending &&
+                                activeCollectionId === collection.id ? (
+                                  <LoaderCircle className="size-12 animate-spin text-white" />
+                                ) : (
+                                  <CopyPlus className="size-8 text-transparent transition-colors group-hover/here:text-white sm:size-12" />
+                                )
+                              ) : addVideoMutation.isPending &&
+                                activeCollectionId === collection.id ? (
                                 <LoaderCircle className="size-12 animate-spin text-white" />
                               ) : (
-                                <CopyPlus className="size-8 text-transparent transition-colors group-hover:text-white sm:size-12" />
+                                <CopyPlus className="size-8 text-transparent transition-colors group-hover/here:text-white sm:size-12" />
                               )}
                             </div>
                           </button>

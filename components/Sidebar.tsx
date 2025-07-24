@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React from "react";
 import { pixory } from "@/lib/import";
 import { Home, LogOut, Megaphone, Plus, User, X } from "lucide-react";
 import Link from "next/link";
