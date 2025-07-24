@@ -26,11 +26,11 @@ const Dropdown = ({
 
   return (
     <div
-      className={`absolute top-full z-50 min-w-[120px] pt-2 md:w-full ${pointerEventsNone ? "pointer-events-none" : ""}`}
+      className={`absolute top-full z-50 min-w-[120px] pt-3 md:w-full ${pointerEventsNone ? "pointer-events-none" : ""}`}
       style={{ marginTop: "-4px" }}
     >
       <div
-        className={`transform space-y-2 rounded-lg bg-white p-2 text-black shadow-md transition-all duration-300 ${
+        className={`transform space-y-2 rounded-xl bg-white p-2 text-black shadow-md transition-all duration-300 ${
           isHovered
             ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-95 opacity-0"

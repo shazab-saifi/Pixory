@@ -1,8 +1,7 @@
 "use client";
 
 import Dropdown from "./Dropdown";
-import Button from "./Button";
-import { ChevronDown, Images, Play, PlayCircle, Search } from "lucide-react";
+import { ChevronDown, Images, PlayCircle, Search } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTransitionRouter } from "next-view-transitions";
 import { cn } from "@/lib/utils";
@@ -45,11 +44,10 @@ const SearchBar = ({
   return (
     <div
       className={cn(
-        "inline-flex w-full items-center justify-between gap-2 rounded-xl bg-white shadow-md",
+        "inline-flex w-full items-center justify-between gap-4 rounded-xl bg-neutral-100 p-1",
         className,
       )}
     >
-      {/* Hover area includes both button and dropdown to prevent accidental close */}
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -57,17 +55,17 @@ const SearchBar = ({
       >
         <button
           onClick={() => setIsHovered((prev) => !prev)}
-          className="inline-flex items-center gap-2 rounded-l-xl bg-white p-4 hover:bg-gray-100 hover:opacity-70"
+          className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200"
         >
           {currentSearchOption === "photos" ? (
             <div className="flex items-center gap-2">
-              <Images size={18} className="opacity-80" />
-              <span className="hidden md:block">Photos</span>
+              <Images size={20} className="text-neutral-400" />
+              <span className="hidden text-neutral-800 md:block">Photos</span>
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <PlayCircle size={18} className="opacity-80" />
-              <span className="hidden md:block">Videos</span>
+              <PlayCircle size={20} className="text-neutral-400" />
+              <span className="hidden text-neutral-800 md:block">Videos</span>
             </div>
           )}
           <ChevronDown
@@ -95,13 +93,12 @@ const SearchBar = ({
         placeholder="Search for free photos"
         className={cn("flex-1 py-2 outline-none 2xl:w-[300px]", inputClassName)}
       />
-      <Button
-        variant="secondary"
+      <button
         onClick={handleOnClick}
-        className="m-1 ml-2 flex items-center shadow-none"
+        className="flex min-h-full cursor-pointer items-center rounded-lg px-4.5 py-3.5 text-neutral-400 shadow-none transition-colors hover:bg-neutral-200 hover:text-neutral-800"
       >
-        <Search size={18} className="opacity-80" />
-      </Button>
+        <Search size={20} className="opacity-80" />
+      </button>
     </div>
   );
 };

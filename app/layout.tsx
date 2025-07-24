@@ -33,12 +33,9 @@ export default async function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en">
-        <link rel="icon" type="image/png" href="/pixoryIcon.png" />
-        <script
-          src="https://accounts.google.com/gsi/client"
-          async
-          defer
-        ></script>
+        <head>
+          <link rel="icon" type="image/png" href="/pixoryIcon.png" />
+        </head>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >

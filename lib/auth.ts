@@ -77,14 +77,27 @@ const authOptions: AuthOptions = {
     async redirect({ url, baseUrl }) {
       return baseUrl + "/";
     },
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.email = user.email;
-        token.picture = user.image;
-        token.name = user.name;
-      }
+    async jwt({ token, user, account }) {
+      if (account?.provider === "google" && user?.email && user.name) {
+        try {
+          let dbUser = await prisma.user.findUnique({
+            where: { email: user.email },
+          });
 
+          if (!dbUser) {
+            dbUser = await prisma.user.create({
+              data: {
+                email: user.email,
+                name: user.name,
+                provider: "google",
+              },
+            });
+          }
+          token.id = dbUser.id;
+        } catch (error) {
+          console.error("Error handling Google user:", error);
+        }
+      }
       return token;
     },
     async session({ session, token }) {

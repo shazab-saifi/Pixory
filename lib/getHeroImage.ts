@@ -36,7 +36,7 @@ export async function getHeroImage(): Promise<HeroImageResponse> {
     const image = photos[imageIndex];
 
     return {
-      imageUrl: image.src.original,
+      imageUrl: image.src.landscape,
     };
   } catch (error) {
     console.error("Error fetching hero image:", error);
