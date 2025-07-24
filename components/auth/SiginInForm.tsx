@@ -42,7 +42,7 @@ const SiginInForm = () => {
   };
 
   return (
-    <div className="flex w-sm flex-col items-center justify-center gap-4 rounded-2xl bg-white p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)] md:gap-8 md:p-8">
+    <div className="flex h-fit w-sm flex-col items-center justify-center gap-4 rounded-2xl bg-white p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)] md:gap-8 md:p-8">
       <h1 className="w-full text-center text-3xl font-semibold">
         Welcome Back
       </h1>
