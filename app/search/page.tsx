@@ -4,9 +4,9 @@ import SearchPageClient from "./SearchPageClient";
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: { query?: string };
+  searchParams: Promise<{ query?: string }>;
 }): Promise<Metadata> {
-  const query = searchParams.query;
+  const query = (await searchParams).query;
 
   if (query) {
     return {

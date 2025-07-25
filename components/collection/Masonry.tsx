@@ -1,6 +1,11 @@
 "use client";
 
-import { Collection, CollectionPhoto, CollectionVideo } from "@/lib/types";
+import {
+  Collection,
+  CollectionPhoto,
+  CollectionVideo,
+  CollectionVideoFile,
+} from "@/lib/types";
 import PhotoPreviewCard from "../PhotoPreviewCard";
 import VideoPreviewCard from "../VideoPreviewCard";
 import { useState } from "react";
@@ -13,7 +18,10 @@ const Masonry = ({ collection }: { collection: Collection }) => {
     | { type: "photo"; data: CollectionPhoto }
     | {
         type: "video";
-        data: CollectionVideo & { videoFile: any; hdVideoFIle: any };
+        data: CollectionVideo & {
+          videoFile: CollectionVideoFile;
+          hdVideoFIle: CollectionVideoFile;
+        };
       }
     | null
   >(null);

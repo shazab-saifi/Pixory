@@ -18,7 +18,7 @@ const SearchPageClient = () => {
     const whichSection = () =>
       currentSearchOption === "photos" ? setToPhotos() : setToVideos();
     whichSection();
-  }, []);
+  }, [currentSearchOption, setToPhotos, setToVideos]);
 
   return (
     <div>

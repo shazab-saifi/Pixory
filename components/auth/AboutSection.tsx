@@ -21,11 +21,11 @@ const AboutSection = () => {
           autoPlay
           className="w-[500px] rounded-xl shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)]"
         />
-        <div className="max-w-[500px] rounded-2xl border border-green-100/40 bg-gradient-to-br from-white via-neutral-50 to-green-200 p-10 shadow-xl backdrop-blur-md">
+        <div className="max-w-[500px] rounded-2xl border border-black/10 bg-white p-10 shadow-xl backdrop-blur-md">
           <div className="mb-4 flex items-center gap-3">
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-green-100/80 shadow-md">
+            <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-black/10 shadow-md">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="12" fill="#22C55E" />
+                <rect width="24" height="24" rx="12" fill="#000000" />
                 <path
                   d="M7 17L17 7M7 7h10v10"
                   stroke="#fff"
@@ -35,81 +35,80 @@ const AboutSection = () => {
                 />
               </svg>
             </span>
-            <h2 className="text-3xl font-extrabold tracking-tight text-green-700 drop-shadow-sm">
-              About <span className="text-green-500">Pixory</span>
+            <h2 className="text-3xl font-extrabold tracking-tight text-black drop-shadow-sm">
+              About <span className="text-black">Pixory</span>
             </h2>
           </div>
           <ul className="space-y-4 pl-0 text-gray-700">
             <li className="flex items-start gap-3">
-              <span className="mt-1 text-green-400">
+              <span className="mt-1 text-black">
                 <svg width="20" height="20" fill="none">
-                  <circle cx="10" cy="10" r="8" fill="#22C55E" opacity="0.15" />
-                  <circle cx="10" cy="10" r="4" fill="#22C55E" />
+                  <circle cx="10" cy="10" r="8" fill="#000000" opacity="0.15" />
+                  <circle cx="10" cy="10" r="4" fill="#000000" />
                 </svg>
               </span>
               <span>
                 {/*  */}
-                <span className="font-semibold text-green-700">Pixory</span> is
-                a free stock media platform inspired by sites like{" "}
-                <span className="font-semibold text-green-500 underline underline-offset-2">
+                <span className="font-semibold text-black">Pixory</span> is a
+                free stock media platform inspired by sites like{" "}
+                <span className="font-semibold text-black underline underline-offset-2">
                   Pexels.com
                 </span>
                 .
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-1 text-green-400">
+              <span className="mt-1 text-black">
                 <svg width="20" height="20" fill="none">
-                  <circle cx="10" cy="10" r="8" fill="#22C55E" opacity="0.15" />
-                  <circle cx="10" cy="10" r="4" fill="#22C55E" />
+                  <circle cx="10" cy="10" r="8" fill="#000000" opacity="0.15" />
+                  <circle cx="10" cy="10" r="4" fill="#000000" />
                 </svg>
               </span>
               <span>
                 Browse and download{" "}
-                <span className="font-semibold text-green-700">thousands</span>{" "}
-                of high-quality photos and videos for personal and commercial
-                use.
+                <span className="font-semibold text-black">thousands</span> of
+                high-quality photos and videos for personal and commercial use.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-1 text-green-400">
+              <span className="mt-1 text-black">
                 <svg width="20" height="20" fill="none">
-                  <circle cx="10" cy="10" r="8" fill="#22C55E" opacity="0.15" />
-                  <circle cx="10" cy="10" r="4" fill="#22C55E" />
+                  <circle cx="10" cy="10" r="8" fill="#000000" opacity="0.15" />
+                  <circle cx="10" cy="10" r="4" fill="#000000" />
                 </svg>
               </span>
               <span>
-                <span className="font-semibold text-green-700">
+                <span className="font-semibold text-black">
                   No attribution required
                 </span>
                 —use media in your projects, websites, or social media.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-1 text-green-400">
+              <span className="mt-1 text-black">
                 <svg width="20" height="20" fill="none">
-                  <circle cx="10" cy="10" r="8" fill="#22C55E" opacity="0.15" />
-                  <circle cx="10" cy="10" r="4" fill="#22C55E" />
+                  <circle cx="10" cy="10" r="8" fill="#000000" opacity="0.15" />
+                  <circle cx="10" cy="10" r="4" fill="#000000" />
                 </svg>
               </span>
               <span>
                 Simple and{" "}
-                <span className="font-semibold text-green-700">
+                <span className="font-semibold text-black">
                   intuitive interface
                 </span>{" "}
                 for searching and discovering beautiful content.
               </span>
             </li>
             <li className="flex items-start gap-3">
-              <span className="mt-1 text-green-400">
+              <span className="mt-1 text-black">
                 <svg width="20" height="20" fill="none">
-                  <circle cx="10" cy="10" r="8" fill="#22C55E" opacity="0.15" />
-                  <circle cx="10" cy="10" r="4" fill="#22C55E" />
+                  <circle cx="10" cy="10" r="8" fill="#000000" opacity="0.15" />
+                  <circle cx="10" cy="10" r="4" fill="#000000" />
                 </svg>
               </span>
               <span>
                 All media is provided by talented creators and sourced from{" "}
-                <span className="font-semibold text-green-500 underline underline-offset-2">
+                <span className="font-semibold text-black underline underline-offset-2">
                   Pexels
                 </span>
                 .

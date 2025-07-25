@@ -19,7 +19,7 @@ export default function WhyAdvertise() {
           creators, professionals, and everyday users who are visually driven
           and highly interactive. With millions of daily content views and
           meaningful engagements, it provides advertisers with exceptional
-          visibility in a trusted, brand-safe environment. Whether you're
+          visibility in a trusted, brand-safe environment. Whether you&apos;re
           looking to build awareness or drive conversions, our global creative
           community offers the perfect space to share your story, connect with
           the right audience, and achieve impactful results.

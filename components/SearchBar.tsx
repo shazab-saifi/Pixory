@@ -6,6 +6,9 @@ import { useRef, useState } from "react";
 import { useTransitionRouter } from "next-view-transitions";
 import { cn } from "@/lib/utils";
 import { useSearchOptions } from "@/lib/store";
+import RecentSearches from "./RecentSearches";
+import { toast } from "sonner";
+import { useOutside } from "@/hooks/useOutside";
 
 const SearchBar = ({
   className,
@@ -19,6 +22,8 @@ const SearchBar = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { currentSearchOption } = useSearchOptions();
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const ref = useOutside(() => setIsFocused(false), isFocused);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -26,8 +31,20 @@ const SearchBar = ({
 
   const handleOnClick = () => {
     if (inputValue.length === 0) {
-      return alert("Please fill the input before searching!");
+      return toast.message("Please fill the input before searching!");
     } else {
+      if (localStorage.getItem("recentSearches")) {
+        const recentSearches: string[] = JSON.parse(
+          localStorage.getItem("recentSearches") || "[]",
+        );
+        const alreadyExists = recentSearches.find((str) => str === inputValue);
+        if (!alreadyExists && recentSearches.length < 5) {
+          const update = [...recentSearches, inputValue];
+          localStorage.setItem("recentSearches", JSON.stringify(update));
+        }
+      } else {
+        localStorage.setItem("recentSearches", JSON.stringify([inputValue]));
+      }
       router.push(`/search?query=${inputValue}`);
     }
   };
@@ -43,8 +60,9 @@ const SearchBar = ({
 
   return (
     <div
+      ref={ref}
       className={cn(
-        "inline-flex w-full items-center justify-between gap-4 rounded-xl bg-neutral-100 p-1",
+        "relative inline-flex w-full items-center justify-between gap-4 rounded-xl bg-neutral-100 p-1",
         className,
       )}
     >
@@ -92,6 +110,7 @@ const SearchBar = ({
         type="text"
         placeholder="Search for free photos"
         className={cn("flex-1 py-2 outline-none 2xl:w-[300px]", inputClassName)}
+        onFocus={() => setIsFocused(true)}
       />
       <button
         onClick={handleOnClick}
@@ -99,6 +118,7 @@ const SearchBar = ({
       >
         <Search size={20} className="opacity-80" />
       </button>
+      <RecentSearches isFocused={isFocused} />
     </div>
   );
 };

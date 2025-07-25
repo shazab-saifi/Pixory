@@ -35,6 +35,7 @@ export const fetchData = async ({
       const nextParam = url.searchParams.get("page");
       nextPage = nextParam ? parseInt(nextParam, 10) : null;
     } catch (e) {
+      console.log(e);
       nextPage = null;
     }
   }

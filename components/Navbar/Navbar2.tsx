@@ -17,7 +17,6 @@ const Navbar2 = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [dropdownItem, setDropdownItem] = useState("photo");
   const [isHovered, setIsHovered] = useState(false);
   const router = useTransitionRouter();
 
@@ -69,17 +68,10 @@ const Navbar2 = () => {
                 onClick={() => setIsHovered((prev) => !prev)}
                 className="inline-flex items-center gap-2 rounded-l-xl bg-white p-4 hover:bg-gray-100 hover:opacity-70"
               >
-                {dropdownItem === "photo" ? (
-                  <div className="flex items-center gap-2">
-                    <Images size={18} className="opacity-80" />
-                    <span className="hidden md:block">Photos</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <PlayCircle size={18} className="opacity-80" />
-                    <span className="hidden md:block">Videos</span>
-                  </div>
-                )}
+                <div className="flex items-center gap-2">
+                  <Images size={18} className="opacity-80" />
+                  <span className="hidden md:block">Photos</span>
+                </div>
                 <ChevronDown
                   className={`h-4 w-4 transition-transform duration-200 ${isHovered ? "rotate-180" : ""}`}
                 />

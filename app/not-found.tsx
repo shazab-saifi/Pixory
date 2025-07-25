@@ -10,7 +10,7 @@ export default function NotFound() {
           <div className="space-y-6">
             <h2 className="text-4xl font-medium">Oops!</h2>
             <p className="max-w-md text-wrap text-gray-800">
-              We couldn't find this page.
+              We couldn&apos;t find this page.
               <br />
               It might have been moved, deleted, or you may have mistyped the
               address.

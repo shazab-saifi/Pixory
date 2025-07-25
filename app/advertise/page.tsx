@@ -1,4 +1,3 @@
-import Button from "@/components/Button";
 import Navbar2 from "@/components/Navbar/Navbar2";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";

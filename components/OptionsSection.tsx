@@ -4,7 +4,7 @@ import React from "react";
 import Button from "./Button";
 import { useOptionsToggle } from "@/lib/store";
 
-const OptionsSection = ({ ref }: { ref: React.Ref<HTMLDivElement> }) => {
+const OptionsSection = ({ ref }: { ref?: React.Ref<HTMLDivElement> }) => {
   const { currentOption, setToPhotos, setToVideos } = useOptionsToggle();
 
   return (

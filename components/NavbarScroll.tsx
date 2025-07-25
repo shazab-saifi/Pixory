@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import OptionsSection from "./OptionsSection";
-import { useMotionValueEvent, useScroll, motion } from "motion/react";
+import { useMotionValueEvent, useScroll } from "motion/react";
 import Navbar2 from "./Navbar/Navbar2";
 
 const NavbarScroll = () => {
