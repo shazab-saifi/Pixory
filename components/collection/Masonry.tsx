@@ -103,7 +103,7 @@ const Masonry = ({ collection }: { collection: Collection }) => {
       )}
       {isMediaOpen && selectedMedia && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto px-4 md:px-12 lg:px-0">
             {selectedMedia.type === "photo" ? (
               <MediaCard
                 ownerName={selectedMedia.data.photographer}

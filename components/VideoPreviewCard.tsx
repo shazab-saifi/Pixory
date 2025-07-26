@@ -10,6 +10,7 @@ import { CollectionVideo } from "@/lib/types";
 import BookmarkDialog from "./BookmarkDialog";
 import { useOutside } from "@/hooks/useOutside";
 import { useThanksDialog } from "@/lib/store";
+import ThanksDialog from "./ThanksDialog";
 
 const VideoPreviewCard = React.memo(
   ({
@@ -27,7 +28,9 @@ const VideoPreviewCard = React.memo(
     const [isHovered, setIsHovered] = useState(false);
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
     const ref = useOutside(() => setIsBookmarkOpen(false), isBookmarkOpen);
-    const { openThanks } = useThanksDialog();
+    const showThanksDialog = useThanksDialog((s) => s.showThanksDialog);
+    const { activeThanksDialog, thanksDialogIn } = useThanksDialog();
+    const thanksDialog = activeThanksDialog["videoPreview"];
 
     const handleMouseEnter = () => {
       setIsHovered(true);
@@ -107,13 +110,22 @@ const VideoPreviewCard = React.memo(
                   e.stopPropagation();
                   handleDownload({
                     url: originalVideoUrl,
-                    onStart: openThanks,
+                    onStart: () => showThanksDialog("videoPreview"),
                   });
                 }}
               >
                 Download
               </Button>
-              <Download className="size-6 text-white md:hidden" />
+              <Download
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDownload({
+                    url: originalVideoUrl,
+                    onStart: () => showThanksDialog("videoPreview"),
+                  });
+                }}
+                className="size-6 text-white md:hidden"
+              />
             </div>
           </div>
           {isBookmarkOpen && (
@@ -122,6 +134,21 @@ const VideoPreviewCard = React.memo(
               video={video}
               setBookmarkOpen={setIsBookmarkOpen}
             />
+          )}
+          {thanksDialog.visible && thanksDialogIn === "videoPreview" && (
+            <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+              <div className="pointer-events-auto">
+                <ThanksDialog
+                  image={{
+                    url: video.image as string,
+                    width: video.width as number,
+                    height: video.height as number,
+                  }}
+                  ownerName={video.videographer as string}
+                  ownerPexelsUrl={video.videographerUrl as string}
+                />
+              </div>
+            </div>
           )}
         </div>
       </>

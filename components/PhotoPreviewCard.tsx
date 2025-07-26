@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { act, useState } from "react";
 import { Bookmark, Download } from "lucide-react";
 import Button from "./Button";
 import Image from "next/image";
@@ -10,7 +10,7 @@ import BookmarkDialog from "./BookmarkDialog";
 import { useOutside } from "@/hooks/useOutside";
 import { CollectionPhoto } from "@/lib/types";
 import { useThanksDialog } from "@/lib/store";
-
+import ThanksDialog from "./ThanksDialog";
 const PhotoPreviewCard = React.memo(
   ({
     pexelsPhotoURL,
@@ -25,7 +25,9 @@ const PhotoPreviewCard = React.memo(
   }) => {
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
     const ref = useOutside(() => setIsBookmarkOpen(false), isBookmarkOpen);
-    const { openThanks } = useThanksDialog();
+    const showThanksDialog = useThanksDialog((s) => s.showThanksDialog);
+    const { activeThanksDialog, thanksDialogIn } = useThanksDialog();
+    const thanksDialog = activeThanksDialog["photoPreview"];
 
     return (
       <>
@@ -70,13 +72,27 @@ const PhotoPreviewCard = React.memo(
                 size="lg"
                 className="z-50 hidden md:block"
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
-                  handleDownload({ url: photo.original, onStart: openThanks });
+                  handleDownload({
+                    url: photo.original,
+                    onStart: () => showThanksDialog("photoPreview"),
+                  });
                 }}
               >
                 Download
               </Button>
-              <Download className="size-6 text-white md:hidden" />
+              <Download
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleDownload({
+                    url: photo.original,
+                    onStart: () => showThanksDialog("photoPreview"),
+                  });
+                }}
+                className="size-6 text-white md:hidden"
+              />
             </div>
           </div>
         </div>
@@ -87,6 +103,21 @@ const PhotoPreviewCard = React.memo(
             setBookmarkOpen={setIsBookmarkOpen}
           />
         )}
+        {thanksDialog.visible && thanksDialogIn === "photoPreview" ? (
+          <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+            <div className="pointer-events-auto">
+              <ThanksDialog
+                image={{
+                  url: photo.portrait as string,
+                  width: photo.width as number,
+                  height: photo.height as number,
+                }}
+                ownerName={photo.photographer as string}
+                ownerPexelsUrl={photo.photographerUrl as string}
+              />
+            </div>
+          </div>
+        ) : null}
       </>
     );
   },

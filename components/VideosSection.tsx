@@ -18,7 +18,8 @@ const VideosSection = ({ query }: { query?: string }) => {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
   const [hdVideo, setHdVideo] = useState<string>();
-  const { thanksOpen } = useThanksDialog();
+  const { activeThanksDialog, thanksDialogIn } = useThanksDialog();
+  const thanksDialog = activeThanksDialog["videoSection"];
 
   const {
     data,
@@ -105,12 +106,12 @@ const VideosSection = ({ query }: { query?: string }) => {
           }),
         )}
       </Masonry>
-      {(isVideoOpen || thanksOpen) && (
-        <div className="pointer-events-none fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
+      {(isVideoOpen || thanksDialog.visible) && (
+        <div className="pointer-events-auto fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
-      {isVideoOpen && !thanksOpen && (
+      {isVideoOpen && !thanksDialog.visible && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto px-4 md:px-12 lg:px-0">
             <MediaCard
               ownerName={selectedVideo?.user.name as string}
               ownerUrl={selectedVideo?.user.url as string}
@@ -125,7 +126,7 @@ const VideosSection = ({ query }: { query?: string }) => {
           </div>
         </div>
       )}
-      {thanksOpen && (
+      {thanksDialog.visible && thanksDialogIn === "videoSection" && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
             <ThanksDialog

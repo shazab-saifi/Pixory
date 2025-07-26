@@ -10,7 +10,6 @@ import {
   heroImage5,
 } from "@/lib/import";
 import arrow from "@/public/arrow.svg";
-import roundArrow from "@/public/roundArrow.svg";
 import { Rocket } from "lucide-react";
 import Button from "../Button";
 
@@ -47,26 +46,19 @@ export default function HeroSection() {
       >
         <Button className="relative space-x-2 font-semibold">
           <Image
-            className="absolute top-4 -left-52 hidden h-auto w-[200px] md:block"
+            className="absolute top-4 hidden md:-left-62 md:block md:min-w-[230px] lg:-left-68 lg:min-w-[250px] xl:-left-74 xl:min-w-[280px]"
             src={arrow}
             alt="arrow svg"
           />
           <Rocket size={18} />
           <span>Advertise your idea</span>
         </Button>
-        <Image
-          className="absolute top-4 opacity-70 md:hidden"
-          width={230}
-          height={50}
-          src={roundArrow}
-          alt="arrow svg"
-        />
       </motion.div>
-      <div className="relative flex items-center justify-center pt-8 md:pt-20">
+      <div className="relative flex items-center justify-center pt-4 md:pt-20">
         {/* Hero images animation group */}
         <div className="relative flex items-center justify-center">
           <motion.div
-            className="z-10 -mr-[150px]"
+            className="z-10 hidden sm:-mr-20 sm:block md:-mr-[100px] lg:-mr-[150px]"
             initial={{
               opacity: 0,
               transform: "translateX(80%)",
@@ -82,7 +74,7 @@ export default function HeroSection() {
             <Image src={heroImage5} width={300} height={400} alt="image5" />
           </motion.div>
           <motion.div
-            className="z-20 -mr-[75px]"
+            className="z-20 -mr-12 sm:-mr-10 md:-mr-[40px] lg:-mr-[75px]"
             initial={{
               opacity: 0,
               transform: "translateX(80%)",
@@ -106,7 +98,7 @@ export default function HeroSection() {
             <Image src={heroImage1} width={300} height={400} alt="image1" />
           </motion.div>
           <motion.div
-            className="z-20 -ml-[75px]"
+            className="z-20 -ml-12 sm:-ml-10 md:-ml-[40px] lg:-ml-[75px]"
             initial={{
               opacity: 0,
               transform: "translateX(-80%)",
@@ -122,7 +114,7 @@ export default function HeroSection() {
             <Image src={heroImage2} width={300} height={400} alt="image2" />
           </motion.div>
           <motion.div
-            className="z-10 -ml-[150px]"
+            className="z-10 hidden sm:-ml-20 sm:block md:-ml-[100px] lg:-ml-[150px]"
             initial={{
               opacity: 0,
               transform: "translateX(-80%)",
@@ -141,7 +133,7 @@ export default function HeroSection() {
         <motion.img
           src="/Gradient.svg"
           alt="gradient"
-          className="absolute -top-25 z-0"
+          className="absolute -top-15 z-0 w-full md:-top-10 lg:-top-35 xl:-top-52"
           initial={{ opacity: 0, scale: 0, y: 10, filter: "blur(10px)" }}
           animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
           transition={{ ease: "easeInOut", duration: 0.7 }}

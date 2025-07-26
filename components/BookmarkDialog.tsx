@@ -18,6 +18,8 @@ import { fetchCollection } from "@/lib/utils";
 import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 import { motion } from "motion/react";
 
+const MAX_COLLECTION_NAME_LENGTH = 16;
+
 const BookmarkDialog = ({
   ref,
   photo,
@@ -151,6 +153,7 @@ const BookmarkDialog = ({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+
     setInputValue(value);
 
     if (validationError) {
@@ -167,6 +170,13 @@ const BookmarkDialog = ({
         if (hasReachedLimit) {
           toast.error(
             `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
+          );
+          return;
+        }
+
+        if (inputValue.length > MAX_COLLECTION_NAME_LENGTH) {
+          toast.error(
+            `Collection name cannot exceed ${MAX_COLLECTION_NAME_LENGTH} characters.`,
           );
           return;
         }
@@ -204,8 +214,11 @@ const BookmarkDialog = ({
 
   return (
     <div
-      onClick={(e) => e.stopPropagation()}
-      className="fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm"
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      className="pointer-events-auto fixed top-0 left-0 z-60 flex min-h-screen w-full items-center justify-center bg-black/80 backdrop-blur-sm"
     >
       <motion.div
         initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
@@ -214,8 +227,12 @@ const BookmarkDialog = ({
         className="max-w-full px-4"
       >
         <div
-          ref={ref}
-          className="relative flex max-w-full flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
+          ref={
+            typeof window !== "undefined" && window.innerWidth >= 768
+              ? ref
+              : undefined
+          }
+          className="relative flex min-w-[300px] flex-col items-center gap-8 rounded-4xl bg-white p-6 md:p-12"
         >
           <h1 className="text-2xl font-semibold md:text-3xl">
             Save to Collection
@@ -224,7 +241,7 @@ const BookmarkDialog = ({
             onClick={() => {
               setBookmarkOpen(false);
             }}
-            className="group absolute top-4 right-4 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
+            className="group absolute top-3 right-3 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100 sm:top-4 sm:right-4"
           >
             <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
           </button>
@@ -352,7 +369,7 @@ const BookmarkDialog = ({
               </Button>
             </>
           ) : (
-            <div className="w-full space-y-8">
+            <div className="w-full space-y-8 sm:min-w-100">
               <div className="space-y-8">
                 <span className="text-sm font-semibold text-gray-700">
                   Collection Name
@@ -363,7 +380,8 @@ const BookmarkDialog = ({
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder="Enter Collection Name"
-                    className={`w-90 rounded-xl border p-4 text-gray-700 ${
+                    maxLength={MAX_COLLECTION_NAME_LENGTH + 1}
+                    className={`w-full rounded-xl border p-4 text-gray-700 ${
                       validationError
                         ? "border-red-500 focus:border-red-500"
                         : ""

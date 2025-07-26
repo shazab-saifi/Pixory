@@ -33,8 +33,12 @@ const MediaCard = React.memo(
 
     return (
       <div
-        ref={ref}
-        className="relative flex h-full max-h-[610px] flex-col gap-4 rounded-2xl bg-white p-4 md:flex-row md:gap-6 lg:gap-8 xl:max-h-none"
+        ref={
+          typeof window !== "undefined" && window.innerWidth >= 768
+            ? ref
+            : undefined
+        }
+        className="relative flex max-h-[600px] flex-col gap-4 rounded-2xl bg-white p-4 md:max-h-fit md:flex-row md:gap-6 lg:gap-8 xl:max-h-none"
       >
         <button
           onClick={() => setIsOpen(false)}
@@ -59,6 +63,7 @@ const MediaCard = React.memo(
               height={mediaAspect ? 600 : 400}
               alt="photo"
               loading="eager"
+              className="aspect-auto max-h-full"
             />
           ) : (
             <video
@@ -67,7 +72,7 @@ const MediaCard = React.memo(
               width={mediaAspect ? 600 : 400}
               height={mediaAspect ? 600 : 400}
               controls
-              className="h-full"
+              className="aspect-auto"
             />
           )}
         </div>

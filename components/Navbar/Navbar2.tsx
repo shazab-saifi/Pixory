@@ -37,7 +37,7 @@ const Navbar2 = () => {
               />
             </Link>
             <SearchBar
-              inputClassName="flex-1"
+              inputClassName="w-[400px]"
               className="hidden gap-2 xl:flex"
             />
           </div>

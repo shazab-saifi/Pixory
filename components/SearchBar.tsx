@@ -62,7 +62,7 @@ const SearchBar = ({
     <div
       ref={ref}
       className={cn(
-        "relative inline-flex w-full items-center justify-between gap-4 rounded-xl bg-neutral-100 p-1",
+        "relative inline-flex w-full items-center justify-between gap-2 rounded-xl bg-neutral-100 p-1 sm:gap-4",
         className,
       )}
     >
@@ -109,12 +109,12 @@ const SearchBar = ({
         onKeyDown={handleEnterKey}
         type="text"
         placeholder="Search for free photos"
-        className={cn("flex-1 py-2 outline-none 2xl:w-[300px]", inputClassName)}
+        className={cn("min-w-[100px] flex-1 py-2 outline-none", inputClassName)}
         onFocus={() => setIsFocused(true)}
       />
       <button
         onClick={handleOnClick}
-        className="flex min-h-full cursor-pointer items-center rounded-lg px-4.5 py-3.5 text-neutral-400 shadow-none transition-colors hover:bg-neutral-200 hover:text-neutral-800"
+        className="flex min-h-full cursor-pointer items-center rounded-lg p-3 text-neutral-400 shadow-none transition-colors hover:bg-neutral-200 hover:text-neutral-800 sm:px-4.5 sm:py-3.5"
       >
         <Search size={20} className="opacity-80" />
       </button>

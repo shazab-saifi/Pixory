@@ -28,7 +28,6 @@ const RecentSearches = ({ isFocused }: { isFocused: boolean }) => {
     );
 
     setRecentSearches(recentSearches);
-    console.log(recentSearches);
   }, []);
 
   const handleClick = () => {
@@ -65,7 +64,7 @@ const RecentSearches = ({ isFocused }: { isFocused: boolean }) => {
                   <button
                     key={idx}
                     onClick={() => router.push(`/search?query=${s}`)}
-                    className="shadow-custom flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-4 py-2 hover:bg-neutral-100 hover:text-neutral-600"
+                    className="shadow-custom flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-4 py-2 transition-colors hover:bg-neutral-100 hover:text-neutral-600"
                   >
                     <span>{s}</span>
                     <Search size={16} />

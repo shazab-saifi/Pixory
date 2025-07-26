@@ -9,7 +9,12 @@ const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedSize, setSelectedSize] = useState<string>();
   const ref = useOutside(() => setIsOpen(false), isOpen);
-  const { openThanks } = useThanksDialog();
+  const showThanksDialog = useThanksDialog((s) => s.showThanksDialog);
+
+  const openThanks = () => {
+    const section = Array.isArray(src) ? "videoSection" : "photoSection";
+    showThanksDialog(section);
+  };
 
   const photoDropdownItems = [
     {

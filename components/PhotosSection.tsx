@@ -22,7 +22,8 @@ const PhotosSection = ({ query }: { query?: string }) => {
   const { currentOption } = useOptionsToggle();
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoType | null>(null);
-  const { thanksOpen } = useThanksDialog();
+  const { activeThanksDialog, thanksDialogIn } = useThanksDialog();
+  const thanksDialog = activeThanksDialog["photoSection"];
 
   const {
     data,
@@ -121,12 +122,12 @@ const PhotosSection = ({ query }: { query?: string }) => {
           );
         })}
       </Masonry>
-      {(isPhotoOpen || thanksOpen) && (
+      {(isPhotoOpen || thanksDialog.visible) && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
-      {isPhotoOpen && !thanksOpen && (
+      {isPhotoOpen && !thanksDialog.visible && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto px-4 md:px-12 lg:px-0">
             <MediaCard
               ownerName={selectedPhoto?.photographer as string}
               ownerUrl={selectedPhoto?.photographer_url as string}
@@ -141,12 +142,14 @@ const PhotosSection = ({ query }: { query?: string }) => {
           </div>
         </div>
       )}
-      {thanksOpen && (
+      {thanksDialog.visible && thanksDialogIn === "photoSection" && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
             <ThanksDialog
               image={{
-                url: selectedPhoto?.src.large as string,
+                url:
+                  (selectedPhoto?.src.large as string) ||
+                  (selectedPhoto?.src.original as string),
                 width: selectedPhoto?.width as number,
                 height: selectedPhoto?.height as number,
               }}
