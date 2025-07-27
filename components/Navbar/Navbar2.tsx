@@ -3,7 +3,6 @@
 import Image from "next/image";
 import SearchBar from "../SearchBar";
 import { pixory } from "@/lib/import";
-import Button from "../Button";
 import { useState, ChangeEvent } from "react";
 import { ChevronDown, Images, Menu, PlayCircle, Search, X } from "lucide-react";
 import Sidebar from "../Sidebar";
@@ -11,6 +10,7 @@ import Dropdown from "../Dropdown";
 import Navigation from "./Navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { isTouchDevice } from "@/lib/utils";
 
 const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,18 +58,25 @@ const Navbar2 = () => {
         </nav>
       ) : (
         <div className="fixed top-0 z-20 flex w-full items-center justify-center px-4">
-          <div className="shadow-custom mt-2 inline-flex w-full items-center rounded-xl bg-white p-1">
+          <div className="shadow-custom mt-2 inline-flex w-full items-center gap-2 rounded-xl bg-white p-1">
             <div
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
+              onMouseEnter={() =>
+                isTouchDevice ? undefined : setIsHovered(true)
+              }
+              onMouseLeave={() =>
+                isTouchDevice ? undefined : setIsHovered(false)
+              }
+              onClick={() =>
+                isTouchDevice ? setIsHovered((prev) => !prev) : undefined
+              }
               className="relative flex flex-col"
             >
-              <button
-                onClick={() => setIsHovered((prev) => !prev)}
-                className="inline-flex items-center gap-2 rounded-l-xl bg-white p-4 hover:bg-gray-100 hover:opacity-70"
-              >
+              <button className="inline-flex items-center gap-2 rounded-lg bg-neutral-100 px-4 py-3 hover:bg-neutral-200">
                 <div className="flex items-center gap-2">
-                  <Images size={18} className="opacity-80" />
+                  <Images
+                    size={18}
+                    className={`${isTouchDevice ? "active:bg-neutral-200 active:text-neutral-800" : "hover:bg-neutral-200 hover:text-neutral-800"} text-neutral-400`}
+                  />
                   <span className="hidden md:block">Photos</span>
                 </div>
                 <ChevronDown
@@ -90,22 +97,24 @@ const Navbar2 = () => {
               onChange={handleInput}
               type="text"
               placeholder="Search for free photos"
-              className="h-full w-[120px] flex-1 shrink outline-none"
+              className="h-full w-[100px] flex-1 outline-none"
             />
-            <Button
-              variant="secondary"
-              className="rounded-md px-2 shadow-none active:bg-gray-100"
+            <button
+              className="flex min-h-full cursor-pointer items-center rounded-lg text-neutral-400 shadow-none"
               onClick={() => setIsSearching(false)}
             >
-              <X className="h-5 w-5 shrink-0 opacity-80" />
-            </Button>
-            <Button
+              <X className="h-5 w-5 shrink-0" />
+            </button>
+            <button
               onClick={handleOnClick}
-              variant="secondary"
-              className="rounded-md pr-4 pl-2 shadow-none active:bg-gray-100"
+              className={`flex min-h-full cursor-pointer items-center rounded-lg p-3 text-neutral-400 shadow-none transition-colors sm:px-4.5 sm:py-3.5 ${
+                isTouchDevice
+                  ? "active:bg-neutral-200 active:text-neutral-800"
+                  : "hover:bg-neutral-200 hover:text-neutral-800"
+              }`}
             >
-              <Search className="h-5 w-5 shrink-0 opacity-80" />
-            </Button>
+              <Search size={20} />
+            </button>
           </div>
         </div>
       )}

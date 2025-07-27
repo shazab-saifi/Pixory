@@ -3,7 +3,7 @@
 import Dropdown from "./Dropdown";
 import { ChevronDown, Images, PlayCircle, Search } from "lucide-react";
 import { useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, isTouchDevice } from "@/lib/utils";
 import { useSearchOptions } from "@/lib/store";
 import RecentSearches from "./RecentSearches";
 import { toast } from "sonner";
@@ -58,11 +58,6 @@ const SearchBar = ({
     }
   };
 
-  const isTouchDevice =
-    typeof window !== "undefined"
-      ? window.matchMedia("(pointer: coarse)").matches
-      : false;
-
   return (
     <div
       ref={ref}
@@ -80,9 +75,10 @@ const SearchBar = ({
         className="relative flex flex-col"
       >
         <button
-          className={`inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 ${
-            isTouchDevice ? "active:bg-neutral-200" : "hover:bg-neutral-200"
-          }`}
+          className={cn(
+            "inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3",
+            isTouchDevice ? "active:bg-neutral-200" : "hover:bg-neutral-200",
+          )}
         >
           {currentSearchOption === "photos" ? (
             <div className="flex items-center gap-2">
@@ -123,7 +119,12 @@ const SearchBar = ({
       />
       <button
         onClick={handleOnClick}
-        className="flex min-h-full cursor-pointer items-center rounded-lg p-3 text-neutral-400 shadow-none transition-colors hover:bg-neutral-200 hover:text-neutral-800 sm:px-4.5 sm:py-3.5"
+        className={cn(
+          "flex min-h-full cursor-pointer items-center rounded-lg p-3 text-neutral-400 shadow-none transition-colors sm:px-4.5 sm:py-3.5",
+          isTouchDevice
+            ? "active:bg-neutral-200 active:text-neutral-800"
+            : "hover:bg-neutral-200 hover:text-neutral-800",
+        )}
       >
         <Search size={20} className="opacity-80" />
       </button>

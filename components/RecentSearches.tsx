@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchCollection } from "@/lib/utils";
+import { fetchCollection, isTouchDevice } from "@/lib/utils";
 
 type RecentSearchesProps = {
   isFocused: boolean;
@@ -57,7 +57,12 @@ const RecentSearches = ({ isFocused }: RecentSearchesProps) => {
                 <button
                   onClick={clearRecentSearches}
                   disabled={recentSearches.length === 0}
-                  className="shadow-custom cursor-pointer rounded-md bg-neutral-100 px-1 py-0.5 text-[12px] text-neutral-600 transition-colors hover:bg-neutral-200 sm:px-2 sm:py-1 sm:text-sm"
+                  className={
+                    "shadow-custom cursor-pointer rounded-md bg-neutral-100 px-1 py-0.5 text-[12px] text-neutral-600 transition-colors sm:px-2 sm:py-1 sm:text-sm " +
+                    (isTouchDevice
+                      ? "active:bg-neutral-200"
+                      : "hover:bg-neutral-200")
+                  }
                 >
                   Clear
                 </button>
@@ -67,7 +72,12 @@ const RecentSearches = ({ isFocused }: RecentSearchesProps) => {
                   <button
                     key={idx}
                     onClick={() => router.push(`/search?query=${s}`)}
-                    className="shadow-custom flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-2 py-1 text-sm transition-colors hover:bg-neutral-100 hover:text-neutral-600 sm:px-4 sm:py-2 sm:text-base"
+                    className={
+                      "shadow-custom flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-2 py-1 text-sm transition-colors sm:px-4 sm:py-2 sm:text-base " +
+                      (isTouchDevice
+                        ? "active:bg-neutral-100 active:text-neutral-600"
+                        : "hover:bg-neutral-100 hover:text-neutral-600")
+                    }
                   >
                     <span>{s}</span>
                     <Search className="size-3.5 sm:size-4" />
@@ -98,7 +108,14 @@ const RecentSearches = ({ isFocused }: RecentSearchesProps) => {
                           }
                           alt="collection"
                         />
-                        <div className="absolute top-0 left-0 z-20 h-full w-full cursor-pointer rounded-lg bg-transparent transition-colors hover:bg-black/50"></div>
+                        <div
+                          className={
+                            "absolute top-0 left-0 z-20 h-full w-full cursor-pointer rounded-lg bg-transparent transition-colors " +
+                            (isTouchDevice
+                              ? "active:bg-black/50"
+                              : "hover:bg-black/50")
+                          }
+                        ></div>
                       </Link>
                       <span className="max-w-[64px] text-sm text-wrap sm:max-w-[80px] sm:text-base">
                         {collection.name}
