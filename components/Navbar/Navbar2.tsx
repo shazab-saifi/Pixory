@@ -3,14 +3,14 @@
 import Image from "next/image";
 import SearchBar from "../SearchBar";
 import { pixory } from "@/lib/import";
-import { Link } from "next-view-transitions";
 import Button from "../Button";
 import { useState, ChangeEvent } from "react";
-import { useTransitionRouter } from "next-view-transitions";
 import { ChevronDown, Images, Menu, PlayCircle, Search, X } from "lucide-react";
 import Sidebar from "../Sidebar";
 import Dropdown from "../Dropdown";
 import Navigation from "./Navigation";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,7 @@ const Navbar2 = () => {
   const [inputValue, setInputValue] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const router = useTransitionRouter();
+  const router = useRouter();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) =>
     setInputValue(e.target.value);

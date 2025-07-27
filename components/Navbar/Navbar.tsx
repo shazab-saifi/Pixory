@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { pixoryWhite } from "@/lib/import";
-import { Link } from "next-view-transitions";
-import { useTransitionRouter } from "next-view-transitions";
 import { Menu } from "lucide-react";
 import Sidebar from "../Sidebar";
 import Navigation from "./Navigation";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const router = useTransitionRouter();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 

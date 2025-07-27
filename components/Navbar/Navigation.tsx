@@ -1,4 +1,3 @@
-import { Link } from "next-view-transitions";
 import Button from "../Button";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -6,6 +5,7 @@ import { LogOutIcon, User } from "lucide-react";
 import { useState } from "react";
 import { motion } from "motion/react";
 import Dropdown from "../Dropdown";
+import Link from "next/link";
 
 const Navigation = ({
   isDropdownOpen,

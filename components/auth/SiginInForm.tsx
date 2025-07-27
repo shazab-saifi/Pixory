@@ -2,17 +2,17 @@
 
 import { CredentialsTypes } from "@/lib/types";
 import { ClientSafeProvider, getProviders, signIn } from "next-auth/react";
-import { useTransitionRouter } from "next-view-transitions";
 import { useEffect, useState } from "react";
 import Form from "../Form";
 import Image from "next/image";
 import { googleicon } from "@/lib/import";
+import { useRouter } from "next/navigation";
 
 const SiginInForm = () => {
   const [googleProvider, setGoogleProvider] = useState<
     ClientSafeProvider | undefined
   >();
-  const router = useTransitionRouter();
+  const router = useRouter();
 
   useEffect(() => {
     getProviders().then((res) => {

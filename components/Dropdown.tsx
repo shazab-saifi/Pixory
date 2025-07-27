@@ -2,7 +2,7 @@
 
 import { useSearchOptions } from "@/lib/store";
 import { signOut } from "next-auth/react";
-import { useTransitionRouter } from "next-view-transitions";
+import { useRouter } from "next/navigation";
 
 const Dropdown = ({
   icon1: Icon1,
@@ -21,7 +21,7 @@ const Dropdown = ({
   isHovered: boolean;
   pointerEventsNone?: boolean;
 }) => {
-  const router = useTransitionRouter();
+  const router = useRouter();
   const { setSearchToPhotos, setSearchToVideos } = useSearchOptions();
 
   return (

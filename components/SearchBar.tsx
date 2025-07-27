@@ -3,12 +3,12 @@
 import Dropdown from "./Dropdown";
 import { ChevronDown, Images, PlayCircle, Search } from "lucide-react";
 import { useRef, useState } from "react";
-import { useTransitionRouter } from "next-view-transitions";
 import { cn } from "@/lib/utils";
 import { useSearchOptions } from "@/lib/store";
 import RecentSearches from "./RecentSearches";
 import { toast } from "sonner";
 import { useOutside } from "@/hooks/useOutside";
+import { useRouter } from "next/navigation";
 
 const SearchBar = ({
   className,
@@ -18,7 +18,7 @@ const SearchBar = ({
   inputClassName?: string;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const router = useTransitionRouter();
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { currentSearchOption } = useSearchOptions();
