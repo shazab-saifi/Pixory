@@ -1,6 +1,4 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const BentoCard = ({
   image,
@@ -11,11 +9,9 @@ const BentoCard = ({
   label: string;
   spanCols?: boolean;
 }) => {
-  const router = useRouter();
-
   return (
-    <div
-      onClick={() => router.push(`search?query=${label.toLowerCase()}`)}
+    <Link
+      href={`/search?query=${label.toLowerCase()}`}
       className={`group relative cursor-pointer overflow-hidden rounded-xl ${spanCols ? "col-span-2" : ""}`}
     >
       <div
@@ -28,7 +24,7 @@ const BentoCard = ({
           {label}
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 
