@@ -26,7 +26,6 @@ const staticImages = [
 ];
 
 export async function getHeroImage(): Promise<HeroImageResponse> {
-  const TWO_HOUR = 2 * 60 * 60 * 1000;
   const now = Date.now();
 
   const date = new Date(now);

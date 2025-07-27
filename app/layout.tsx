@@ -4,7 +4,6 @@ import "./globals.css";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
 import AuthProvider from "@/components/AuthProvider";
 import { getSession } from "@/lib/auth";
-import { ViewTransitions } from "next-view-transitions";
 import { Toaster } from "sonner";
 import ProgressBar from "@/lib/ProgressBar";
 
@@ -31,23 +30,21 @@ export default async function RootLayout({
   const session = await getSession();
 
   return (
-    <ViewTransitions>
-      <html lang="en">
-        <head>
-          <link rel="icon" type="image/png" href="/pixoryIcon.png" />
-        </head>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <ReactQueryProvider>
-            <AuthProvider session={session}>
-              <Toaster richColors position="top-center" />
-              <ProgressBar />
-              {children}
-            </AuthProvider>
-          </ReactQueryProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+    <html lang="en">
+      <head>
+        <link rel="icon" type="image/png" href="/pixoryIcon.png" />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <ReactQueryProvider>
+          <AuthProvider session={session}>
+            <Toaster richColors position="top-center" />
+            <ProgressBar />
+            {children}
+          </AuthProvider>
+        </ReactQueryProvider>
+      </body>
+    </html>
   );
 }
