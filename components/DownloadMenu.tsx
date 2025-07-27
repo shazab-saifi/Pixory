@@ -13,7 +13,7 @@ const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
 
   const openThanks = () => {
     const section = Array.isArray(src) ? "videoSection" : "photoSection";
-    showThanksDialog(section);
+    showThanksDialog(section, null);
   };
 
   const photoDropdownItems = [

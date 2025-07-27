@@ -22,8 +22,9 @@ const PhotosSection = ({ query }: { query?: string }) => {
   const { currentOption } = useOptionsToggle();
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoType | null>(null);
-  const { activeThanksDialog, thanksDialogIn } = useThanksDialog();
+  const { activeThanksDialog, thanksDialogIn, dialogData } = useThanksDialog();
   const thanksDialog = activeThanksDialog["photoSection"];
+  const dialogPhotoPreview = activeThanksDialog["photoPreview"];
 
   const {
     data,
@@ -97,68 +98,87 @@ const PhotosSection = ({ query }: { query?: string }) => {
         className="my-masonry-grid px-4 md:px-20 xl:px-50"
         columnClassName="pl-4 md:pl-6 space-y-4 md:space-y-6"
       >
-        {uniquePhotos.map((photo) => {
-          return (
-            <PhotoPreviewCard
-              key={photo.id}
-              pexelsPhotoURL={photo.url}
-              onClick={() => {
-                setIsPhotoOpen(true);
-                setSelectedPhoto(photo);
-              }}
-              photo={{
-                id: photo.id,
-                width: photo.width,
-                height: photo.height,
-                alt: photo.alt,
-                photographerUrl: photo.photographer_url,
-                portrait: photo.src.portrait,
-                photographer: photo.photographer,
-                landscape: photo.src.landscape,
-                original: photo.src.original,
-                large: photo.src.large,
-              }}
-            />
-          );
-        })}
+        {uniquePhotos.map((photo) => (
+          <PhotoPreviewCard
+            key={photo.id}
+            pexelsPhotoURL={photo.url}
+            onClick={() => {
+              setIsPhotoOpen(true);
+              setSelectedPhoto(photo);
+            }}
+            photo={{
+              id: photo.id,
+              width: photo.width,
+              height: photo.height,
+              alt: photo.alt,
+              photographerUrl: photo.photographer_url,
+              portrait: photo.src.portrait,
+              photographer: photo.photographer,
+              landscape: photo.src.landscape,
+              original: photo.src.original,
+              large: photo.src.large,
+            }}
+          />
+        ))}
       </Masonry>
-      {(isPhotoOpen || thanksDialog.visible) && (
+
+      {(isPhotoOpen || thanksDialog.visible || dialogPhotoPreview.visible) && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
+
       {isPhotoOpen && !thanksDialog.visible && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto px-4 md:px-12 lg:px-0">
             <MediaCard
-              ownerName={selectedPhoto?.photographer as string}
-              ownerUrl={selectedPhoto?.photographer_url as string}
+              ownerName={selectedPhoto?.photographer ?? ""}
+              ownerUrl={selectedPhoto?.photographer_url ?? ""}
               src={selectedPhoto?.src}
               isVideo={false}
-              Url={selectedPhoto?.src.large as string}
-              mediaWidth={selectedPhoto?.width as number}
-              mediaHeight={selectedPhoto?.height as number}
+              Url={selectedPhoto?.src.large ?? ""}
+              mediaWidth={selectedPhoto?.width ?? 0}
+              mediaHeight={selectedPhoto?.height ?? 0}
               isOpen={isPhotoOpen}
               setIsOpen={setIsPhotoOpen}
             />
           </div>
         </div>
       )}
+
       {thanksDialog.visible && thanksDialogIn === "photoSection" && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
             <ThanksDialog
               image={{
                 url:
-                  (selectedPhoto?.src.large as string) ||
-                  (selectedPhoto?.src.original as string),
-                width: selectedPhoto?.width as number,
-                height: selectedPhoto?.height as number,
+                  selectedPhoto?.src.large || selectedPhoto?.src.original || "",
+                width: selectedPhoto?.width ?? 0,
+                height: selectedPhoto?.height ?? 0,
               }}
-              ownerName={selectedPhoto?.photographer as string}
-              ownerPexelsUrl={selectedPhoto?.photographer_url as string}
+              ownerName={selectedPhoto?.photographer ?? ""}
+              ownerPexelsUrl={selectedPhoto?.photographer_url ?? ""}
             />
           </div>
         </div>
       )}
+
+      {dialogPhotoPreview.visible &&
+        thanksDialogIn === "photoPreview" &&
+        dialogData && (
+          <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+            <div className="pointer-events-auto">
+              <ThanksDialog
+                image={{
+                  url: dialogData.url,
+                  width: dialogData.width,
+                  height: dialogData.height,
+                }}
+                ownerName={dialogData.photographer}
+                ownerPexelsUrl={dialogData.photographerUrl}
+              />
+            </div>
+          </div>
+        )}
+
       <div ref={loadMoreRef} className="py-10 text-center text-gray-500">
         {isFetchingNextPage && <Spinner />}
       </div>

@@ -24,25 +24,23 @@ export const useSearchOptions = create<SearchState>((set) => ({
   setSearchToPhotos: () => set({ currentSearchOption: "photos" }),
 }));
 
-// export const useThanksDialog = create<{
-//   thanksOpen: boolean;
-//   openThanks: () => void;
-//   closeThanks: () => void;
-// }>((set) => ({
-//   thanksOpen: false,
-//   openThanks: () => set({ thanksOpen: true }),
-//   closeThanks: () => set({ thanksOpen: false }),
-// }));
-
-interface PopupState {
-  activeThanksDialog: Record<string, { visible: boolean }>;
-  showThanksDialog: (id: string) => void;
-  hideThanksDialog: (id: string) => void;
+interface DialogData {
+  url: string;
+  width: number;
+  height: number;
+  photographer: string;
+  photographerUrl: string;
 }
 
-export const useThanksDialog = create<
-  PopupState & { thanksDialogIn: string | null }
->((set) => ({
+interface DialogState {
+  activeThanksDialog: Record<string, { visible: boolean }>;
+  showThanksDialog: (id: string, data: DialogData | null) => void;
+  hideThanksDialog: (id: string) => void;
+  thanksDialogIn: string | null;
+  dialogData: DialogData | null;
+}
+
+export const useThanksDialog = create<DialogState>((set) => ({
   activeThanksDialog: {
     photoPreview: { visible: false },
     videoSection: { visible: false },
@@ -50,13 +48,15 @@ export const useThanksDialog = create<
     videoPreview: { visible: false },
   },
   thanksDialogIn: null,
-  showThanksDialog: (id) =>
+  dialogData: null,
+  showThanksDialog: (id, photoData) =>
     set((state) => ({
       activeThanksDialog: {
         ...state.activeThanksDialog,
         [id]: { visible: true },
       },
       thanksDialogIn: id,
+      dialogData: photoData,
     })),
   hideThanksDialog: (id) =>
     set((state) => ({
@@ -65,5 +65,6 @@ export const useThanksDialog = create<
         [id]: { ...state.activeThanksDialog[id], visible: false },
       },
       thanksDialogIn: state.thanksDialogIn === id ? null : state.thanksDialogIn,
+      dialogData: state.thanksDialogIn === id ? null : state.dialogData, // clear if closing active one
     })),
 }));

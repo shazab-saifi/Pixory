@@ -10,7 +10,6 @@ import { CollectionVideo } from "@/lib/types";
 import BookmarkDialog from "./BookmarkDialog";
 import { useOutside } from "@/hooks/useOutside";
 import { useThanksDialog } from "@/lib/store";
-import ThanksDialog from "./ThanksDialog";
 
 const VideoPreviewCard = React.memo(
   ({
@@ -29,8 +28,6 @@ const VideoPreviewCard = React.memo(
     const [isBookmarkOpen, setIsBookmarkOpen] = useState<boolean>(false);
     const ref = useOutside(() => setIsBookmarkOpen(false), isBookmarkOpen);
     const showThanksDialog = useThanksDialog((s) => s.showThanksDialog);
-    const { activeThanksDialog, thanksDialogIn } = useThanksDialog();
-    const thanksDialog = activeThanksDialog["videoPreview"];
 
     const handleMouseEnter = () => {
       setIsHovered(true);
@@ -110,7 +107,14 @@ const VideoPreviewCard = React.memo(
                   e.stopPropagation();
                   handleDownload({
                     url: originalVideoUrl,
-                    onStart: () => showThanksDialog("videoPreview"),
+                    onStart: () =>
+                      showThanksDialog("videoPreview", {
+                        url: video.image,
+                        photographer: video.videographer,
+                        width: video.width,
+                        height: video.height,
+                        photographerUrl: video.videographerUrl,
+                      }),
                   });
                 }}
               >
@@ -121,7 +125,14 @@ const VideoPreviewCard = React.memo(
                   e.stopPropagation();
                   handleDownload({
                     url: originalVideoUrl,
-                    onStart: () => showThanksDialog("videoPreview"),
+                    onStart: () =>
+                      showThanksDialog("videoPreview", {
+                        url: video.image,
+                        photographer: video.videographer,
+                        width: video.width,
+                        height: video.height,
+                        photographerUrl: video.videographerUrl,
+                      }),
                   });
                 }}
                 className="size-6 text-white md:hidden"
@@ -134,21 +145,6 @@ const VideoPreviewCard = React.memo(
               video={video}
               setBookmarkOpen={setIsBookmarkOpen}
             />
-          )}
-          {thanksDialog.visible && thanksDialogIn === "videoPreview" && (
-            <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-              <div className="pointer-events-auto">
-                <ThanksDialog
-                  image={{
-                    url: video.image as string,
-                    width: video.width as number,
-                    height: video.height as number,
-                  }}
-                  ownerName={video.videographer as string}
-                  ownerPexelsUrl={video.videographerUrl as string}
-                />
-              </div>
-            </div>
           )}
         </div>
       </>

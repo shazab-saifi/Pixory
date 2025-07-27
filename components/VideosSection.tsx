@@ -18,8 +18,9 @@ const VideosSection = ({ query }: { query?: string }) => {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [selectedVideo, setSelectedVideo] = useState<VideoData | null>(null);
   const [hdVideo, setHdVideo] = useState<string>();
-  const { activeThanksDialog, thanksDialogIn } = useThanksDialog();
+  const { activeThanksDialog, thanksDialogIn, dialogData } = useThanksDialog();
   const thanksDialog = activeThanksDialog["videoSection"];
+  const dialogVideoPreview = activeThanksDialog["videoPreview"];
 
   const {
     data,
@@ -106,41 +107,63 @@ const VideosSection = ({ query }: { query?: string }) => {
           }),
         )}
       </Masonry>
-      {(isVideoOpen || thanksDialog.visible) && (
-        <div className="pointer-events-auto fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
+
+      {(isVideoOpen || thanksDialog.visible || dialogVideoPreview.visible) && (
+        <div className="pointer-events-auto fixed inset-0 z-30 bg-black/80 backdrop-blur-sm" />
       )}
+
       {isVideoOpen && !thanksDialog.visible && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto px-4 md:px-12 lg:px-0">
             <MediaCard
-              ownerName={selectedVideo?.user.name as string}
-              ownerUrl={selectedVideo?.user.url as string}
+              ownerName={selectedVideo?.user.name ?? ""}
+              ownerUrl={selectedVideo?.user.url ?? ""}
               src={selectedVideo?.video_files}
-              isVideo={true}
-              Url={hdVideo as string}
+              isVideo
+              Url={hdVideo ?? ""}
               isOpen={isVideoOpen}
-              mediaHeight={selectedVideo?.height as number}
-              mediaWidth={selectedVideo?.width as number}
+              mediaHeight={selectedVideo?.height ?? 0}
+              mediaWidth={selectedVideo?.width ?? 0}
               setIsOpen={setIsVideoOpen}
             />
           </div>
         </div>
       )}
+
       {thanksDialog.visible && thanksDialogIn === "videoSection" && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
           <div className="pointer-events-auto">
             <ThanksDialog
               image={{
-                url: selectedVideo?.image as string,
-                width: selectedVideo?.width as number,
-                height: selectedVideo?.height as number,
+                url: selectedVideo?.image ?? "",
+                width: selectedVideo?.width ?? 0,
+                height: selectedVideo?.height ?? 0,
               }}
-              ownerName={selectedVideo?.user.name as string}
-              ownerPexelsUrl={selectedVideo?.user.url as string}
+              ownerName={selectedVideo?.user.name ?? ""}
+              ownerPexelsUrl={selectedVideo?.user.url ?? ""}
             />
           </div>
         </div>
       )}
+
+      {dialogVideoPreview.visible &&
+        thanksDialogIn === "videoPreview" &&
+        dialogData && (
+          <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
+            <div className="pointer-events-auto">
+              <ThanksDialog
+                image={{
+                  url: dialogData.url,
+                  width: dialogData.width,
+                  height: dialogData.height,
+                }}
+                ownerName={dialogData.photographer}
+                ownerPexelsUrl={dialogData.photographerUrl}
+              />
+            </div>
+          </div>
+        )}
+
       <div ref={loadMoreRef} className="py-10 text-center text-gray-500">
         {isFetchingNextPage && <Spinner />}
       </div>
