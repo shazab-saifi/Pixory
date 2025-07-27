@@ -14,7 +14,7 @@ const AboutSection = () => {
       />
       <div className="z-20 space-y-8">
         <video
-          src="/pixoryDemo.mp4"
+          src="https://res.cloudinary.com/dgyxsjwuf/video/upload/v1753614609/pixoryDemo_kggpzb.mp4"
           muted
           playsInline
           loop
