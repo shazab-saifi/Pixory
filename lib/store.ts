@@ -65,6 +65,6 @@ export const useThanksDialog = create<DialogState>((set) => ({
         [id]: { ...state.activeThanksDialog[id], visible: false },
       },
       thanksDialogIn: state.thanksDialogIn === id ? null : state.thanksDialogIn,
-      dialogData: state.thanksDialogIn === id ? null : state.dialogData, // clear if closing active one
+      dialogData: state.thanksDialogIn === id ? null : state.dialogData,
     })),
 }));
