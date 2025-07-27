@@ -146,7 +146,7 @@ const PhotosSection = ({ query }: { query?: string }) => {
 
       {thanksDialog.visible && thanksDialogIn === "photoSection" && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto px-4 sm:px-0">
             <ThanksDialog
               image={{
                 url:
@@ -165,7 +165,7 @@ const PhotosSection = ({ query }: { query?: string }) => {
         thanksDialogIn === "photoPreview" &&
         dialogData && (
           <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-            <div className="pointer-events-auto">
+            <div className="pointer-events-auto px-4 sm:px-0">
               <ThanksDialog
                 image={{
                   url: dialogData.url,

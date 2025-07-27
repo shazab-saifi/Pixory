@@ -58,6 +58,11 @@ const SearchBar = ({
     }
   };
 
+  const isTouchDevice =
+    typeof window !== "undefined"
+      ? window.matchMedia("(pointer: coarse)").matches
+      : false;
+
   return (
     <div
       ref={ref}
@@ -67,14 +72,14 @@ const SearchBar = ({
       )}
     >
       <div
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() => (isTouchDevice ? undefined : setIsHovered(true))}
+        onMouseLeave={() => (isTouchDevice ? undefined : setIsHovered(false))}
+        onClick={() =>
+          isTouchDevice ? setIsHovered((prev) => !prev) : undefined
+        }
         className="relative flex flex-col"
       >
-        <button
-          onClick={() => setIsHovered((prev) => !prev)}
-          className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200"
-        >
+        <button className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200">
           {currentSearchOption === "photos" ? (
             <div className="flex items-center gap-2">
               <Images size={20} className="text-neutral-400" />

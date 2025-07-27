@@ -132,7 +132,7 @@ const VideosSection = ({ query }: { query?: string }) => {
 
       {thanksDialog.visible && thanksDialogIn === "videoSection" && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto px-4 sm:px-0">
             <ThanksDialog
               image={{
                 url: selectedVideo?.image ?? "",
@@ -150,7 +150,7 @@ const VideosSection = ({ query }: { query?: string }) => {
         thanksDialogIn === "videoPreview" &&
         dialogData && (
           <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center">
-            <div className="pointer-events-auto">
+            <div className="pointer-events-auto px-4 sm:px-0">
               <ThanksDialog
                 image={{
                   url: dialogData.url,

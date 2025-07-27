@@ -57,8 +57,8 @@ const Navbar2 = () => {
           </div>
         </nav>
       ) : (
-        <div className="absolute top-0 flex w-full items-center justify-center px-4">
-          <div className="mt-2 inline-flex w-full items-center rounded-xl bg-white p-1 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
+        <div className="fixed top-0 z-20 flex w-full items-center justify-center px-4">
+          <div className="shadow-custom mt-2 inline-flex w-full items-center rounded-xl bg-white p-1">
             <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
