@@ -1,6 +1,5 @@
 "use client";
 
-import { useOutside } from "@/hooks/useOutside";
 import { useThanksDialog } from "@/lib/store";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +7,8 @@ import Button from "./Button";
 import { useRouter } from "next/navigation";
 import { X } from "lucide-react";
 import { motion } from "motion/react";
+import { useOutside } from "@/hooks/useOutside";
+import { useCallback } from "react";
 
 type PropsType = {
   image: {
@@ -20,17 +21,24 @@ type PropsType = {
 };
 
 const ThanksDialog = ({ image, ownerName, ownerPexelsUrl }: PropsType) => {
-  // const { closeThanks, thanksOpen } = useThanksDialog();
-  // const ref = useOutside(closeThanks, thanksOpen);
   const router = useRouter();
   const hideDialog = useThanksDialog((s) => s.hideThanksDialog);
+
+  const closeAllThanksDialogs = useCallback(() => {
+    hideDialog("photoSection");
+    hideDialog("videoSection");
+    hideDialog("videoPreview");
+    hideDialog("photoPreview");
+  }, [hideDialog]);
+
+  const ref = useOutside(closeAllThanksDialogs, true);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ duration: 0.3 }}
-      // ref={ref}
+      ref={ref}
       className="relative z-60 flex h-fit w-fit flex-col gap-4 sm:flex-row"
     >
       <Image
@@ -43,12 +51,7 @@ const ThanksDialog = ({ image, ownerName, ownerPexelsUrl }: PropsType) => {
       />
       <div className="flex flex-col justify-between gap-6 rounded-br-3xl rounded-bl-3xl bg-white p-6 sm:relative sm:rounded-tr-3xl sm:rounded-br-3xl sm:rounded-bl-none">
         <button
-          onClick={() => {
-            hideDialog("photoSection");
-            hideDialog("videoSection");
-            hideDialog("videoPreview");
-            hideDialog("photoPreview");
-          }}
+          onClick={closeAllThanksDialogs}
           className="group absolute top-4 right-4 z-50 cursor-pointer rounded-lg p-2 text-white transition-colors hover:bg-gray-100"
         >
           <X className="size-5 text-white transition-colors sm:text-gray-400 sm:group-hover:text-gray-600" />
