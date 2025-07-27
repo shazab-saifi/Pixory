@@ -79,7 +79,11 @@ const SearchBar = ({
         }
         className="relative flex flex-col"
       >
-        <button className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200">
+        <button
+          className={`inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 ${
+            isTouchDevice ? "active:bg-neutral-200" : "hover:bg-neutral-200"
+          }`}
+        >
           {currentSearchOption === "photos" ? (
             <div className="flex items-center gap-2">
               <Images size={20} className="text-neutral-400" />
