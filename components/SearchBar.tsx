@@ -2,13 +2,16 @@
 
 import Dropdown from "./Dropdown";
 import { ChevronDown, Images, PlayCircle, Search } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useCallback, useMemo } from "react";
 import { cn, isTouchDevice } from "@/lib/utils";
 import { useSearchOptions } from "@/lib/store";
 import RecentSearches from "./RecentSearches";
 import { toast } from "sonner";
 import { useOutside } from "@/hooks/useOutside";
 import { useRouter } from "next/navigation";
+
+const capitalizeInput = (input: string) =>
+  input.length > 0 ? input[0].toUpperCase() + input.slice(1).toLowerCase() : "";
 
 const SearchBar = ({
   className,
@@ -23,40 +26,80 @@ const SearchBar = ({
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const { currentSearchOption } = useSearchOptions();
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const ref = useOutside(() => setIsFocused(false), isFocused);
+  const [isNewSearch, setIsNewSearch] = useState<boolean>(false);
+
+  const ref = useOutside(
+    useCallback(() => {
+      setIsFocused(false);
+      setIsNewSearch(false);
+    }, []),
+    isFocused,
+  );
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleOnClick = () => {
-    if (inputValue.length === 0) {
-      return toast.message("Please fill the input before searching!");
-    } else {
-      if (localStorage.getItem("recentSearches")) {
-        const recentSearches: string[] = JSON.parse(
-          localStorage.getItem("recentSearches") || "[]",
-        );
-        const alreadyExists = recentSearches.find((str) => str === inputValue);
-        if (!alreadyExists && recentSearches.length < 5) {
-          const update = [...recentSearches, inputValue];
-          localStorage.setItem("recentSearches", JSON.stringify(update));
-        }
-      } else {
-        localStorage.setItem("recentSearches", JSON.stringify([inputValue]));
-      }
-      router.push(`/search?query=${inputValue}`);
-    }
-  };
+  const finalInput = useMemo(() => capitalizeInput(inputValue), [inputValue]);
 
-  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleOnClick();
-    } else {
-      return null;
+  const handleOnClick = useCallback(() => {
+    if (finalInput.length === 0) {
+      toast.message("Please fill the input before searching!");
+      return;
     }
-  };
+
+    let recentSearches: string[] = [];
+    try {
+      recentSearches = JSON.parse(
+        localStorage.getItem("recentSearches") || "[]",
+      );
+    } catch {
+      recentSearches = [];
+    }
+
+    recentSearches = recentSearches.filter(
+      (str) => str.toLowerCase() !== finalInput.toLowerCase(),
+    );
+
+    const updated =
+      recentSearches.length >= 10
+        ? [...recentSearches.slice(1), finalInput]
+        : [...recentSearches, finalInput];
+
+    localStorage.setItem("recentSearches", JSON.stringify(updated));
+
+    router.push(`/search?query=${finalInput}`);
+    setIsFocused(false);
+    setIsNewSearch(true);
+  }, [inputValue, finalInput, router]);
+
+  const handleEnterKey = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleOnClick();
+      }
+    },
+    [handleOnClick],
+  );
+
+  const handleFocus = useCallback(() => {
+    setIsFocused(true);
+    setIsNewSearch(false);
+  }, []);
+
+  const dropdownProps = useMemo(
+    () => ({
+      text1: "Photos",
+      text2: "Videos",
+      icon1: Images,
+      icon2: PlayCircle,
+      forSearch: true,
+      isHovered,
+      pointerEventsNone: !isHovered,
+    }),
+    [isHovered],
+  );
 
   return (
     <div
@@ -67,14 +110,22 @@ const SearchBar = ({
       )}
     >
       <div
-        onMouseEnter={() => (isTouchDevice ? undefined : setIsHovered(true))}
-        onMouseLeave={() => (isTouchDevice ? undefined : setIsHovered(false))}
-        onClick={() =>
-          isTouchDevice ? setIsHovered((prev) => !prev) : undefined
-        }
+        onMouseEnter={() => {
+          if (!isTouchDevice) setIsHovered(true);
+        }}
+        onMouseLeave={() => {
+          if (!isTouchDevice) setIsHovered(false);
+        }}
+        onClick={() => {
+          if (isTouchDevice) setIsHovered((prev) => !prev);
+        }}
         className="relative flex flex-col"
       >
-        <button className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200">
+        <button
+          type="button"
+          className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200"
+          tabIndex={-1}
+        >
           {currentSearchOption === "photos" ? (
             <div className="flex items-center gap-2">
               <Images size={20} className="text-neutral-400" />
@@ -92,15 +143,7 @@ const SearchBar = ({
             }`}
           />
         </button>
-        <Dropdown
-          text1="Photos"
-          text2="Videos"
-          icon1={Images}
-          icon2={PlayCircle}
-          forSearch={true}
-          isHovered={isHovered}
-          pointerEventsNone={!isHovered}
-        />
+        <Dropdown {...dropdownProps} />
       </div>
       <input
         ref={inputRef}
@@ -110,9 +153,12 @@ const SearchBar = ({
         type="text"
         placeholder="Search for free photos"
         className={cn("min-w-[100px] flex-1 py-2 outline-none", inputClassName)}
-        onFocus={() => setIsFocused(true)}
+        onFocus={handleFocus}
+        aria-label="Search input"
+        autoComplete="off"
       />
       <button
+        type="button"
         onClick={handleOnClick}
         className={cn(
           "flex min-h-full cursor-pointer items-center rounded-lg p-3 text-neutral-400 shadow-none transition-colors sm:px-4.5 sm:py-3.5",
@@ -120,10 +166,11 @@ const SearchBar = ({
             ? "active:bg-neutral-200 active:text-neutral-800"
             : "hover:bg-neutral-200 hover:text-neutral-800",
         )}
+        aria-label="Search"
       >
         <Search size={20} className="opacity-80" />
       </button>
-      <RecentSearches isFocused={isFocused} />
+      <RecentSearches isFocused={isFocused} isNewSearch={isNewSearch} />
     </div>
   );
 };

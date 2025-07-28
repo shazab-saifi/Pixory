@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 
-export const useOutside = (callback: () => void, isOpen: boolean) => {
+export const useOutside = (handler: () => void, isOpen: boolean) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        callback();
+        handler();
       }
     };
 
@@ -19,7 +19,7 @@ export const useOutside = (callback: () => void, isOpen: boolean) => {
       document.removeEventListener("mousedown", handleOutsideClick);
       document.removeEventListener("touchstart", handleOutsideClick);
     };
-  }, [callback, isOpen]);
+  }, [handler, isOpen]);
 
   return ref;
 };
