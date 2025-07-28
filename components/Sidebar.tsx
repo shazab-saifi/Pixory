@@ -24,91 +24,98 @@ const Sidebar = ({
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+          className="fixed inset-0 z-50 min-h-screen bg-black/50 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
         />
       )}
       <div
-        className={`fixed top-0 right-0 z-50 h-full w-64 transform bg-white transition-transform duration-300 ${
+        className={`fixed top-0 right-0 z-50 flex h-full w-4/6 max-w-xs transform flex-col bg-white p-5 transition-transform duration-300 md:hidden ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between px-6 py-6">
-          <Image className="aspect-auto w-[100px]" src={pixory} alt="Logo" />
-          <button onClick={() => setIsOpen(false)}>
-            <X className="h-6 w-6" />
+        <div className="mb-8 flex items-center justify-between">
+          <Image className="aspect-auto w-[90px]" src={pixory} alt="Logo" />
+          <button onClick={() => setIsOpen(false)} aria-label="Close sidebar">
+            <X className="h-7 w-7" />
           </button>
         </div>
-        <div className="flex w-full flex-col gap-50 p-6 text-base font-medium">
-          <div className="space-y-10">
-            {status === "authenticated" && (
-              <div className="flex w-full gap-4">
-                <Image
-                  src={
-                    (session && (session?.user?.image as string)) ||
-                    "/profileAvatar.webp"
-                  }
-                  width={48}
-                  height={48}
-                  className="rounded-full"
-                  alt="profile pic"
-                />
-                <div className="flex flex-col">
-                  <span className="font-semibold">{session?.user?.name}</span>
-                  <span className="block max-w-full text-[12px] break-words text-gray-600">
-                    {session.user?.email}
-                  </span>
-                </div>
-              </div>
-            )}
-            <div className="flex flex-col space-y-8">
-              {status === "authenticated" && (
-                <div className="jsu inline-flex items-center gap-3 pl-3">
-                  <User />
-                  <Link href="/profile" onClick={() => setIsOpen(false)}>
-                    Profile
-                  </Link>
-                </div>
-              )}
-              <div className="inline-flex items-center gap-3 pl-3">
-                <Home />
-                <Link href="/" onClick={() => setIsOpen(false)}>
-                  Home
-                </Link>
-              </div>
-              <div className="inline-flex items-center gap-3 pl-3">
-                <Plus />
-                <Link href="/getpixory+" onClick={() => setIsOpen(false)}>
-                  Get Pixory+
-                </Link>
-              </div>
-              <div className="inline-flex items-center gap-3 pl-3">
-                <Megaphone />
-                <Link href="/advertise" onClick={() => setIsOpen(false)}>
-                  Advertise
-                </Link>
-              </div>
+        {status === "authenticated" && (
+          <div className="mb-8 flex items-center gap-3">
+            <Image
+              src={
+                (session && (session?.user?.image as string)) ||
+                "/profileAvatar.webp"
+              }
+              width={44}
+              height={44}
+              className="rounded-full"
+              alt="profile pic"
+            />
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate font-semibold">
+                {session?.user?.name}
+              </span>
+              <span className="block truncate text-xs text-neutral-600">
+                {session?.user?.email}
+              </span>
             </div>
           </div>
+        )}
+        <nav className="flex flex-1 flex-col gap-6">
+          {status === "authenticated" && (
+            <Link
+              href="/profile"
+              onClick={() => setIsOpen(false)}
+              className="flex items-center gap-3 rounded px-2 py-2 transition hover:bg-neutral-100"
+            >
+              <User className="size-6" />
+              <span>Profile</span>
+            </Link>
+          )}
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 rounded px-2 py-2 transition hover:bg-neutral-100"
+          >
+            <Home className="size-6" />
+            <span>Home</span>
+          </Link>
+          <Link
+            href="/getpixory+"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 rounded px-2 py-2 transition hover:bg-neutral-100"
+          >
+            <Plus className="size-6" />
+            <span>Get Pixory+</span>
+          </Link>
+          <Link
+            href="/advertise"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 rounded px-2 py-2 transition hover:bg-neutral-100"
+          >
+            <Megaphone className="size-6" />
+            <span>Advertise</span>
+          </Link>
+        </nav>
+        <div className="mt-8 flex flex-col gap-3">
           {status === "authenticated" ? (
-            <div>
-              <Button
-                variant="secondary"
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="mt-12 flex w-full justify-center gap-4"
-              >
-                <LogOut className="size-4" />
-                <span>Log Out</span>
-              </Button>
-            </div>
+            <Button
+              variant="secondary"
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="flex w-full items-center justify-center gap-3"
+            >
+              <LogOut className="size-4" />
+              <span>Log Out</span>
+            </Button>
           ) : (
-            <div className="flex flex-col gap-3">
+            <>
               <Button
                 variant="secondary"
                 onClick={() => {
                   setIsOpen(false);
                   navigate("signup");
                 }}
+                className="w-full"
               >
                 Sign Up
               </Button>
@@ -118,10 +125,11 @@ const Sidebar = ({
                   setIsOpen(false);
                   navigate("signin");
                 }}
+                className="w-full"
               >
                 Sign In
               </Button>
-            </div>
+            </>
           )}
         </div>
       </div>

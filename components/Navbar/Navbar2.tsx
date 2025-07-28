@@ -58,7 +58,7 @@ const Navbar2 = () => {
         </nav>
       ) : (
         <div className="fixed top-0 z-20 flex w-full items-center justify-center px-4">
-          <div className="shadow-custom mt-2 inline-flex w-full items-center gap-2 rounded-xl bg-white p-1">
+          <div className="shadow-custom mt-2 inline-flex w-full items-center gap-2 rounded-xl bg-neutral-100 p-1">
             <div
               onMouseEnter={() =>
                 isTouchDevice ? undefined : setIsHovered(true)
@@ -71,12 +71,9 @@ const Navbar2 = () => {
               }
               className="relative flex flex-col"
             >
-              <button className="inline-flex items-center gap-2 rounded-lg bg-neutral-100 px-4 py-3 hover:bg-neutral-200">
+              <button className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200">
                 <div className="flex items-center gap-2">
-                  <Images
-                    size={18}
-                    className={`${isTouchDevice ? "active:bg-neutral-200 active:text-neutral-800" : "hover:bg-neutral-200 hover:text-neutral-800"} text-neutral-400`}
-                  />
+                  <Images size={18} className="text-neutral-400" />
                   <span className="hidden md:block">Photos</span>
                 </div>
                 <ChevronDown
