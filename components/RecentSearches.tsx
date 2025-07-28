@@ -9,6 +9,7 @@ import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchCollection, isTouchDevice } from "@/lib/utils";
+import { Collection } from "@/lib/types";
 
 type RecentSearchesProps = {
   isFocused: boolean;
@@ -92,7 +93,7 @@ const RecentSearches = ({ isFocused }: RecentSearchesProps) => {
               <div className="flex w-full flex-col gap-4">
                 <h3 className="text-2xl">Your Collections</h3>
                 <div className="flex w-full flex-wrap gap-4">
-                  {collections.map((collection: any, idx: number) => (
+                  {collections.map((collection: Collection, idx: number) => (
                     <div key={idx} className="flex flex-col gap-2">
                       <Link
                         href={`/collection/${collection.id}`}

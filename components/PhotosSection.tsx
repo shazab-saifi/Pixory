@@ -88,6 +88,16 @@ const PhotosSection = ({ query }: { query?: string }) => {
       </div>
     );
 
+  if (data === undefined || data.pages[0].nextPage === null)
+    return (
+      <div className="mt-20 flex min-w-full items-center justify-center">
+        <span className="text-lg font-semibold">
+          Failed to fetch videos <br />
+          Please refresh the page to try again
+        </span>
+      </div>
+    );
+
   return (
     <div>
       <h1 className="my-6 px-4 text-2xl font-medium md:px-22 xl:px-52">

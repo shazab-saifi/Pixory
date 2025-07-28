@@ -58,8 +58,6 @@ const SearchBar = ({
     }
   };
 
-  console.log(isHovered);
-
   return (
     <div
       ref={ref}

@@ -52,14 +52,29 @@ const VideosSection = ({ query }: { query?: string }) => {
     enabled: hasNextPage,
   });
 
-  if (error) return <div>Error loading videos: {(error as Error).message}</div>;
+  console.log(data?.pages);
+
+  if (error)
+    return (
+      <div className="mt-20 flex min-w-full items-center justify-center">
+        Error loading videos: {(error as Error).message}
+      </div>
+    );
   if (isLoading)
     return (
       <div className="mt-20 flex min-w-full items-center justify-center">
         <Spinner />
       </div>
     );
-  if (data === undefined) return;
+  if (data === undefined || data.pages[0].nextPage === null)
+    return (
+      <div className="mt-20 flex min-w-full items-center justify-center">
+        <span className="text-lg font-semibold">
+          Failed to fetch videos <br />
+          Please refresh the page to try again
+        </span>
+      </div>
+    );
 
   return (
     <div>
