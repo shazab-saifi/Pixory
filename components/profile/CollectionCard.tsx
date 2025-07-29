@@ -40,10 +40,13 @@ const CollectionCard = ({
   });
 
   return (
-    <div onClick={onClick} className="mx-auto flex w-fit flex-col gap-4">
+    <div
+      onClick={onClick}
+      className="mx-auto flex w-fit flex-col gap-2 md:gap-4"
+    >
       <Link
         href={`/collection/${collectionId}`}
-        className="group relative grid aspect-square w-70 cursor-pointer grid-cols-2 gap-2 overflow-hidden rounded-2xl transition-opacity hover:opacity-80"
+        className="group relative grid aspect-square max-w-70 cursor-pointer grid-cols-2 gap-2 overflow-hidden rounded-2xl transition-opacity hover:opacity-80"
       >
         <button
           type="button"
@@ -82,7 +85,7 @@ const CollectionCard = ({
         </div>
       </Link>
       <div className="flex w-full items-center">
-        <h2 className="w-fit text-xl">{collectionName}</h2>
+        <h2 className="w-fit text-base md:text-xl">{collectionName}</h2>
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ const page = async () => {
           </h1>
         </div>
         <div className="mx-auto my-10 md:my-20">
-          <h1 className="py-4 text-left text-2xl font-medium">
+          <h1 className="pb-4 text-left text-xl font-medium md:text-2xl">
             Your Collections
           </h1>
           <CollectionsGrid />

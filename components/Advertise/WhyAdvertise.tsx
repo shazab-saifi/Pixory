@@ -45,7 +45,7 @@ export default function WhyAdvertise() {
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.3 }}
           viewport={{ once: true }}
-          className="z-20 mt-20 -ml-[35px]"
+          className="z-10 mt-20 -ml-[35px]"
         >
           <Image src={reviewCard} width={300} height={400} alt="users review" />
         </motion.div>

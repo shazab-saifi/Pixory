@@ -42,7 +42,7 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ ease: "easeInOut", duration: 0.5 }}
-        className="relative z-20 flex justify-center py-10 md:py-8"
+        className="relative z-10 flex justify-center py-10 md:py-8"
       >
         <Button className="relative space-x-2 font-semibold">
           <Image
@@ -74,7 +74,7 @@ export default function HeroSection() {
             <Image src={heroImage5} width={300} height={400} alt="image5" />
           </motion.div>
           <motion.div
-            className="z-20 -mr-12 sm:-mr-10 md:-mr-[40px] lg:-mr-[75px]"
+            className="z-2 -mr-12 sm:-mr-10 md:-mr-[40px] lg:-mr-[75px]"
             initial={{
               opacity: 0,
               transform: "translateX(80%)",
@@ -90,7 +90,7 @@ export default function HeroSection() {
             <Image src={heroImage4} width={300} height={400} alt="image4" />
           </motion.div>
           <motion.div
-            className="z-30"
+            className="z-3"
             initial={{ opacity: 0, y: 120, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ ease: "easeInOut", duration: 0.5, delay: 0 }}
@@ -98,7 +98,7 @@ export default function HeroSection() {
             <Image src={heroImage1} width={300} height={400} alt="image1" />
           </motion.div>
           <motion.div
-            className="z-20 -ml-12 sm:-ml-10 md:-ml-[40px] lg:-ml-[75px]"
+            className="z-2 -ml-12 sm:-ml-10 md:-ml-[40px] lg:-ml-[75px]"
             initial={{
               opacity: 0,
               transform: "translateX(-80%)",
@@ -114,7 +114,7 @@ export default function HeroSection() {
             <Image src={heroImage2} width={300} height={400} alt="image2" />
           </motion.div>
           <motion.div
-            className="z-10 hidden sm:-ml-20 sm:block md:-ml-[100px] lg:-ml-[150px]"
+            className="z-1 hidden sm:-ml-20 sm:block md:-ml-[100px] lg:-ml-[150px]"
             initial={{
               opacity: 0,
               transform: "translateX(-80%)",
