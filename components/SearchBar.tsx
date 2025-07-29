@@ -71,7 +71,7 @@ const SearchBar = ({
     router.push(`/search?query=${finalInput}`);
     setIsFocused(false);
     setIsNewSearch(true);
-  }, [inputValue, finalInput, router]);
+  }, [finalInput, router]);
 
   const handleEnterKey = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
