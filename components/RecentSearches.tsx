@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useMemo, useState } from "react";
+import React, { useEffect, useCallback, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { AnimatePresence, motion } from "motion/react";
@@ -158,4 +158,4 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
   );
 };
 
-export default RecentSearches;
+export default React.memo(RecentSearches);
