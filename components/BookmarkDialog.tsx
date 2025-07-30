@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Button from "./Button";
-import { ArrowDownRight, CopyPlus, LoaderCircle, X } from "lucide-react";
+import { ArrowDownRight, CopyPlus, LoaderCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { fetchCollection } from "@/lib/utils";
 import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 import { motion } from "motion/react";
+import CloseButton from "./CloseButton";
 
 const MAX_COLLECTION_NAME_LENGTH = 16;
 
@@ -237,14 +238,7 @@ const BookmarkDialog = ({
           <h1 className="text-2xl font-semibold md:text-3xl">
             Save to Collection
           </h1>
-          <button
-            onClick={() => {
-              setBookmarkOpen(false);
-            }}
-            className="group absolute top-3 right-3 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100 sm:top-4 sm:right-4"
-          >
-            <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
-          </button>
+          <CloseButton handlerFn={() => setBookmarkOpen(false)} />
           {!isClicked ? (
             <>
               <div className="no-scrollbar flex w-full max-w-120 gap-4 overflow-x-auto scroll-smooth">

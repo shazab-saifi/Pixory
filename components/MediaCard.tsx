@@ -1,10 +1,10 @@
 import React, { Dispatch, SetStateAction } from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
 import DownloadMenu from "./DownloadMenu";
 import PhotoLinkCopy from "./PhotoLinkCopy";
 import { PhotoURLsTypes, VideoFile } from "@/lib/types";
 import { useOutside } from "@/hooks/useOutside";
+import CloseButton from "./CloseButton";
 
 const MediaCard = React.memo(
   ({
@@ -40,12 +40,7 @@ const MediaCard = React.memo(
         }
         className="relative flex max-h-[600px] flex-col gap-4 rounded-2xl bg-white p-4 md:max-h-fit md:flex-row md:gap-6 lg:gap-8 xl:max-h-none"
       >
-        <button
-          onClick={() => setIsOpen(false)}
-          className="group absolute top-4 right-4 z-50 cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-100"
-        >
-          <X className="size-5 text-gray-400 transition-colors group-hover:text-gray-600" />
-        </button>
+        <CloseButton handlerFn={() => setIsOpen(false)} />
         <div className="w-full md:hidden">
           <DownloadMenu src={src} />
           {/* <Button

@@ -4,21 +4,13 @@ import Navbar2 from "@/components/Navbar/Navbar2";
 import OptionsSection from "@/components/OptionsSection";
 import PhotosSection from "@/components/PhotosSection";
 import VideosSection from "@/components/VideosSection";
-import { useOptionsToggle, useSearchOptions } from "@/lib/store";
+import { useOptionsToggle } from "@/lib/store";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
 const SearchPageClient = () => {
   const searchParams = useSearchParams();
-  const { currentOption, setToPhotos, setToVideos } = useOptionsToggle();
-  const { currentSearchOption } = useSearchOptions();
+  const { currentOption } = useOptionsToggle();
   const query = searchParams.get("query") || undefined;
-
-  useEffect(() => {
-    const whichSection = () =>
-      currentSearchOption === "photos" ? setToPhotos() : setToVideos();
-    whichSection();
-  }, [currentSearchOption, setToPhotos, setToVideos]);
 
   return (
     <div>

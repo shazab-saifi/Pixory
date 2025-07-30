@@ -12,6 +12,7 @@ import { useOverflowHidden } from "@/hooks/useOverflowHidden";
 import { findVideoFile } from "@/lib/utils";
 import ThanksDialog from "./ThanksDialog";
 import SkeletonLoading from "./SkeletonLoading";
+import Button from "./Button";
 
 const VideosSection = ({ query }: { query?: string }) => {
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -30,6 +31,7 @@ const VideosSection = ({ query }: { query?: string }) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading,
+    refetch,
   } = useInfiniteQuery({
     queryKey: ["videos", query],
     queryFn: ({ pageParam = 1 }) => {
@@ -64,13 +66,16 @@ const VideosSection = ({ query }: { query?: string }) => {
 
   if (isLoading) return <SkeletonLoading str="Videos" />;
 
-  if (data === undefined || data.pages[0].nextPage === null)
+  if (data === undefined || data.pages === null || undefined)
     return (
-      <div className="mt-20 flex min-w-full items-center justify-center">
+      <div className="mt-20 flex min-w-full flex-col items-center justify-center gap-4">
         <span className="text-center text-lg font-semibold">
           Failed to fetch videos <br />
           Please refresh the page to try again
         </span>
+        <Button size="sm" onClick={() => refetch()}>
+          Retry
+        </Button>
       </div>
     );
 

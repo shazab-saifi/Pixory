@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
 import { useRouter } from "next/navigation";
-import { X } from "lucide-react";
 import { motion } from "motion/react";
 import { useOutside } from "@/hooks/useOutside";
 import { useCallback } from "react";
+import CloseButton from "./CloseButton";
 
 type PropsType = {
   image: {
@@ -50,12 +50,7 @@ const ThanksDialog = ({ image, ownerName, ownerPexelsUrl }: PropsType) => {
         className="max-h-[150px] w-full rounded-t-3xl object-cover sm:max-h-[330px] sm:w-[150px] sm:rounded-tl-3xl sm:rounded-tr-none sm:rounded-bl-3xl"
       />
       <div className="flex flex-col justify-between gap-6 rounded-br-3xl rounded-bl-3xl bg-white p-6 sm:relative sm:rounded-tr-3xl sm:rounded-br-3xl sm:rounded-bl-none">
-        <button
-          onClick={closeAllThanksDialogs}
-          className="group absolute top-4 right-4 z-50 cursor-pointer rounded-lg p-2 text-white transition-colors hover:bg-gray-100"
-        >
-          <X className="size-5 text-white transition-colors sm:text-gray-400 sm:group-hover:text-gray-600" />
-        </button>
+        <CloseButton handlerFn={closeAllThanksDialogs} />
         <div className="space-y-4">
           <h1 className="text-2xl tracking-tight sm:text-3xl">Say Thanks!</h1>
           <p className="max-w-[250px] text-sm text-neutral-600 sm:text-base">

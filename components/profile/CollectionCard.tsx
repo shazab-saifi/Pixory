@@ -56,9 +56,9 @@ const CollectionCard = ({
             deleteMutation.mutate();
           }}
           disabled={deleteMutation.isPending}
-          className="absolute top-4 right-4 translate-x-14 cursor-pointer rounded-lg bg-neutral-100 p-2 font-bold text-red-600 transition-all group-hover:translate-x-0 hover:shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]"
+          className="hover:shadow-custom absolute top-2 right-2 cursor-pointer rounded-md bg-neutral-100 p-2 font-bold text-red-600 transition-all sm:top-4 sm:right-4 sm:rounded-lg lg:translate-x-14 lg:group-hover:translate-x-0"
         >
-          <Trash />
+          <Trash className="size-4 sm:size-6" />
         </button>
         <Image
           className="h-full w-full object-cover"

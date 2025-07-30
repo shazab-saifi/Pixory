@@ -11,6 +11,7 @@ import Navigation from "./Navigation";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { isTouchDevice } from "@/lib/utils";
+import { useOptionsToggle, useSearchOptions } from "@/lib/store";
 
 const Navbar2 = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +20,20 @@ const Navbar2 = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
+  const { currentSearchOption } = useSearchOptions();
+  const { setToPhotos, setToVideos } = useOptionsToggle();
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) =>
     setInputValue(e.target.value);
-  const handleOnClick = () => router.push(`/search?query=${inputValue}`);
+
+  const handleOnClick = () => {
+    router.push(`/search?query=${inputValue}`);
+    if (currentSearchOption === "photos") {
+      setToPhotos();
+    } else {
+      setToVideos();
+    }
+  };
 
   return (
     <>
@@ -72,10 +83,21 @@ const Navbar2 = () => {
               className="relative flex flex-col"
             >
               <button className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200">
-                <div className="flex items-center gap-2">
-                  <Images size={18} className="text-neutral-400" />
-                  <span className="hidden md:block">Photos</span>
-                </div>
+                {currentSearchOption === "photos" ? (
+                  <div className="flex items-center gap-2">
+                    <Images size={20} className="text-neutral-400" />
+                    <span className="hidden text-neutral-800 md:block">
+                      Photos
+                    </span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <PlayCircle size={20} className="text-neutral-400" />
+                    <span className="hidden text-neutral-800 md:block">
+                      Videos
+                    </span>
+                  </div>
+                )}
                 <ChevronDown
                   className={`h-4 w-4 transition-transform duration-200 ${isHovered ? "rotate-180" : ""}`}
                 />

@@ -4,7 +4,7 @@ import Dropdown from "./Dropdown";
 import { ChevronDown, Images, PlayCircle, Search } from "lucide-react";
 import { useRef, useState, useCallback, useMemo } from "react";
 import { cn, isTouchDevice } from "@/lib/utils";
-import { useSearchOptions } from "@/lib/store";
+import { useOptionsToggle, useSearchOptions } from "@/lib/store";
 import RecentSearches from "./RecentSearches";
 import { toast } from "sonner";
 import { useOutside } from "@/hooks/useOutside";
@@ -27,6 +27,7 @@ const SearchBar = ({
   const { currentSearchOption } = useSearchOptions();
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isNewSearch, setIsNewSearch] = useState<boolean>(false);
+  const { setToPhotos, setToVideos } = useOptionsToggle();
 
   const ref = useOutside(
     useCallback(() => {
@@ -67,11 +68,15 @@ const SearchBar = ({
         : [...recentSearches, finalInput];
 
     localStorage.setItem("recentSearches", JSON.stringify(updated));
-
     router.push(`/search?query=${finalInput}`);
+    if (currentSearchOption === "photos") {
+      setToPhotos();
+    } else {
+      setToVideos();
+    }
     setIsFocused(false);
     setIsNewSearch(true);
-  }, [finalInput, router]);
+  }, [finalInput, router, currentSearchOption, setToPhotos, setToVideos]);
 
   const handleEnterKey = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -124,7 +129,6 @@ const SearchBar = ({
         <button
           type="button"
           className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-3 hover:bg-neutral-200"
-          tabIndex={-1}
         >
           {currentSearchOption === "photos" ? (
             <div className="flex items-center gap-2">
