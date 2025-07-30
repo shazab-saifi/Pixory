@@ -58,7 +58,7 @@ export default function HeroSection() {
         {/* Hero images animation group */}
         <div className="relative flex items-center justify-center">
           <motion.div
-            className="z-10 hidden sm:-mr-20 sm:block md:-mr-[100px] lg:-mr-[150px]"
+            className="z-1 hidden sm:-mr-20 sm:block md:-mr-[100px] lg:-mr-[150px]"
             initial={{
               opacity: 0,
               transform: "translateX(80%)",

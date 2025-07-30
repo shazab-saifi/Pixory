@@ -22,13 +22,11 @@ export default function CollectionsGrid() {
   return (
     <div className="w-full">
       {isLoading ? (
-        <div className="grid w-full grid-cols-1 gap-12 md:grid-cols-4">
+        <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-2 md:gap-12 lg:grid-cols-3 2xl:grid-cols-4">
           {[1, 2, 3, 4].map((n) => (
-            <div key={n}>
+            <div key={n} className="h-full">
               <Skeleton
-                width={280}
-                className="mb-4"
-                height={280}
+                className="mb-2 aspect-square max-h-70 w-full max-w-70 md:mb-4"
                 borderRadius={16}
               />
               <Skeleton width={100} height={20} borderRadius={4} />

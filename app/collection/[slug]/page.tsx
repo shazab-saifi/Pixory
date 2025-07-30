@@ -44,7 +44,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
       <div className="min-h-screen w-full">
         <Navbar2 />
         <div className="mt-30 mb-20 w-full space-y-6 px-4 md:mt-50 md:mb-40 md:px-20 xl:px-50">
-          <h1 className="text-4xl font-medium">
+          <h1 className="text-2xl font-medium xl:text-4xl">
             {collection && collection.name}
           </h1>
           {collection && (

@@ -13,7 +13,7 @@ const FAQItem = ({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex max-w-[700px] flex-col items-center justify-center rounded-lg border p-4 shadow-md transition-all duration-300">
+    <div className="shadow-custom flex max-w-[700px] flex-col items-center justify-center rounded-lg border p-4 transition-all duration-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between text-left"

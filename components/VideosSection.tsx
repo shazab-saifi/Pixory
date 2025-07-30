@@ -55,8 +55,6 @@ const VideosSection = ({ query }: { query?: string }) => {
     enabled: hasNextPage,
   });
 
-  console.log(data?.pages);
-
   if (error)
     return (
       <div className="mt-20 flex min-w-full items-center justify-center">
@@ -66,7 +64,7 @@ const VideosSection = ({ query }: { query?: string }) => {
 
   if (isLoading) return <SkeletonLoading str="Videos" />;
 
-  if (data === undefined || data.pages === null || undefined)
+  if (data === undefined || data.pages[0].data === null || undefined)
     return (
       <div className="mt-20 flex min-w-full flex-col items-center justify-center gap-4">
         <span className="text-center text-lg font-semibold">

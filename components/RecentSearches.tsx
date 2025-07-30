@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { fetchCollection, isTouchDevice } from "@/lib/utils";
 import { Collection } from "@/lib/types";
+import { useOptionsToggle, useSearchOptions } from "@/lib/store";
 
 type RecentSearchesProps = {
   isFocused: boolean;
@@ -20,6 +21,8 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const { status } = useSession();
   const router = useRouter();
+  const { currentSearchOption } = useSearchOptions();
+  const { setToPhotos, setToVideos } = useOptionsToggle();
 
   const { data: collections } = useQuery({
     queryKey: ["collections"],
@@ -51,9 +54,15 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
 
   const handleRecentSearchClick = useCallback(
     (s: string) => {
+      if (currentSearchOption === "photos") {
+        setToPhotos();
+      } else {
+        setToVideos();
+      }
+
       router.push(`/search?query=${encodeURIComponent(s)}`);
     },
-    [router],
+    [router, currentSearchOption, setToPhotos, setToVideos],
   );
 
   const recentSearchesSection = useMemo(() => {

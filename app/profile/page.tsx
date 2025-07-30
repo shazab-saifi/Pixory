@@ -34,7 +34,7 @@ const page = async () => {
             {session?.user?.name}
           </h1>
         </div>
-        <div className="mx-auto my-10 md:my-20">
+        <div className="mx-auto my-10 w-full max-w-6xl md:my-20">
           <h1 className="pb-4 text-left text-xl font-medium md:text-2xl">
             Your Collections
           </h1>
