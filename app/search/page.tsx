@@ -19,7 +19,7 @@ export async function generateMetadata({
         type: "website",
         images: [
           {
-            url: "/ogImage.svg",
+            url: "/ogImage.png",
             width: 1200,
             height: 630,
             alt: "Pixory - Visual Content Platform",
@@ -30,7 +30,7 @@ export async function generateMetadata({
         card: "summary_large_image",
         title: `Search Results for "${query}" - Pixory`,
         description: `Find photos and videos related to "${query}" on Pixory.`,
-        images: ["/ogImage.svg"],
+        images: ["/ogImage.png"],
       },
     };
   }
@@ -46,7 +46,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "/ogImage.svg",
+          url: "/ogImage.png",
           width: 1200,
           height: 630,
           alt: "Pixory - Visual Content Platform",
@@ -57,7 +57,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: "Search - Pixory",
       description: "Search for photos and videos on Pixory.",
-      images: ["/ogImage.svg"],
+      images: ["/ogImage.png"],
     },
   };
 }
