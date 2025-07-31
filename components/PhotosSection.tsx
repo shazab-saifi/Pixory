@@ -84,6 +84,8 @@ const PhotosSection = ({ query }: { query?: string }) => {
   if (error) return <div>Error loading photos: {(error as Error).message}</div>;
   if (isLoading) return <SkeletonLoading str="Photos" />;
 
+  console.log(data);
+
   if (data === undefined || data.pages[0].nextPage === null)
     return (
       <div className="mt-20 flex min-w-full items-center justify-center">

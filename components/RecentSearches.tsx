@@ -22,7 +22,7 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
   const { status } = useSession();
   const router = useRouter();
   const { currentSearchOption } = useSearchOptions();
-  const { setToPhotos, setToVideos } = useOptionsToggle();
+  const { setToVideos, setToPhotos } = useOptionsToggle();
 
   const { data: collections } = useQuery({
     queryKey: ["collections"],
@@ -75,8 +75,8 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
             onClick={clearRecentSearches}
             disabled={recentSearches.length === 0}
             className={
-              "shadow-custom cursor-pointer rounded-md bg-neutral-100 px-1 py-0.5 text-[12px] text-neutral-600 transition-colors sm:px-2 sm:py-1 sm:text-sm " +
-              (isTouchDevice ? "active:bg-neutral-200" : "hover:bg-neutral-200")
+              "shadow-custom cursor-pointer rounded-md bg-neutral-100 px-1 py-0.5 text-[12px] text-neutral-600 transition-colors hover:bg-neutral-200 sm:px-2 sm:py-1 sm:text-sm " +
+              (isTouchDevice && "active:bg-neutral-200")
             }
           >
             Clear
@@ -88,10 +88,9 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
               key={s + idx}
               onClick={() => handleRecentSearchClick(s)}
               className={
-                "shadow-custom flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-2 py-1 text-sm transition-colors sm:px-4 sm:py-2 sm:text-base " +
-                (isTouchDevice
-                  ? "active:bg-neutral-100 active:text-neutral-600"
-                  : "hover:bg-neutral-100 hover:text-neutral-600")
+                "shadow-custom flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-2 py-1 text-sm transition-colors hover:bg-neutral-100 hover:text-neutral-600 sm:px-4 sm:py-2 sm:text-base " +
+                (isTouchDevice &&
+                  "active:bg-neutral-100 active:text-neutral-600")
               }
             >
               <span>{s}</span>
@@ -131,10 +130,8 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
                   />
                   <div
                     className={
-                      "absolute top-0 left-0 z-20 h-full w-full cursor-pointer rounded-lg bg-transparent transition-colors " +
-                      (isTouchDevice
-                        ? "active:bg-black/50"
-                        : "hover:bg-black/50")
+                      "absolute top-0 left-0 z-20 h-full w-full cursor-pointer rounded-lg bg-transparent transition-colors hover:bg-black/30 " +
+                      (isTouchDevice && "active:bg-black/30")
                     }
                   ></div>
                 </Link>

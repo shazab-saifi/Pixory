@@ -39,7 +39,7 @@ const Navbar2 = () => {
     <>
       {!isSearching ? (
         <nav className="fixed top-0 z-20 flex w-full items-center justify-between bg-white px-4 py-4 text-base text-black md:px-20 xl:px-30 2xl:px-50">
-          <div className="flex gap-8 2xl:gap-20">
+          <div className="flex gap-8 2xl:gap-12">
             <Link href="/" className="inline-flex items-center">
               <Image
                 className="aspect-auto w-[100px] xl:w-[130px]"
@@ -48,7 +48,7 @@ const Navbar2 = () => {
               />
             </Link>
             <SearchBar
-              inputClassName="w-[400px]"
+              inputClassName="2xl:w-[20vw] xl:w-[18vw]"
               className="hidden gap-2 xl:flex"
             />
           </div>

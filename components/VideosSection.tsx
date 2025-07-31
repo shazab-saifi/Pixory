@@ -23,6 +23,7 @@ const VideosSection = ({ query }: { query?: string }) => {
   const { activeThanksDialog, thanksDialogIn, dialogData } = useThanksDialog();
   const thanksDialog = activeThanksDialog["videoSection"];
   const dialogVideoPreview = activeThanksDialog["videoPreview"];
+  const [hideDataInvalid, setHideDataInvalid] = useState(false);
 
   const {
     data,
@@ -30,6 +31,7 @@ const VideosSection = ({ query }: { query?: string }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
+    isRefetching,
     isLoading,
     refetch,
   } = useInfiniteQuery({
@@ -64,14 +66,27 @@ const VideosSection = ({ query }: { query?: string }) => {
 
   if (isLoading) return <SkeletonLoading str="Videos" />;
 
-  if (data === undefined || data.pages[0].data === null || undefined)
+  const isDataInvalid =
+    !data ||
+    !Array.isArray(data.pages) ||
+    data.pages.some((page) => !page?.data || !Array.isArray(page.data.videos));
+
+  console.log(isRefetching);
+
+  if (isDataInvalid && !hideDataInvalid)
     return (
       <div className="mt-20 flex min-w-full flex-col items-center justify-center gap-4">
         <span className="text-center text-lg font-semibold">
           Failed to fetch videos <br />
-          Please refresh the page to try again
+          Please refresh the page or click on Retry button
         </span>
-        <Button size="sm" onClick={() => refetch()}>
+        <Button
+          size="sm"
+          onClick={() => {
+            setHideDataInvalid(true);
+            refetch();
+          }}
+        >
           Retry
         </Button>
       </div>
@@ -87,40 +102,42 @@ const VideosSection = ({ query }: { query?: string }) => {
         className="my-masonry-grid px-4 md:px-20 xl:px-50"
         columnClassName="pl-4 md:pl-6 space-y-4 md:space-y-6"
       >
-        {data.pages.flatMap((page) =>
-          page.data.videos.map((video: VideoData) => {
-            const { hdVideoFIle } = findVideoFile(video);
+        {data?.pages.flatMap(
+          (page) =>
+            Array.isArray(page?.data?.videos) &&
+            page.data.videos.map((video: VideoData) => {
+              const { hdVideoFIle } = findVideoFile(video);
 
-            return (
-              <VideoPreviewCard
-                key={video.id}
-                originalVideoUrl={hdVideoFIle.link}
-                video={{
-                  id: video.id,
-                  width: video.width,
-                  height: video.height,
-                  url: video.url,
-                  image: video.image,
-                  videographer: video.user.name,
-                  videographerUrl: video.user.url,
-                  videoFiles: video.video_files.map((f) => ({
-                    id: f.id,
-                    quality: f.quality,
-                    width: f.width,
-                    height: f.height,
-                    fileType: f.file_type,
-                    link: f.link,
-                    videoId: video.id,
-                  })),
-                }}
-                onClick={() => {
-                  setIsVideoOpen(true);
-                  setSelectedVideo(video);
-                  setHdVideo(hdVideoFIle.link);
-                }}
-              />
-            );
-          }),
+              return (
+                <VideoPreviewCard
+                  key={video.id}
+                  originalVideoUrl={hdVideoFIle.link}
+                  video={{
+                    id: video.id,
+                    width: video.width,
+                    height: video.height,
+                    url: video.url,
+                    image: video.image,
+                    videographer: video.user.name,
+                    videographerUrl: video.user.url,
+                    videoFiles: video.video_files.map((f) => ({
+                      id: f.id,
+                      quality: f.quality,
+                      width: f.width,
+                      height: f.height,
+                      fileType: f.file_type,
+                      link: f.link,
+                      videoId: video.id,
+                    })),
+                  }}
+                  onClick={() => {
+                    setIsVideoOpen(true);
+                    setSelectedVideo(video);
+                    setHdVideo(hdVideoFIle.link);
+                  }}
+                />
+              );
+            }),
         )}
       </Masonry>
 

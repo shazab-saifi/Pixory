@@ -27,7 +27,7 @@ const SearchBar = ({
   const { currentSearchOption } = useSearchOptions();
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isNewSearch, setIsNewSearch] = useState<boolean>(false);
-  const { setToPhotos, setToVideos } = useOptionsToggle();
+  const { setToVideos, setToPhotos } = useOptionsToggle();
 
   const ref = useOutside(
     useCallback(() => {
@@ -63,7 +63,7 @@ const SearchBar = ({
     );
 
     const updated =
-      recentSearches.length >= 10
+      recentSearches.length >= 8
         ? [...recentSearches.slice(1), finalInput]
         : [...recentSearches, finalInput];
 
