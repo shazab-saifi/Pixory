@@ -71,8 +71,6 @@ const VideosSection = ({ query }: { query?: string }) => {
     !Array.isArray(data.pages) ||
     data.pages.some((page) => !page?.data || !Array.isArray(page.data.videos));
 
-  console.log(isRefetching);
-
   if (isDataInvalid && !hideDataInvalid)
     return (
       <div className="mt-20 flex min-w-full flex-col items-center justify-center gap-4">
