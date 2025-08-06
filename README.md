@@ -64,3 +64,17 @@ pixory/
 ├── README.md             
 └── tsconfig.json         
 
+---
+
+## 🧰 Tech Stack
+
+Frontend: Next.js, React Query, Tailwind CSS
+
+State Management: Zustand
+
+API: Pexels API
+
+Auth: NextAuth
+
+Database: Prisma, neon.tech
+
