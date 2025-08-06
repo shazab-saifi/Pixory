@@ -28,7 +28,7 @@ Pixory is a visually rich web application inspired by Pexels. It allows users to
 
 - 🕵️‍♂️ **Recent Searches**  
   View recent searches directly in the search bar menu.
-  ![Your Recent Searches And Your Collections](screenshots/recentSearches.png)
+  ![Your Recent Searches And Your Collections](screenshots/searchMenu.png)
 
 - 📤 **Share Searches**  
   Share the URL of a specific search result with others.
