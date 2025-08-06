@@ -8,34 +8,59 @@ Pixory is a visually rich web application inspired by Pexels. It allows users to
 
 - 🔍 **Search Photos & Videos**  
   Users can search for either photos or videos using a dropdown filter.
-  (screenshots/searchResults.png)
+  ![Search Result](screenshots/searchResults.png)
 
 - 🖼️ **Pagination**  
   Results are paginated for better performance and navigation.
-  (screenshots/pagination.png)
+  ![Pagination](screenshots/pagination.png)
 
 - 💾 **Download in Multiple Sizes**  
   Download media in portrait, landscape, or original resolutions.
-  (screenshots/download.png)
+  ![Download Photo/Video](screenshots/download.png)
 
 - 📂 **Create & Manage Collections**  
   Organize photos and videos into custom collections.
-  (screenshots/collections.png)
+  ![Your Collections](screenshots/collections.png)
 
 - 🔖 **Bookmark**  
   Easily bookmark favorite items to save in collections.
-  (screenshots/bookmark.png)
+  ![Bookmark Photo/Video](screenshots/bookmark.png)
 
 - 🕵️‍♂️ **Recent Searches**  
   View recent searches directly in the search bar menu.
-  (screenshots/recentSearches.png)
+  ![Your Recent Searches And Your Collections](screenshots/recentSearches.png)
 
 - 📤 **Share Searches**  
   Share the URL of a specific search result with others.
-  (screenshots/searchResults.png)
+  ![Search Results](screenshots/searchResults.png)
 
 - 🔐 **Authentication**  
   Login/Logout functionality to save user preferences and collections.
-  (screenshots/auth.png)
+  ![Authentication](screenshots/auth.png)
 
 ---
+
+## 🌟 Project Structure
+
+pixory/              
+├── app/                  
+├── components/           
+├── hooks/                
+├── lib/                 
+├── prisma/              
+├── public/              
+├── screenshots/         
+├── .env.local            
+├── .gitignore            
+├── .prettierrc.json     
+├── eslint.config.mjs    
+├── global.d.ts           
+├── middleware.ts        
+├── next-env.d.ts         
+├── next.config.ts       
+├── package.json          
+├── package-lock.json     
+├── postcss.config.mjs    
+├── README.md             
+└── tsconfig.json         
+
