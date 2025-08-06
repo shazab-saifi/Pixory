@@ -31,7 +31,6 @@ const VideosSection = ({ query }: { query?: string }) => {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isRefetching,
     isLoading,
     refetch,
   } = useInfiniteQuery({

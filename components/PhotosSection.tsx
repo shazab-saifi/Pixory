@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import PhotoPreviewCard from "./PhotoPreviewCard";
 import Spinner from "./Spinner";
 import Masonry from "react-masonry-css";
@@ -71,34 +71,8 @@ const PhotosSection = ({ query }: { query?: string }) => {
     }
   }, [data]);
 
-  useOverflowHidden(isPhotoOpen);
-
-  useIntersection({
-    onIntersect: () => {
-      if (hasNextPage && !isFetchingNextPage) fetchNextPage();
-    },
-    targetRef: loadMoreRef,
-    enabled: hasNextPage,
-  });
-
-  if (error) return <div>Error loading photos: {(error as Error).message}</div>;
-  if (isLoading) return <SkeletonLoading str="Photos" />;
-
-  if (data === undefined || data.pages[0].nextPage === null)
+  const MasonryGrid = useMemo(() => {
     return (
-      <div className="mt-20 flex min-w-full items-center justify-center">
-        <span className="text-lg font-semibold">
-          Failed to fetch videos <br />
-          Please refresh the page to try again
-        </span>
-      </div>
-    );
-
-  return (
-    <div>
-      <h1 className="my-6 px-4 text-2xl font-medium md:px-22 xl:px-52">
-        Free Stock Photos
-      </h1>
       <Masonry
         breakpointCols={{ default: 3, 768: 2 }}
         className="my-masonry-grid px-4 md:px-20 xl:px-50"
@@ -127,7 +101,38 @@ const PhotosSection = ({ query }: { query?: string }) => {
           />
         ))}
       </Masonry>
+    );
+  }, [uniquePhotos]);
 
+  useOverflowHidden(isPhotoOpen);
+
+  useIntersection({
+    onIntersect: () => {
+      if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+    },
+    targetRef: loadMoreRef,
+    enabled: hasNextPage,
+  });
+
+  if (error) return <div>Error loading photos: {(error as Error).message}</div>;
+  if (isLoading) return <SkeletonLoading str="Photos" />;
+
+  if (data === undefined || data.pages[0].nextPage === null)
+    return (
+      <div className="mt-20 flex min-w-full items-center justify-center">
+        <span className="text-lg font-semibold">
+          Failed to fetch videos <br />
+          Please refresh the page to try again
+        </span>
+      </div>
+    );
+
+  return (
+    <div>
+      <h1 className="my-6 px-4 text-2xl font-medium md:px-22 xl:px-52">
+        Free Stock Photos
+      </h1>
+      {MasonryGrid}
       {(isPhotoOpen || thanksDialog.visible || dialogPhotoPreview.visible) && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm" />
       )}
