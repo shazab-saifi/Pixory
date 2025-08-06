@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📸 Pixory
 
-## Getting Started
+Pixory is a visually rich web application inspired by Pexels. It allows users to explore, search, collect, bookmark, and download high-quality photos and videos using the [Pexels API](https://www.pexels.com/api/). It offers a sleek UI and several user-friendly features like recent searches, collections, and multi-size download options.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌟 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔍 **Search Photos & Videos**  
+  Users can search for either photos or videos using a dropdown filter.
+  (screenshots/searchResults.png)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🖼️ **Pagination**  
+  Results are paginated for better performance and navigation.
+  (screenshots/pagination.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 💾 **Download in Multiple Sizes**  
+  Download media in portrait, landscape, or original resolutions.
+  (screenshots/download.png)
 
-## Learn More
+- 📂 **Create & Manage Collections**  
+  Organize photos and videos into custom collections.
+  (screenshots/collections.png)
 
-To learn more about Next.js, take a look at the following resources:
+- 🔖 **Bookmark**  
+  Easily bookmark favorite items to save in collections.
+  (screenshots/bookmark.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🕵️‍♂️ **Recent Searches**  
+  View recent searches directly in the search bar menu.
+  (screenshots/recentSearches.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- 📤 **Share Searches**  
+  Share the URL of a specific search result with others.
+  (screenshots/searchResults.png)
 
-## Deploy on Vercel
+- 🔐 **Authentication**  
+  Login/Logout functionality to save user preferences and collections.
+  (screenshots/auth.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
