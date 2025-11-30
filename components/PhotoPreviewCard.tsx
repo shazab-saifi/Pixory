@@ -30,7 +30,7 @@ const PhotoPreviewCard = ({
     <>
       <div
         onClick={onClick}
-        className={`relative w-[${photo.width}px] h-[${photo.height}px] group overflow-hidden rounded-xl lg:rounded-2xl`}
+        className={`relative w-[${photo.width}px] h-[${photo.height}px] group hover:scale-98 transition-transform overflow-hidden rounded-xl lg:rounded-2xl`}
       >
         <Image
           className="z-0 h-full w-full object-cover"

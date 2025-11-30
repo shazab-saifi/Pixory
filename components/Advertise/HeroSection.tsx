@@ -2,16 +2,53 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import {
-  heroImage1,
-  heroImage2,
-  heroImage3,
-  heroImage4,
-  heroImage5,
-} from "@/lib/import";
+import { heroImage1, heroImage2, heroImage3, heroImage4, heroImage5 } from "@/lib/import";
 import arrow from "@/public/arrow.svg";
 import { Rocket } from "lucide-react";
 import Button from "../Button";
+
+const HERO_IMAGES = [
+  {
+    src: heroImage5,
+    alt: "image5",
+    className: "z-1 hidden sm:-mr-20 sm:block md:-mr-[100px] lg:-mr-[150px]",
+    initial: { opacity: 0, transform: "translateX(80%)", filter: "blur(10px)" },
+    animate: { opacity: 1, transform: "translateX(0)", filter: "blur(0px)" },
+    transition: { ease: "easeInOut", duration: 0.5, delay: 0.6 },
+  },
+  {
+    src: heroImage4,
+    alt: "image4",
+    className: "z-2 -mr-12 sm:-mr-10 md:-mr-[40px] lg:-mr-[75px]",
+    initial: { opacity: 0, transform: "translateX(80%)", filter: "blur(10px)" },
+    animate: { opacity: 1, transform: "translateX(0)", filter: "blur(0px)" },
+    transition: { ease: "easeInOut", duration: 0.5, delay: 0.3 },
+  },
+  {
+    src: heroImage1,
+    alt: "image1",
+    className: "z-3",
+    initial: { opacity: 0, y: 120, filter: "blur(10px)" },
+    animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+    transition: { ease: "easeInOut", duration: 0.5, delay: 0 },
+  },
+  {
+    src: heroImage2,
+    alt: "image2",
+    className: "z-2 -ml-12 sm:-ml-10 md:-ml-[40px] lg:-ml-[75px]",
+    initial: { opacity: 0, transform: "translateX(-80%)", filter: "blur(10px)" },
+    animate: { opacity: 1, transform: "translateX(0)", filter: "blur(0px)" },
+    transition: { ease: "easeInOut", duration: 0.5, delay: 0.3 },
+  },
+  {
+    src: heroImage3,
+    alt: "image3",
+    className: "z-1 hidden sm:-ml-20 sm:block md:-ml-[100px] lg:-ml-[150px]",
+    initial: { opacity: 0, transform: "translateX(-80%)", filter: "blur(10px)" },
+    animate: { opacity: 1, transform: "translateX(0)", filter: "blur(0px)" },
+    transition: { ease: "easeInOut", duration: 0.5, delay: 0.6 },
+  },
+];
 
 export default function HeroSection() {
   return (
@@ -32,10 +69,8 @@ export default function HeroSection() {
           transition={{ ease: "easeInOut", duration: 0.4 }}
           className="text-center text-base md:text-xl"
         >
-          Tap into a high-intent audience of millions searching for stunning
-          visuals.
-          <br className="hidden md:block" /> Drive real results through native
-          and targeted placements.
+          Tap into a high-intent audience of millions searching for stunning visuals.
+          <br className="hidden md:block" /> Drive real results through native and targeted placements.
         </motion.h4>
       </div>
       <motion.div
@@ -55,80 +90,21 @@ export default function HeroSection() {
         </Button>
       </motion.div>
       <div className="relative flex items-center justify-center pt-4 md:pt-20">
-        {/* Hero images animation group */}
         <div className="relative flex items-center justify-center">
-          <motion.div
-            className="z-1 hidden sm:-mr-20 sm:block md:-mr-[100px] lg:-mr-[150px]"
-            initial={{
-              opacity: 0,
-              transform: "translateX(80%)",
-              filter: "blur(10px)",
-            }}
-            animate={{
-              opacity: 1,
-              transform: "translateX(0)",
-              filter: "blur(0px)",
-            }}
-            transition={{ ease: "easeInOut", duration: 0.5, delay: 0.6 }}
-          >
-            <Image src={heroImage5} width={300} height={400} alt="image5" />
-          </motion.div>
-          <motion.div
-            className="z-2 -mr-12 sm:-mr-10 md:-mr-[40px] lg:-mr-[75px]"
-            initial={{
-              opacity: 0,
-              transform: "translateX(80%)",
-              filter: "blur(10px)",
-            }}
-            animate={{
-              opacity: 1,
-              transform: "translateX(0)",
-              filter: "blur(0px)",
-            }}
-            transition={{ ease: "easeInOut", duration: 0.5, delay: 0.3 }}
-          >
-            <Image src={heroImage4} width={300} height={400} alt="image4" />
-          </motion.div>
-          <motion.div
-            className="z-3"
-            initial={{ opacity: 0, y: 120, filter: "blur(10px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ ease: "easeInOut", duration: 0.5, delay: 0 }}
-          >
-            <Image src={heroImage1} width={300} height={400} alt="image1" />
-          </motion.div>
-          <motion.div
-            className="z-2 -ml-12 sm:-ml-10 md:-ml-[40px] lg:-ml-[75px]"
-            initial={{
-              opacity: 0,
-              transform: "translateX(-80%)",
-              filter: "blur(10px)",
-            }}
-            animate={{
-              opacity: 1,
-              transform: "translateX(0)",
-              filter: "blur(0px)",
-            }}
-            transition={{ ease: "easeInOut", duration: 0.5, delay: 0.3 }}
-          >
-            <Image src={heroImage2} width={300} height={400} alt="image2" />
-          </motion.div>
-          <motion.div
-            className="z-1 hidden sm:-ml-20 sm:block md:-ml-[100px] lg:-ml-[150px]"
-            initial={{
-              opacity: 0,
-              transform: "translateX(-80%)",
-              filter: "blur(10px)",
-            }}
-            animate={{
-              opacity: 1,
-              transform: "translateX(0)",
-              filter: "blur(0px)",
-            }}
-            transition={{ ease: "easeInOut", duration: 0.5, delay: 0.6 }}
-          >
-            <Image src={heroImage3} width={300} height={400} alt="image3" />
-          </motion.div>
+          {HERO_IMAGES.map(({ src, alt, className, initial, animate, transition }) => (
+            <motion.div
+              key={alt}
+              className={className}
+              initial={initial}
+              animate={animate}
+              transition={{
+                ...transition,
+                ease: [0.42, 0, 0.58, 1],
+              }}
+            >
+              <Image src={src} width={300} height={400} alt={alt} />
+            </motion.div>
+          ))}
         </div>
         <motion.img
           src="/Gradient.svg"

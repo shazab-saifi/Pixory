@@ -35,6 +35,7 @@ const Dropdown = ({
             ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-95 opacity-0"
         }`}
+        style={{transformOrigin: "top center"}}
       >
         <div
           className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-100"
