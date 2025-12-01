@@ -1,7 +1,7 @@
 "use client";
 
 import Dropdown from "./Dropdown";
-import { ChevronDown, Images, PlayCircle, Search } from "lucide-react";
+import { ChevronDown, Command, Images, PlayCircle, Search } from "lucide-react";
 import { useRef, useState, useCallback, useMemo, useEffect } from "react";
 import { cn, isTouchDevice } from "@/lib/utils";
 import { useOptionsToggle, useSearchOptions } from "@/lib/store";
@@ -175,10 +175,11 @@ const SearchBar = ({
       {!isFocused && (
         <span
           className={cn(
-            "hidden rounded border border-neutral-300 bg-neutral-200 px-1 py-0.5 font-mono text-[10px] text-neutral-600 transition-transform duration-300 select-none sm:inline-block",
+            "flex items-center rounded border border-neutral-300 bg-neutral-200 px-1 py-0.5 font-mono text-xs text-neutral-500 transition-transform duration-300 select-none",
           )}
         >
-          Ctrl+k
+          <Command size={12} />
+          <span>+k</span>
         </span>
       )}
       <button

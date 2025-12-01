@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Button from "./Button";
-import { ArrowDownRight, CopyPlus, LoaderCircle } from "lucide-react";
+import { ChevronsRight, CopyPlus, LoaderCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -359,7 +359,7 @@ const BookmarkDialog = ({
                 className="w-fit space-x-2 font-bold"
               >
                 <span>Your Collections</span>
-                <ArrowDownRight className="size-5 -rotate-45" />
+                <ChevronsRight size={20} />
               </Button>
             </>
           ) : (
@@ -371,6 +371,7 @@ const BookmarkDialog = ({
                 <div className="space-y-2">
                   <input
                     type="text"
+                    autoFocus
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder="Enter Collection Name"
