@@ -2,7 +2,7 @@
 
 import Dropdown from "./Dropdown";
 import { ChevronDown, Images, PlayCircle, Search } from "lucide-react";
-import { useRef, useState, useCallback, useMemo } from "react";
+import { useRef, useState, useCallback, useMemo, useEffect } from "react";
 import { cn, isTouchDevice } from "@/lib/utils";
 import { useOptionsToggle, useSearchOptions } from "@/lib/store";
 import RecentSearches from "./RecentSearches";
@@ -36,6 +36,16 @@ const SearchBar = ({
     }, []),
     isFocused,
   );
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey && e.key === "k") || (e.metaKey && e.key === "k")) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -155,12 +165,22 @@ const SearchBar = ({
         onChange={handleInput}
         onKeyDown={handleEnterKey}
         type="text"
-        placeholder="Search for free photos"
+        placeholder="Search free Photos and Videos"
         className={cn("min-w-[100px] flex-1 py-2 outline-none", inputClassName)}
         onFocus={handleFocus}
         aria-label="Search input"
         autoComplete="off"
       />
+      {/* Ctrl+k Badge */}
+      {!isFocused && (
+        <span
+          className={cn(
+            "hidden rounded border border-neutral-300 bg-neutral-200 px-1 py-0.5 font-mono text-[10px] text-neutral-600 transition-transform duration-300 select-none sm:inline-block",
+          )}
+        >
+          Ctrl+k
+        </span>
+      )}
       <button
         type="button"
         onClick={handleOnClick}
