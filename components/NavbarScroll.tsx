@@ -23,7 +23,7 @@ const NavbarScroll = () => {
 
   return (
     <div>
-      <OptionsSection ref={ref} />
+      <OptionsSection ref={ref} layoutId="select-active" />
       {isNavbarVisible && <Navbar2 />}
     </div>
   );

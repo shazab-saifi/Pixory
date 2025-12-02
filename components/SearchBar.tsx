@@ -1,7 +1,14 @@
 "use client";
 
 import Dropdown from "./Dropdown";
-import { ChevronDown, Command, Images, PlayCircle, Search } from "lucide-react";
+import {
+  ChevronDown,
+  Command,
+  Images,
+  PlayCircle,
+  Search,
+  X,
+} from "lucide-react";
 import { useRef, useState, useCallback, useMemo, useEffect } from "react";
 import { cn, isTouchDevice } from "@/lib/utils";
 import { useOptionsToggle, useSearchOptions } from "@/lib/store";
@@ -50,6 +57,11 @@ const SearchBar = ({
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
+
+  const handleClearInput = useCallback(() => {
+    setInputValue("");
+    inputRef.current?.focus();
+  }, []);
 
   const finalInput = useMemo(() => capitalizeInput(inputValue), [inputValue]);
 
@@ -159,18 +171,34 @@ const SearchBar = ({
         </button>
         <Dropdown {...dropdownProps} />
       </div>
-      <input
-        ref={inputRef}
-        value={inputValue}
-        onChange={handleInput}
-        onKeyDown={handleEnterKey}
-        type="text"
-        placeholder="Search free Photos and Videos"
-        className={cn("min-w-[100px] flex-1 py-2 outline-none", inputClassName)}
-        onFocus={handleFocus}
-        aria-label="Search input"
-        autoComplete="off"
-      />
+      <div className="relative flex min-w-[100px] flex-1 items-center">
+        <input
+          ref={inputRef}
+          value={inputValue}
+          onChange={handleInput}
+          onKeyDown={handleEnterKey}
+          type="text"
+          placeholder="Search free Photos and Videos"
+          className={cn(
+            "flex-1 bg-transparent py-2 pr-8 outline-none",
+            inputClassName,
+          )}
+          onFocus={handleFocus}
+          aria-label="Search input"
+          autoComplete="off"
+        />
+        {inputValue.length > 0 && (
+          <button
+            type="button"
+            aria-label="Clear search"
+            onClick={handleClearInput}
+            className="absolute top-1/2 right-1 -translate-y-1/2 rounded-full p-1 text-neutral-400 hover:bg-neutral-200 hover:text-neutral-600 focus:outline-none active:bg-neutral-300"
+            tabIndex={0}
+          >
+            <X size={18} />
+          </button>
+        )}
+      </div>
       {/* Ctrl+k Badge */}
       {!isFocused && (
         <span

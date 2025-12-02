@@ -16,7 +16,7 @@ const SearchPageClient = () => {
     <div>
       <Navbar2 />
       <div className="mt-17 xl:mt-25">
-        <OptionsSection />
+        <OptionsSection layoutId="search-active" />
       </div>
       {currentOption === "photos" ? (
         <PhotosSection query={query} />
