@@ -1,10 +1,12 @@
 import Footer from "@/components/Footer/Footer";
+import Navbar2 from "@/components/Navbar/Navbar2";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function NotFound() {
   return (
     <div className="flex w-full flex-col items-center justify-center">
+      <Navbar2 />
       <div className="my-48 flex max-h-[600px] gap-16 p-8 sm:my-42">
         <div className="flex flex-col justify-evenly gap-8">
           <div className="space-y-6">

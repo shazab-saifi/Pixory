@@ -41,7 +41,7 @@ const SearchBar = ({
       setIsFocused(false);
       setIsNewSearch(false);
     }, []),
-    isFocused,
+    isFocused
   );
 
   useEffect(() => {
@@ -74,14 +74,14 @@ const SearchBar = ({
     let recentSearches: string[] = [];
     try {
       recentSearches = JSON.parse(
-        localStorage.getItem("recentSearches") || "[]",
+        localStorage.getItem("recentSearches") || "[]"
       );
     } catch {
       recentSearches = [];
     }
 
     recentSearches = recentSearches.filter(
-      (str) => str.toLowerCase() !== finalInput.toLowerCase(),
+      (str) => str.toLowerCase() !== finalInput.toLowerCase()
     );
 
     const updated =
@@ -107,7 +107,7 @@ const SearchBar = ({
         handleOnClick();
       }
     },
-    [handleOnClick],
+    [handleOnClick]
   );
 
   const handleFocus = useCallback(() => {
@@ -125,15 +125,15 @@ const SearchBar = ({
       isHovered,
       pointerEventsNone: !isHovered,
     }),
-    [isHovered],
+    [isHovered]
   );
 
   return (
     <div
       ref={ref}
       className={cn(
-        "relative inline-flex w-full items-center justify-between gap-2 rounded-xl bg-neutral-100 p-1 sm:gap-4",
-        className,
+        "relative inline-flex w-full items-center justify-between gap-2 rounded-xl border border-neutral-200 bg-neutral-100 p-1 sm:gap-4",
+        className
       )}
     >
       <div
@@ -180,8 +180,8 @@ const SearchBar = ({
           type="text"
           placeholder="Search free Photos and Videos"
           className={cn(
-            "flex-1 bg-transparent py-2 pr-8 outline-none",
-            inputClassName,
+            "flex-1 bg-transparent py-2 pr-8 text-sm outline-none md:text-base",
+            inputClassName
           )}
           onFocus={handleFocus}
           aria-label="Search input"
@@ -203,7 +203,7 @@ const SearchBar = ({
       {!isFocused && (
         <span
           className={cn(
-            "flex items-center rounded border border-neutral-300 bg-neutral-200 px-1 py-0.5 font-mono text-xs text-neutral-500 transition-transform duration-300 select-none",
+            "absolute top-1/2 right-18 hidden -translate-y-[50%] items-center rounded border border-neutral-300 bg-neutral-200 px-1 py-0.5 font-mono text-xs text-neutral-500 transition-transform duration-300 select-none sm:flex"
           )}
         >
           <Command size={12} />
@@ -217,7 +217,7 @@ const SearchBar = ({
           "flex min-h-full cursor-pointer items-center rounded-lg p-3 text-neutral-400 shadow-none transition-colors sm:px-4.5 sm:py-3.5",
           isTouchDevice
             ? "active:bg-neutral-200 active:text-neutral-800"
-            : "hover:bg-neutral-200 hover:text-neutral-800",
+            : "hover:bg-neutral-200 hover:text-neutral-800"
         )}
         aria-label="Search"
       >

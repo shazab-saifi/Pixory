@@ -49,7 +49,7 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
     () =>
       recentSearches.length > 0 ||
       (status === "authenticated" && collections && collections.length > 0),
-    [recentSearches.length, status, collections],
+    [recentSearches.length, status, collections]
   );
 
   const handleRecentSearchClick = useCallback(
@@ -62,7 +62,7 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
 
       router.push(`/search?query=${encodeURIComponent(s)}`);
     },
-    [router, currentSearchOption, setToPhotos, setToVideos],
+    [router, currentSearchOption, setToPhotos, setToVideos]
   );
 
   const recentSearchesSection = useMemo(() => {
@@ -70,7 +70,7 @@ const RecentSearches = ({ isFocused, isNewSearch }: RecentSearchesProps) => {
     return (
       <div className="flex w-full flex-col gap-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-2xl">Recent Searches</h3>
+          <h3 className="text-lg sm:text-xl md:text-2xl">Recent Searches</h3>
           <button
             onClick={clearRecentSearches}
             disabled={recentSearches.length === 0}

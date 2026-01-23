@@ -38,7 +38,7 @@ const Navbar2 = () => {
   return (
     <>
       {!isSearching ? (
-        <nav className="fixed top-0 z-20 flex w-full items-center justify-between bg-white px-4 py-4 text-base text-black md:px-20 xl:px-30 2xl:px-50">
+        <nav className="fixed top-0 z-20 flex w-full items-center justify-between border-b border-neutral-200 bg-white/80 px-4 py-3 text-base text-black backdrop-blur-2xl lg:px-20 xl:px-30 2xl:px-50">
           <div className="flex gap-8 2xl:gap-12">
             <Link href="/" className="inline-flex items-center">
               <Image

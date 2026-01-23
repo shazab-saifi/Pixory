@@ -11,6 +11,30 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    plugins: {
+      prettier: (await import("eslint-plugin-prettier")).default,
+    },
+    rules: {
+      "prettier/prettier": "error",
+      "arrow-body-style": "off",
+      "prefer-arrow-callback": "off",
+      "@typescript-eslint/no-unused-vars": "error",
+    },
+  },
+  {
+    ignores: [
+      "node_modules/**",
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+      ".husky/**",
+      ".vscode/**",
+      "storybook-static/**",
+      "stories/assets/**",
+    ],
+  },
 ];
 
 export default eslintConfig;
