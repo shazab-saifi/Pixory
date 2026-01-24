@@ -21,12 +21,12 @@ export async function GET(req: NextRequest) {
             Authorization: process.env.PEXELS_API_KEY,
           },
           timeout: 10000,
-        },
+        }
       );
       const after = Date.now();
 
       console.log(
-        `Time taken to fetch video ${Math.floor((after - before) / 1000)}s`,
+        `Time taken to fetch video ${Math.floor((after - before) / 1000)}s`
       );
 
       const limit = response.headers["x-ratelimit-limit"];
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
       console.log("Remaining:", remaining);
       console.log(
         "Reset Time:",
-        new Date(parseInt(reset || "0") * 1000).toLocaleString(),
+        new Date(parseInt(reset || "0") * 1000).toLocaleString()
       );
 
       return NextResponse.json(response.data);
@@ -58,13 +58,13 @@ export async function GET(req: NextRequest) {
           error: "Failed to fetch videos from Pexels",
           details: message,
         }),
-        { status: 500 },
+        { status: 500 }
       );
     }
   }
 
   return new NextResponse(
     JSON.stringify({ error: "Retries exhausted without success" }),
-    { status: 500 },
+    { status: 500 }
   );
 }

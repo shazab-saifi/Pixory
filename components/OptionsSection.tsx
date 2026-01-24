@@ -47,7 +47,7 @@ const OptionsSection = ({
                   damping: 36,
                 }}
               />
-            ) : null,
+            ) : null
           )}
         </AnimatePresence>
         {tabOptions.map((tab, idx) => (

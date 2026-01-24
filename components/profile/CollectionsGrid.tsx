@@ -53,8 +53,7 @@ export default function CollectionsGrid() {
                   collectionId={collection.id}
                   collectionName={collection.name}
                   preview={collection.media.map(
-                    (item) =>
-                      (item.photo?.large as string) ?? item.video?.image,
+                    (item) => (item.photo?.large as string) ?? item.video?.image
                   )}
                 />
               </motion.div>

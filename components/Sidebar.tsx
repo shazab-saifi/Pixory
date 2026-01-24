@@ -62,6 +62,14 @@ const Sidebar = ({
           </div>
         )}
         <nav className="flex flex-1 flex-col gap-6">
+          <Link
+            href="/"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 rounded px-2 py-2 transition hover:bg-neutral-100"
+          >
+            <Home className="size-6" />
+            <span>Home</span>
+          </Link>
           {status === "authenticated" && (
             <Link
               href="/profile"
@@ -72,14 +80,6 @@ const Sidebar = ({
               <span>Profile</span>
             </Link>
           )}
-          <Link
-            href="/"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 rounded px-2 py-2 transition hover:bg-neutral-100"
-          >
-            <Home className="size-6" />
-            <span>Home</span>
-          </Link>
           <Link
             href="/getpixory+"
             onClick={() => setIsOpen(false)}

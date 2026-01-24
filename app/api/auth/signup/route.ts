@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
       JSON.stringify({ message: "Internal server error while signing up!" }),
       {
         status: 500,
-      },
+      }
     );
   }
 }

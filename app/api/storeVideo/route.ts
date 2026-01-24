@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
         {
           error: "Collection id must be provided as a param!",
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
           error: "validation failed!",
           errors: validateVideo.error.errors,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
         {
           error: "Collection does not exists!",
         },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
         {
           error: "This video already exists in this collection!",
         },
-        { status: 409 },
+        { status: 409 }
       );
     }
 
@@ -95,21 +95,21 @@ export async function POST(req: NextRequest) {
         message: "Video added to the collection!",
         collectionMedia,
       },
-      { status: 201 },
+      { status: 201 }
     );
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         return NextResponse.json(
           { error: "Unique constraint failed!" },
-          { status: 409 },
+          { status: 409 }
         );
       }
     }
     console.error("Error while storing Video in db:", error);
     return NextResponse.json(
       { error: "Internal server error in storeVideo endpoint!" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

@@ -54,7 +54,7 @@ const VideoPreviewCard = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onClick={onClick}
-        className={`group relative ${videoAspect ? "aspect-[9/14]" : "aspect-video"} overflow-hidden hover:scale-98 transition-transform rounded-xl lg:rounded-2xl`}
+        className={`group relative ${videoAspect ? "aspect-[9/14]" : "aspect-video"} overflow-hidden rounded-xl transition-transform hover:scale-98 lg:rounded-2xl`}
       >
         <Image
           src={video.image}

@@ -32,7 +32,7 @@ const authOptions: AuthOptions = {
 
           const isPasswordValid = await bcrypt.compare(
             credentials.password,
-            user.password as string,
+            user.password as string
           );
 
           if (!isPasswordValid) return null;

@@ -9,7 +9,7 @@ export async function GET() {
     if (!session?.user?.email) {
       return NextResponse.json(
         { message: "Not authenticated!" },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
@@ -20,7 +20,7 @@ export async function GET() {
     if (!user) {
       return NextResponse.json(
         { message: "User with this email doesn't exist!" },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -44,7 +44,7 @@ export async function GET() {
     console.error("Error fetching collections:", error);
     return NextResponse.json(
       { message: "Internal server error in collections endpoint!" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

@@ -134,7 +134,7 @@ const VideosSection = ({ query }: { query?: string }) => {
                   }}
                 />
               );
-            }),
+            })
         )}
       </Masonry>
 

@@ -10,7 +10,7 @@ export async function DELETE(req: NextRequest) {
         error:
           "collectionId must be provided as a param to delete the collection!",
       },
-      { status: 404 },
+      { status: 404 }
     );
   }
 
@@ -22,7 +22,7 @@ export async function DELETE(req: NextRequest) {
     if (!collection) {
       return NextResponse.json(
         { error: "Collection with this id doesn't exists!" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -39,7 +39,7 @@ export async function DELETE(req: NextRequest) {
     console.error("Error deleting collection:", error);
     return NextResponse.json(
       { error: "Internal server error." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

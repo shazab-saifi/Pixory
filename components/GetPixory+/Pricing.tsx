@@ -27,7 +27,7 @@ const PricingCard = ({
         "flex h-full flex-col gap-20 rounded-2xl p-4 shadow-[0_3px_10px_rgb(0,0,0,0.2)] transition-all duration-300 sm:p-6 lg:p-8",
         selectedPlan === card.heading
           ? "bg-black text-white xl:-translate-y-12"
-          : "bg-white xl:-translate-y-0",
+          : "bg-white xl:-translate-y-0"
       )}
     >
       <div className="flex flex-1 flex-col gap-4 sm:gap-6 lg:gap-8">

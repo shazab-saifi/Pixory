@@ -42,27 +42,27 @@ Pixory is a visually rich web application inspired by Pexels. It allows users to
 
 ## 🌟 Project Structure
 
-pixory/              
-├── app/                  
-├── components/           
-├── hooks/                
-├── lib/                 
-├── prisma/              
-├── public/              
-├── screenshots/         
-├── .env.local            
-├── .gitignore            
-├── .prettierrc.json     
-├── eslint.config.mjs    
-├── global.d.ts           
-├── middleware.ts        
-├── next-env.d.ts         
-├── next.config.ts       
-├── package.json          
-├── package-lock.json     
-├── postcss.config.mjs    
-├── README.md             
-└── tsconfig.json         
+pixory/  
+├── app/  
+├── components/  
+├── hooks/  
+├── lib/  
+├── prisma/  
+├── public/  
+├── screenshots/  
+├── .env.local  
+├── .gitignore  
+├── .prettierrc.json  
+├── eslint.config.mjs  
+├── global.d.ts  
+├── middleware.ts  
+├── next-env.d.ts  
+├── next.config.ts  
+├── package.json  
+├── package-lock.json  
+├── postcss.config.mjs  
+├── README.md  
+└── tsconfig.json
 
 ---
 
@@ -77,4 +77,3 @@ API: Pexels API
 Auth: NextAuth
 
 Database: Prisma, neon.tech
-

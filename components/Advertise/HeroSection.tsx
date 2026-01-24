@@ -2,7 +2,13 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { heroImage1, heroImage2, heroImage3, heroImage4, heroImage5 } from "@/lib/import";
+import {
+  heroImage1,
+  heroImage2,
+  heroImage3,
+  heroImage4,
+  heroImage5,
+} from "@/lib/import";
 import arrow from "@/public/arrow.svg";
 import { Rocket } from "lucide-react";
 import Button from "../Button";
@@ -36,7 +42,11 @@ const HERO_IMAGES = [
     src: heroImage2,
     alt: "image2",
     className: "z-2 -ml-12 sm:-ml-10 md:-ml-[40px] lg:-ml-[75px]",
-    initial: { opacity: 0, transform: "translateX(-80%)", filter: "blur(10px)" },
+    initial: {
+      opacity: 0,
+      transform: "translateX(-80%)",
+      filter: "blur(10px)",
+    },
     animate: { opacity: 1, transform: "translateX(0)", filter: "blur(0px)" },
     transition: { ease: "easeInOut", duration: 0.5, delay: 0.3 },
   },
@@ -44,7 +54,11 @@ const HERO_IMAGES = [
     src: heroImage3,
     alt: "image3",
     className: "z-1 hidden sm:-ml-20 sm:block md:-ml-[100px] lg:-ml-[150px]",
-    initial: { opacity: 0, transform: "translateX(-80%)", filter: "blur(10px)" },
+    initial: {
+      opacity: 0,
+      transform: "translateX(-80%)",
+      filter: "blur(10px)",
+    },
     animate: { opacity: 1, transform: "translateX(0)", filter: "blur(0px)" },
     transition: { ease: "easeInOut", duration: 0.5, delay: 0.6 },
   },
@@ -69,8 +83,10 @@ export default function HeroSection() {
           transition={{ ease: "easeInOut", duration: 0.4 }}
           className="text-center text-base md:text-xl"
         >
-          Tap into a high-intent audience of millions searching for stunning visuals.
-          <br className="hidden md:block" /> Drive real results through native and targeted placements.
+          Tap into a high-intent audience of millions searching for stunning
+          visuals.
+          <br className="hidden md:block" /> Drive real results through native
+          and targeted placements.
         </motion.h4>
       </div>
       <motion.div
@@ -91,20 +107,22 @@ export default function HeroSection() {
       </motion.div>
       <div className="relative flex items-center justify-center pt-4 md:pt-20">
         <div className="relative flex items-center justify-center">
-          {HERO_IMAGES.map(({ src, alt, className, initial, animate, transition }) => (
-            <motion.div
-              key={alt}
-              className={className}
-              initial={initial}
-              animate={animate}
-              transition={{
-                ...transition,
-                ease: [0.42, 0, 0.58, 1],
-              }}
-            >
-              <Image src={src} width={300} height={400} alt={alt} />
-            </motion.div>
-          ))}
+          {HERO_IMAGES.map(
+            ({ src, alt, className, initial, animate, transition }) => (
+              <motion.div
+                key={alt}
+                className={className}
+                initial={initial}
+                animate={animate}
+                transition={{
+                  ...transition,
+                  ease: [0.42, 0, 0.58, 1],
+                }}
+              >
+                <Image src={src} width={300} height={400} alt={alt} />
+              </motion.div>
+            )
+          )}
         </div>
         <motion.img
           src="/Gradient.svg"

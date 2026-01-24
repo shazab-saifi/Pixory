@@ -37,7 +37,7 @@ const BookmarkDialog = ({
   const [validationError, setValidationError] = useState<string>("");
   const { status } = useSession();
   const [activeCollectionId, setActiveCollectionId] = useState<number | null>(
-    null,
+    null
   );
   const router = useRouter();
 
@@ -99,7 +99,7 @@ const BookmarkDialog = ({
             "content-Type": "application/json",
           },
           body: JSON.stringify(data.photoData),
-        },
+        }
       );
 
       if (!res.ok) {
@@ -132,7 +132,7 @@ const BookmarkDialog = ({
             "content-type": "application/json",
           },
           body: JSON.stringify(data.videoData),
-        },
+        }
       );
 
       if (!res.ok) {
@@ -163,21 +163,21 @@ const BookmarkDialog = ({
   };
 
   const handleClick = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.stopPropagation();
     if (status === "authenticated") {
       try {
         if (hasReachedLimit) {
           toast.error(
-            `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
+            `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`
           );
           return;
         }
 
         if (inputValue.length > MAX_COLLECTION_NAME_LENGTH) {
           toast.error(
-            `Collection name cannot exceed ${MAX_COLLECTION_NAME_LENGTH} characters.`,
+            `Collection name cannot exceed ${MAX_COLLECTION_NAME_LENGTH} characters.`
           );
           return;
         }
@@ -247,7 +247,7 @@ const BookmarkDialog = ({
                     onClick={() => {
                       if (hasReachedLimit) {
                         toast.error(
-                          `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`,
+                          `You can only have a maximum of ${MAX_COLLECTIONS_PER_USER} collections!`
                         );
                         return;
                       }
@@ -347,7 +347,7 @@ const BookmarkDialog = ({
                             {collection.name}
                           </div>
                         </div>
-                      ),
+                      )
                     )}
                   </>
                 )}

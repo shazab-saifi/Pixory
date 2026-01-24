@@ -39,14 +39,12 @@ const Masonry = ({ collection }: { collection: Collection }) => {
           if (video && video.videoFiles && video.videoFiles.length > 0) {
             videoFile =
               video.videoFiles.find(
-                (file) =>
-                  file.quality === "sd" && file.fileType === "video/mp4",
+                (file) => file.quality === "sd" && file.fileType === "video/mp4"
               ) || video.videoFiles[0];
 
             hdVideoFIle =
               video.videoFiles.find(
-                (file) =>
-                  file.quality === "hd" && file.fileType === "video/mp4",
+                (file) => file.quality === "hd" && file.fileType === "video/mp4"
               ) || video.videoFiles[0];
           }
 

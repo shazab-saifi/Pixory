@@ -94,7 +94,7 @@ const DownloadMenu = ({ src }: { src: PhotoURLsTypes | VideoFile[] }) => {
     : photoDropdownItems;
 
   return (
-    <div ref={ref} className="relative flex items-center z-30">
+    <div ref={ref} className="relative z-30 flex items-center">
       <button
         onClick={() => downloadImage()}
         className="cursor-pointer rounded-l-lg bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"

@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     if (!session?.user?.email) {
       return NextResponse.json(
         { error: "Not authenticated!" },
-        { status: 401 },
+        { status: 401 }
       );
     }
 
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
           error:
             "Photo or Video at least one of them should be provided while creating collection!",
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
           error: "Validation failed!",
           errors: validation.error.errors,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json(
         { error: "User doesn't exist with this email!" },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
     if (collectionsCount >= 10) {
       return NextResponse.json(
         { error: "You can only have a maximum of 10 collections!" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
     if (duplicate) {
       return NextResponse.json(
         { error: "Collection with this name already exists!" },
-        { status: 409 },
+        { status: 409 }
       );
     }
 
@@ -136,13 +136,13 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { collection, message: "Collection created successfully!" },
-      { status: 201 },
+      { status: 201 }
     );
   } catch (error) {
     console.error("Error creating collection:", error);
     return NextResponse.json(
       { error: "Internal server error in collection endpoint!" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

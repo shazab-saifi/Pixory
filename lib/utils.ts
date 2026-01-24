@@ -41,12 +41,12 @@ export async function fetchCollection(): Promise<Collection[]> {
 export function findVideoFile(video: VideoData) {
   const videoFile =
     video.video_files.find(
-      (file) => file.quality === "sd" && file.file_type === "video/mp4",
+      (file) => file.quality === "sd" && file.file_type === "video/mp4"
     ) || video.video_files[0];
 
   const hdVideoFIle =
     video.video_files.find(
-      (file) => file.quality === "hd" && file.file_type === "video/mp4",
+      (file) => file.quality === "hd" && file.file_type === "video/mp4"
     ) || video.video_files[0];
 
   return { videoFile, hdVideoFIle };

@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     if (isNaN(collectionId)) {
       return NextResponse.json(
         { message: "collectionId must be provided as a valid integer param!" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
           message: "Validation failed!",
           errors: validatedResult.error.errors,
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     if (!collection) {
       return NextResponse.json(
         { message: "Collection does not exist!" },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
     if (existingCollectionMedia) {
       return NextResponse.json(
         { message: "This photo already exists in this collection!" },
-        { status: 409 },
+        { status: 409 }
       );
     }
 
@@ -71,21 +71,21 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { message: "Photo added to collection successfully!", collectionMedia },
-      { status: 201 },
+      { status: 201 }
     );
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       if (error.code === "P2002") {
         return NextResponse.json(
           { error: "Unique constraint failed!" },
-          { status: 409 },
+          { status: 409 }
         );
       }
     }
     console.error("Error while storing Photo in db:", error);
     return NextResponse.json(
       { error: "Internal server error in storePhoto endpoint!" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

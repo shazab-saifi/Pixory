@@ -21,7 +21,7 @@ const buttonVariants = cva(
       variant: "primary",
       size: "md",
     },
-  },
+  }
 );
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
@@ -38,7 +38,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  },
+  }
 );
 
 Button.displayName = "Button";

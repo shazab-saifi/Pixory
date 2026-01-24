@@ -243,7 +243,7 @@ const page = () => {
                     <p className="text-sm text-gray-500">{name}</p>
                   </div>
                 </div>
-              ),
+              )
             )}
           </Marquee>
           <Marquee pauseOnHover direction="right">
@@ -280,7 +280,7 @@ const page = () => {
                     <p className="text-sm text-gray-500">{name}</p>
                   </div>
                 </div>
-              ),
+              )
             )}
           </Marquee>
         </div>

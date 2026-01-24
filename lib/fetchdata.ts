@@ -14,7 +14,7 @@ export const fetchData = async ({
 
     if (query) {
       response = await fetch(
-        `/api/${currentOption === "photos" ? "photoSearch" : "videoSearch"}?query=${query}&page=${pageParam}`,
+        `/api/${currentOption === "photos" ? "photoSearch" : "videoSearch"}?query=${query}&page=${pageParam}`
       );
     } else {
       response = await fetch(`/api/${currentOption}?page=${pageParam}`);

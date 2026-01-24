@@ -23,7 +23,7 @@ const CollectionCard = ({
         `/api/deleteCollection?collectionId=${collectionId}`,
         {
           method: "DELETE",
-        },
+        }
       );
       if (!res.ok) {
         const errorData = await res.json();
@@ -37,7 +37,7 @@ const CollectionCard = ({
         (oldData: Collection[] | undefined) => {
           if (!oldData) return oldData;
           return oldData.filter((col: Collection) => col.id !== collectionId);
-        },
+        }
       );
 
       queryClient.invalidateQueries({ queryKey: ["collections"] });
