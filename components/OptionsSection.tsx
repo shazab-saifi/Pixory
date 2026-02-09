@@ -81,7 +81,9 @@ const OptionsSection = ({
                   }}
                 />
               )}
-              <span className="relative z-10">{tab.label}</span>
+              <span className="relative z-10 text-sm md:text-base">
+                {tab.label}
+              </span>
             </button>
           </div>
         ))}

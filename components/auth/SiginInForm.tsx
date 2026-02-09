@@ -7,11 +7,13 @@ import Form from "../Form";
 import Image from "next/image";
 import { googleicon } from "@/lib/import";
 import { useRouter } from "next/navigation";
+import { LoaderCircle } from "lucide-react";
 
 const SiginInForm = () => {
   const [googleProvider, setGoogleProvider] = useState<
     ClientSafeProvider | undefined
   >();
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -28,8 +30,6 @@ const SiginInForm = () => {
         password,
         redirect: false,
       });
-      console.log(result);
-      console.log("hello");
 
       if (result?.ok) {
         router.push("/profile");
@@ -41,24 +41,63 @@ const SiginInForm = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    if (!googleProvider?.id || isGoogleLoading) return;
+
+    try {
+      setIsGoogleLoading(true);
+      await signIn(googleProvider.id);
+    } catch (error) {
+      console.error(`Google sign-in error: ${error}`);
+    } finally {
+      setTimeout(() => {
+        setIsGoogleLoading(false);
+      }, 2000);
+    }
+  };
+
   return (
-    <div className="flex h-fit w-sm flex-col items-center justify-center gap-4 rounded-2xl bg-white p-6 shadow-[0_3px_10px_rgb(0,0,0,0.2)] md:gap-8 md:p-8">
-      <h1 className="w-full text-center text-3xl font-semibold">
-        Welcome Back
-      </h1>
-      <Form reqfn={handleLogin} />
-      <div className="flex w-full items-center justify-center gap-2">
-        <span className="h-[1px] flex-1 bg-gray-400"></span>
-        <span className="text-[12px] text-gray-600">OR</span>
-        <span className="h-[1px] flex-1 bg-gray-400"></span>
+    <div>
+      <div className="mb-8">
+        <h1 className="mb-2 w-full text-xl font-semibold text-neutral-500">
+          Welcome Back to
+        </h1>
+        <Image src="/pixory.svg" width={100} height={50} alt="pixory.logo" />
       </div>
-      <button
-        className="flex w-full cursor-pointer items-center justify-center rounded-xl bg-white px-4 py-2 text-sm shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] transition-colors hover:bg-neutral-100"
-        onClick={() => signIn(googleProvider?.id)}
-      >
-        <Image src={googleicon} alt="google" className="h-6 w-6" />
-        <span className="flex-1 text-center">Sign In with Google</span>
-      </button>
+      <div className="flex h-fit w-xs flex-col items-center justify-center gap-2">
+        <Form reqfn={handleLogin} />
+        <div className="flex w-full items-center justify-center gap-2">
+          <span className="h-[1px] flex-1 bg-neutral-200"></span>
+          <span className="text-[12px] text-neutral-400">OR</span>
+          <span className="h-[1px] flex-1 bg-neutral-200"></span>
+        </div>
+        <button
+          className="flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-green-500 px-4 py-2 text-sm font-semibold text-white shadow-[0_2.8px_2.2px_rgba(0,_0,_0,_0.034),_0_6.7px_5.3px_rgba(0,_0,_0,_0.048),_0_12.5px_10px_rgba(0,_0,_0,_0.06),_0_22.3px_17.9px_rgba(0,_0,_0,_0.072),_0_41.8px_33.4px_rgba(0,_0,_0,_0.086),_0_100px_80px_rgba(0,_0,_0,_0.12)] transition-colors hover:bg-green-400 disabled:cursor-not-allowed disabled:opacity-70"
+          onClick={handleGoogleSignIn}
+          disabled={!googleProvider || isGoogleLoading}
+        >
+          {isGoogleLoading ? (
+            <>
+              <LoaderCircle className="h-4 w-4 animate-spin" />
+              <span className="text-center">Signing in...</span>
+            </>
+          ) : (
+            <>
+              <Image src={googleicon} alt="google" className="h-6 w-6" />
+              <span className="text-center">Sign In with Google</span>
+            </>
+          )}
+        </button>
+        <p className="mt-2 text-xs text-neutral-500">
+          Do not have an account?{" "}
+          <a
+            href="/signup"
+            className="font-semibold text-green-600 hover:underline"
+          >
+            Sign up
+          </a>
+        </p>
+      </div>
     </div>
   );
 };

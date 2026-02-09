@@ -12,36 +12,35 @@ type FormData = z.infer<typeof FormSchema>;
 export default function Form({
   reqfn,
 }: {
-  reqfn: ({ email, name, password }: CredentialsTypes) => void;
+  reqfn: ({ email, name, password }: CredentialsTypes) => void | Promise<void>;
 }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
   });
 
   const onSubmit = async (data: FormData) => {
-    setIsLoading(true);
-    reqfn(data);
-    console.log(data);
-    setIsLoading(false);
+    await reqfn(data);
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const inputClasses = "px-4 py-2 w-full rounded-md outline-none focus:ring-1";
+  const inputClasses =
+    "px-4 py-2 w-full rounded-md outline-none border border-neutral-200 bg-white";
 
   return (
     <div className="mx-auto w-full">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name">Name</label>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div className="flex flex-col gap-1">
+          <label htmlFor="name" className="text-sm">
+            Name
+          </label>
           <input
             id="name"
             type="text"
@@ -54,8 +53,10 @@ export default function Form({
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="email">Email</label>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="email" className="text-sm">
+            Email
+          </label>
           <input
             id="email"
             type="email"
@@ -63,12 +64,11 @@ export default function Form({
             {...register("email")}
             className={inputClasses}
           />
-          {errors.email && (
-            <p className="text-sm text-red-700">{errors.email.message}</p>
-          )}
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="password">Password</label>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="password" className="text-sm">
+            Password
+          </label>
           <div className="relative flex items-center justify-center">
             <input
               id="password"
@@ -79,7 +79,7 @@ export default function Form({
             />
             <button
               type="button"
-              className="absolute top-0 right-0 h-full rounded-md bg-white px-3 py-2"
+              className="absolute top-1/2 right-1 h-[80%] -translate-y-1/2 cursor-pointer rounded-md bg-white px-3 py-2"
               onClick={togglePasswordVisibility}
               aria-label={showPassword ? "Hide password" : "Show password"}
             >
@@ -91,16 +91,17 @@ export default function Form({
             </button>
           </div>
           {errors.password && (
-            <p className="text-sm text-red-700">{errors.password.message}</p>
+            <p className="text-xs text-red-700">{errors.password.message}</p>
           )}
         </div>
 
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? (
-            <>
-              <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
-              Submitting...
-            </>
+        <Button
+          type="submit"
+          className="mt-2 w-full rounded-xl font-semibold"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <LoaderCircle className="h-4 w-4 animate-spin" />
           ) : (
             "Submit"
           )}

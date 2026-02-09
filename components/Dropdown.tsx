@@ -38,7 +38,7 @@ const Dropdown = ({
         style={{ transformOrigin: "top center" }}
       >
         <div
-          className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-100"
+          className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 text-neutral-600 transition-colors hover:bg-gray-100 hover:text-black"
           onClick={() => {
             if (forSearch) {
               setSearchToPhotos();
@@ -47,11 +47,11 @@ const Dropdown = ({
             }
           }}
         >
-          <Icon1 size={18} className="opacity-80" />
+          <Icon1 size={16} />
           <span>{text1}</span>
         </div>
         <div
-          className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-gray-100"
+          className="flex w-full cursor-pointer items-center gap-2 rounded-md p-2 text-neutral-600 transition-colors hover:bg-gray-100 hover:text-black"
           onClick={() => {
             if (forSearch) {
               setSearchToVideos();
@@ -60,7 +60,7 @@ const Dropdown = ({
             }
           }}
         >
-          <Icon2 size={18} className="opacity-80" />
+          <Icon2 size={16} />
           <span>{text2}</span>
         </div>
       </div>
