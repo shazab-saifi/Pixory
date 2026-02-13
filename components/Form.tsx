@@ -97,7 +97,7 @@ export default function Form({
 
         <Button
           type="submit"
-          className="mt-2 w-full rounded-xl font-semibold"
+          className="mt-2 h-11 w-full rounded-xl font-semibold"
           disabled={isSubmitting}
         >
           {isSubmitting ? (

@@ -8,6 +8,8 @@ import Image from "next/image";
 import { googleicon } from "@/lib/import";
 import { useRouter } from "next/navigation";
 import { LoaderCircle } from "lucide-react";
+import { motion } from "motion/react";
+import StaggerText from "../stagger-text";
 
 const SiginInForm = () => {
   const [googleProvider, setGoogleProvider] = useState<
@@ -59,12 +61,23 @@ const SiginInForm = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="mb-2 w-full text-xl font-semibold text-neutral-500">
-          Welcome Back to
-        </h1>
-        <Image src="/pixory.svg" width={100} height={50} alt="pixory.logo" />
+        <div className="mb-2 w-full text-xl font-semibold text-neutral-500">
+          <StaggerText str="Welcome back to" />
+        </div>
+        <motion.div
+          initial={{ opacity: 0, filter: "blur(10px)", y: -4 }}
+          animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <Image src="/pixory.svg" width={84} height={50} alt="pixory.logo" />
+        </motion.div>
       </div>
-      <div className="flex h-fit w-xs flex-col items-center justify-center gap-2">
+      <motion.div
+        initial={{ opacity: 0, filter: "blur(10px)" }}
+        animate={{ opacity: 1, filter: "blur(0px)" }}
+        transition={{ duration: 0.3, delay: 1.3 }}
+        className="flex h-fit w-xs flex-col items-center justify-center gap-2"
+      >
         <Form reqfn={handleLogin} />
         <div className="flex w-full items-center justify-center gap-2">
           <span className="h-[1px] flex-1 bg-neutral-200"></span>
@@ -97,7 +110,7 @@ const SiginInForm = () => {
             Sign up
           </a>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };
