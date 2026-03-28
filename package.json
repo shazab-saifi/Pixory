@@ -10,7 +10,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:fix": "eslint --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:migrate": "bunx prisma migrate dev",
+    "start:prod": "bun run db:migrate && bun run start"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
